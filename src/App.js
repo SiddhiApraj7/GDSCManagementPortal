@@ -16,11 +16,11 @@ function App() {
         <div className="my-auto p-6">
           <h1 className="text-6xl font-bold text-[#dde3fe] ml-8">GDSC Management Portal</h1>
           <div className="mt-6 ml-8 flex gap-2">
-            <button className="bg-[#dde3fe] rounded-3xl font-medium px-4 py-2 border-[#3243c0] border-2">Join a Project</button>
+            <button className="hover:bg-[#dde3fe] rounded-3xl bg-[#7a8aff] font-medium px-4 py-2 hover:border-[#3243c0] border-[#dde3fe] border-2">Join a Project</button>
             <button className="bg-[#dde3fe] rounded-3xl font-medium px-4 py-2 border-[#3243c0] border-2">Host a project</button>
           </div>
         </div>
-      <img src="illus.jpg" className="h-1/3 w-2/3"></img>
+      <img src="new_illus.png" className="h-1/3 w-[63%]"></img>
       </div>
 
       
