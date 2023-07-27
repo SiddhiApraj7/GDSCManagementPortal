@@ -3,22 +3,27 @@
 
 function App() {
   return (
-    <div className="">
-<div className='bg-gray-100 h-screen'>
-  <div className="flex justify-between bg-white">
-    <div className="flex p-2">
-    <img src="gdsc-logo.png" className="h-20 w-20 rounded-full" alt="logo of gdsc"></img>
-      <h1 className="text-4xl py-6 font-bold italic p-4 text-blue-900">GDSC Management Portal</h1>
-    
-    </div>
-    <div className="flex gap-6 py-6 px-4 font-bold text-blue-900">
-    <h1 className="my-auto text-xl">About Us</h1>
-    <h1 className="my-auto text-xl">Contact</h1>
-    <h1 className="my-auto text-xl">Login</h1>
-    </div>
- 
-  </div>
- </div>
+    <div className="bg-[#7a8aff] h-full flex flex-col justify-center items-center" >
+     
+        <div className="mt-8 text-lg font-bold text-[#dde3fe] flex gap-20 ">
+          <h1 className="text-center">Home</h1>
+          <h1>About</h1>
+          <h1>Contact</h1>
+          <h1>Sign In</h1>
+        </div>
+      
+      <div className="flex justify-between">
+        <div className="my-auto p-6">
+          <h1 className="text-6xl font-bold text-[#dde3fe] ml-10">GDSC Management Portal</h1>
+          <div className="mt-6 ml-10 flex gap-2">
+            <button className="bg-[#dde3fe] rounded-3xl font-medium px-4 py-2 border-[#3243c0] border-2">Join a Project</button>
+            <button className="bg-[#dde3fe] rounded-3xl font-medium px-4 py-2 border-[#3243c0] border-2">Host a project</button>
+          </div>
+        </div>
+      <img src="illus.jpg" className="h-1/3 w-2/3"></img>
+      </div>
+
+      
     </div>
     
   );
