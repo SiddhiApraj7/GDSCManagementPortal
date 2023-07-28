@@ -5,6 +5,7 @@ import Login from './Pages/Login';
 import Register from './Pages/Register';
 import HostProject from './Pages/HostProject';
 import Projects from './Pages/Projects';
+import JoinProject from './Pages/JoinProject';
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
       <Route path="/register" element={<Register/>}/>
       <Route path="/host-project" element={<HostProject/>}/>
       <Route path="/projects" element={<Projects/>}/>
+      <Route path="/join-project" element={<JoinProject/>}/>
       </Routes>
     </Router>
 
