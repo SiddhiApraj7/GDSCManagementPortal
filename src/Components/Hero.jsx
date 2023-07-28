@@ -55,7 +55,7 @@ const Hero = () => {
                 fontSize: "18px",
                 color: "#687690",
                 fontWeight: "500",
-                mt: 10,
+                mt: 4,
                 mb: 4,
               }}
             >
