@@ -61,7 +61,7 @@ const Hero = () => {
             >
             Welcome to IIT Ropar's
             </Typography>
-            <h1 class="flex items-center text-4xl sm:text-6xl  font-extrabold text-blue-950 justify-center mb-6">
+            <h1 class="flex items-center text-4xl sm:text-6xl  font-extrabold text-[#04276a] justify-center mb-6">
             <div className="flex flex-col gap-5">
             <div>
            <span className="border-b-4 border-red-400">G</span><span className="border-b-4 border-blue-600">D</span><span className="border-b-4 border-yellow-400">S</span><span className="border-b-4 border-green-400">C</span> 
@@ -92,10 +92,10 @@ const Hero = () => {
             />
             </span>
             </div> */}
-            <Fab size="medium" variant = "extended" className="bg-[#000336] text-gray-300"  sx = {{mr : 2}}>
+            <Fab size="medium" variant = "extended" className="bg-[#04276a] text-gray-300"  sx = {{mr : 2}}>
                Join Project
             </Fab>
-            <Fab size="medium" variant = "extended" className="bg-neutral-100 text-[#000336]" >
+            <Fab size="medium" variant = "extended" className="bg-neutral-100 text-[#04276a]" >
                Host Project
             </Fab>
           </Box>

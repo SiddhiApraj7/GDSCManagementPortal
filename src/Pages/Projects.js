@@ -1,5 +1,6 @@
 import Navbar from '../Components/Navbar'
 import * as React from 'react';
+import Google from '../Components/Google';
 
 /* import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
@@ -51,8 +52,6 @@ export default function Projects() {
             bgcolor: '#f2f0f0',
             pt: 6,
             pb: 4,
-            borderBottom:2,
-            borderColor: '#a9a9af',
           }}
         >
           <Container maxWidth="sm">
@@ -62,7 +61,7 @@ export default function Projects() {
               variant="h2"
               align="center"
               color="text.primary"
-              className="font-bold text-[#004eb3]"
+              className="font-bold text-[#004eb3] tracking-wide"
               gutterBottom
             >
               Explore Projects
@@ -72,7 +71,9 @@ export default function Projects() {
               the creator, etc. Make it short and sweet, but not too short so folks
               don&apos;t simply skip over it entirely.
             </Typography>
-            
+            <div className="mt-16">
+            <Google/>
+            </div>
           </Container>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="lg">
