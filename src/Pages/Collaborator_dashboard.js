@@ -95,14 +95,6 @@ export default function Collaborator_dashboard() {
 <div className="p-4 sm:ml-64">
    <div className="p-4 border-2 border-gray-200 border-dashed rounded-lg dark:border-gray-700 mt-14">
       
-
-    
-    <div className="rounded-[2rem] overflow-hidden w-[272px] h-[572px] bg-white dark:bg-gray-800">
-        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-light.png" class="dark:hidden w-[272px] h-[572px]" alt=""/>
-        <img src="https://flowbite.s3.amazonaws.com/blocks/marketing-ui/hero/mockup-1-dark.png" class="hidden dark:block w-[272px] h-[572px]" alt=""/>
-    </div>
-</div>
-
       <div className="grid grid-cols-2 gap-4 mb-4">
          
          <div className=" h-auto p-2 rounded bg-gray-50 dark:bg-gray-800">
@@ -116,12 +108,12 @@ export default function Collaborator_dashboard() {
               Skills
             </h1>
            <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 '>
-                <div className='rounded-2xl p-2  bg-blue-100'><h1 className="text-center ">ML</h1></div>
-                <div className='rounded-2xl p-2 bg-blue-50'><h1 className="text-center">Web Dev</h1></div>
-                <div className='rounded-2xl p-2 bg-blue-100'><h1 className="text-center">App Dev</h1></div>
-                <div className='rounded-2xl p-2  bg-blue-100'><h1 className="text-center">ML</h1></div>
-                <div className='rounded-2xl p-2 bg-blue-50'><h1 className="text-center">Web Dev</h1></div>
-                <div className='rounded-2xl p-2 bg-blue-100'><h1 className="text-center">App Dev</h1></div>
+                <div className='rounded-2xl p-2 border-[#487fe6] border-2  bg-blue-100'><h1 className="text-center ">ML</h1></div>
+                <div className='rounded-2xl p-2 border-[#487fe6] border-2 bg-blue-50'><h1 className="text-center">Web Dev</h1></div>
+                <div className='rounded-2xl p-2 border-[#487fe6] border-2 bg-blue-100'><h1 className="text-center">App Dev</h1></div>
+                <div className='rounded-2xl p-2 border-[#487fe6] border-2 bg-blue-100'><h1 className="text-center">ML</h1></div>
+                <div className='rounded-2xl p-2 border-[#487fe6] border-2 bg-blue-50'><h1 className="text-center">Web Dev</h1></div>
+                <div className='rounded-2xl p-2 border-[#487fe6] border-2 bg-blue-100'><h1 className="text-center">App Dev</h1></div>
            </div>
          </div>
       </div>
@@ -138,6 +130,6 @@ export default function Collaborator_dashboard() {
    </div>
 </div>
 
-    
+    </div>
   )
 }

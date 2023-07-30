@@ -20,7 +20,6 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
-import { LinkOffTwoTone } from "@mui/icons-material";
 
 export const Navbar = () => {
   const [mobileMenu, setMobileMenu] = useState({
@@ -99,7 +98,7 @@ export const Navbar = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "space-between",
-    padding: theme.spacing(5),
+    padding: theme.spacing(4),
     [theme.breakpoints.down("md")]: {
       padding: theme.spacing(2),
     },
@@ -115,7 +114,9 @@ export const Navbar = () => {
   }));
 
   return (
-    <NavbarContainer>
+
+    <NavbarContainer className="border-b-2 border-neutral-50">
+
       <Box
         sx={{
           display: "flex",
@@ -154,15 +155,16 @@ export const Navbar = () => {
         }}
       >
         <NavLink variant="body2" >Sign Up</NavLink>
-        <div className = "bg-[#000336] rounded-xl">
-        <CustomButton
-          backgroundColor="#000336"
-          color="#fff"
-          buttonText="Register"
-        />
+        <div className="bg-[#000336] rounded-xl">
+          <CustomButton
+            backgroundColor="#000336"
+            color="#fff"
+            buttonText="Register"
+          />
         </div>
       </Box>
     </NavbarContainer>
+
   );
 };
 
