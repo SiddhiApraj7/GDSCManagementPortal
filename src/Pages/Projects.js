@@ -55,17 +55,8 @@ export default function Projects() {
           }}
         >
           <Container maxWidth="sm">
+          <h1 align="center" class="mb-8 text-3xl font-extrabold tracking-wide text-gray-900 dark:text-white md:text-5xl lg:text-6xl"><span class="text-transparent bg-clip-text bg-gradient-to-r to-[#0b9f6e] from-[#1b64f1]">Explore Projects</span></h1>
             
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="text.primary"
-              className="font-bold text-[#004eb3] tracking-wide"
-              gutterBottom
-            >
-              Explore Projects
-            </Typography>
             <Typography variant="h5" align="center" color="text.secondary" paragraph className="text-[#7aa5eb]">
               Something short and leading about the collection below—its contents,
               the creator, etc. Make it short and sweet, but not too short so folks
@@ -86,6 +77,9 @@ export default function Projects() {
             ))}
           </Grid>
         </Container>
+        <div className="mb-10">
+        <Google />
+        </div>
     </div>
     </ThemeProvider>
   )

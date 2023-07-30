@@ -7,6 +7,7 @@ import HostProject from './Pages/HostProject';
 import Projects from './Pages/Projects';
 import JoinProject from './Pages/JoinProject';
 import Collaborator_dashboard from './Pages/Collaborator_dashboard';
+import ProjectManagerDashboard from './Pages/ProjectManagerDashboard';
 import Inbox from './Pages/Inbox';
 import JoinProjectForm from './Pages/JoinProjectForm';
 
@@ -21,6 +22,7 @@ function App() {
       <Route path="/projects" element={<Projects/>}/>
       <Route path="/join-project" element={<JoinProject/>}/>
       <Route path="/collaborator-dashboard" element={<Collaborator_dashboard/>}/>
+      <Route path="/manager-dashboard" element={<ProjectManagerDashboard/>}/>
       <Route path="/collaborator-dashboard/inbox" element={<Inbox/>}/>
       <Route path="/join-project-form" element={<JoinProjectForm />}/>
       </Routes>
