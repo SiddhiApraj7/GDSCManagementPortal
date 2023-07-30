@@ -2,6 +2,7 @@ import React from 'react'
 import logoImg from "../media/gdsc-logo.png";
 import { Link } from 'react-router-dom';
 import ProjectCardDashboard from '../Components/ProjectCardDashboard';
+
 export default function Collaborator_dashboard() {
     
   return (
@@ -97,12 +98,38 @@ export default function Collaborator_dashboard() {
       
       <div className="grid grid-cols-2 gap-4 mb-4">
          
-         <div className=" h-auto p-2 rounded bg-gray-50 dark:bg-gray-800">
+         <div className="flex h-auto p-2 rounded bg-gray-50 dark:bg-gray-800">
+            <div>
             <h1 className="lg:text-2xl text-sm lg:p-4 p-2 font-semibold text-gray-800 dark:text-gray-500">
               Projects Completed
             </h1>
-            <h1 className="lg:text-2xl text-sm lg:px-4 px-2 font-semibold text-gray-800 dark:text-gray-500">4</h1>
+            <div className='rounded-full flex justify-center w-32 h-32 border-8 border-[#487fe6]'>
+            <h1 className='text-center text-4xl font-semibold my-auto'>4</h1>
+            </div>
+            </div>
+           <div className='flex mt-14 flex-col gap-4 h-auto w-2/3'>
+           <h1 className='text-gray-600'>Beginner</h1>
+           <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+            
+         <div class="bg-[#16a75f] h-2 rounded-full w-[80%] text-xs text-center" ></div>
          </div>
+         <h1 className='text-gray-600'>Intermediate</h1>
+         <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+         <div class="bg-[#ffba01] h-2 rounded-full w-[25%] text-xs text-center" ></div>
+         </div>
+         <h1 className='text-gray-600'>Advanced</h1>
+         <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+         <div class="bg-[#fe2c25] h-2 rounded-full w-[15%] text-xs text-center" ></div>
+         </div>
+           </div>
+         
+
+        
+
+         </div>
+          
+        
+            
          <div className=" h-auto p-2 rounded bg-gray-50 dark:bg-gray-800">
             <h1 className="lg:text-2xl text-sm lg:p-4 p-2 font-semibold text-gray-800 dark:text-gray-500">
               Skills
@@ -118,7 +145,7 @@ export default function Collaborator_dashboard() {
          </div>
       </div>
       <h1 className='text-4xl font-semibold my-10'>Active Projects</h1>
-      <div className="grid grid-cols-3 gap-6 h-auto mb-4 rounded bg-gray-50 dark:bg-gray-800">
+      <div className="grid grid-cols-3 gap-16 h-auto mb-4 rounded bg-gray-50 dark:bg-gray-800">
         <ProjectCardDashboard />
         <ProjectCardDashboard />
         <ProjectCardDashboard />
