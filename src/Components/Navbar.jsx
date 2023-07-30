@@ -67,7 +67,7 @@ export const Navbar = () => {
 
   const NavLink = styled(Typography)(({ theme }) => ({
     fontSize: "14px",
-    color: "#01276a",
+    color: "#04276a",
     fontWeight: "bold",
     cursor: "pointer",
     "&:hover": {
@@ -155,9 +155,9 @@ export const Navbar = () => {
         }}
       >
         <NavLink variant="body2" >Sign Up</NavLink>
-        <div className="bg-[#000336] rounded-xl">
+        <div className="bg-[#04276a] rounded-xl">
           <CustomButton
-            backgroundColor="#000336"
+            backgroundColor="#04276a"
             color="#fff"
             buttonText="Register"
           />
