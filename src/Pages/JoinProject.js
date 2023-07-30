@@ -3,8 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container } from '@mui/material';
 import Post from '../Components/Post';
 import Navbar from '../Components/Navbar';
-import Typography from '@mui/material/Typography';
-import Button from '@mui/material/Button'
+
 
 const theme = createTheme({
     typography: {
@@ -21,6 +20,8 @@ const mainFeaturedPost = {
     domain: 'Blockchain Technology',
     startDate: '29-07-23',
     duration: '3',
+    problemStatement:'A paragraph is a self-contained unit of discourse in writing dealing with a particular point or idea. Though not required by the orthographic conventions of any language with a writing system, paragraphs are a conventional means of organizing extended segments of prose.A paragraph is a self-contained unit of discourse in writing dealing with a particular point or idea. Though not required by the orthographic conventions of any language with a writing system, paragraphs are a conventional means of organizing extended segments of prose.',
+    prerequisite: 'A paragraph is a self-contained unit of discourse in writing dealing with a particular point or idea.',
 };
 
 export default function JoinProject() {
@@ -31,10 +32,6 @@ export default function JoinProject() {
                 <Container maxWidth="lg">
                     <main>
                         <Post post={mainFeaturedPost} />
-                        
-                        <Container align="center">
-                            <Button variant="contained" className="text-white bg-[#4284f3]">Apply Now</Button>
-                        </Container>
                     </main>
                 </Container>
             </div>

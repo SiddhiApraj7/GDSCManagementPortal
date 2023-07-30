@@ -76,7 +76,7 @@ const Hero = () => {
             <div className="h-16">
             <Typography
               variant="body2"
-              sx={{ fontSize: "18px", color: "#5A6473", my: 4 }}
+              sx={{ fontSize: "18px", color: "#687690", my: 4 }}
             >
             {text}
             </Typography>

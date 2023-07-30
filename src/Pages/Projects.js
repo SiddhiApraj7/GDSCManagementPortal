@@ -31,6 +31,16 @@ const theme = createTheme({
     },
   });
 
+  const projectInfo = {
+    title: 'GDSC ChatBot',
+    image: 'https://source.unsplash.com/random?wallpapers',
+    imageText: 'project image description',
+    difficulty: 'Advanced',
+    manager: 'Kartik Tiwari',
+    domain: 'Machine Learning',
+    startDate: '29-07-23',
+};
+
 export default function Projects() {
   return (
     <ThemeProvider theme={theme}>
@@ -40,7 +50,9 @@ export default function Projects() {
           sx={{
             bgcolor: '#f2f0f0',
             pt: 6,
-            pb: 6,
+            pb: 4,
+            borderBottom:2,
+            borderColor: '#a9a9af',
           }}
         >
           <Container maxWidth="sm">
@@ -68,7 +80,7 @@ export default function Projects() {
           <Grid container spacing={4} columns={12}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <ProjectCard/>
+                <ProjectCard projectInfo={projectInfo}/>
               </Grid>
             ))}
           </Grid>
