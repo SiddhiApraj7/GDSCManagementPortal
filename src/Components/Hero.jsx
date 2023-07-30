@@ -61,9 +61,18 @@ const Hero = () => {
             >
             Welcome to IIT Ropar's
             </Typography>
-            <Title variant="h1">
-              GDSC Management Portal
-            </Title>
+            <h1 class="flex items-center text-4xl sm:text-6xl  font-extrabold text-blue-950 justify-center mb-6">
+            <div className="flex flex-col gap-5">
+            <div>
+           <span className="border-b-4 border-red-400">G</span><span className="border-b-4 border-blue-600">D</span><span className="border-b-4 border-yellow-400">S</span><span className="border-b-4 border-green-400">C</span> 
+           </div>
+           <div >
+           Management
+            <span class="bg-blue-100 text-blue-800 text-xl sm:text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">
+              Portal
+            </span>
+            </div></div>
+          </h1>
             <div className="h-16">
             <Typography
               variant="body2"
@@ -83,10 +92,10 @@ const Hero = () => {
             />
             </span>
             </div> */}
-            <Fab size="medium" variant = "extended" className="bg-[#000336] text-gray-300 hover:text-[#000336]"  sx = {{mr : 2}}>
+            <Fab size="medium" variant = "extended" className="bg-[#000336] text-gray-300"  sx = {{mr : 2}}>
                Join Project
             </Fab>
-            <Fab size="medium" variant = "extended" className="bg-neutral-100 text-[#000336] hover:text-neutral-100 hover:bg-[#000336]" >
+            <Fab size="medium" variant = "extended" className="bg-neutral-100 text-[#000336]" >
                Host Project
             </Fab>
           </Box>
