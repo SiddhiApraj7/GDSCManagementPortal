@@ -6,6 +6,8 @@ import Register from './Pages/Register';
 import HostProject from './Pages/HostProject';
 import Projects from './Pages/Projects';
 import JoinProject from './Pages/JoinProject';
+import Collaborator_dashboard from './Pages/Collaborator_dashboard';
+import Inbox from './Pages/Inbox';
 
 function App() {
   return (
@@ -17,6 +19,8 @@ function App() {
       <Route path="/host-project" element={<HostProject/>}/>
       <Route path="/projects" element={<Projects/>}/>
       <Route path="/join-project" element={<JoinProject/>}/>
+      <Route path="/collaborator-dashboard" element={<Collaborator_dashboard/>}/>
+      <Route path="/collaborator-dashboard/inbox" element={<Inbox/>}/>
       </Routes>
     </Router>
 
