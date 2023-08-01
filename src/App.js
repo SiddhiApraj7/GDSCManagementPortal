@@ -23,6 +23,7 @@ function App() {
       <Route path="/join-project" element={<JoinProject/>}/>
       <Route path="/collaborator-dashboard" element={<Collaborator_dashboard/>}/>
       <Route path="/manager-dashboard" element={<ProjectManagerDashboard/>}/>
+      <Route path="/manager-dashboard/inbox" element={<Inbox/>}/>
       <Route path="/collaborator-dashboard/inbox" element={<Inbox/>}/>
       <Route path="/join-project-form" element={<JoinProjectForm />}/>
       </Routes>
