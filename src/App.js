@@ -10,7 +10,7 @@ import ProjectManagerDashboard from './Pages/ProjectManagerDashboard';
 import Inbox from './Pages/Inbox';
 import JoinProjectForm from './Pages/JoinProjectForm';
 import Admin from './Pages/Admin';
-import CollDashboard from './Pages/CollDashboard';
+import CollaboratorDashboard from './Pages/CollaboratorDashboard';
 
 
 function App() {
@@ -23,7 +23,7 @@ function App() {
       <Route path="/host-project" element={<HostProject/>}/>
       <Route path="/projects" element={<Projects/>}/>
       <Route path="/join-project" element={<JoinProject/>}/>
-      <Route path="/collaborator-dashboard" element={<CollDashboard/>}/>
+      <Route path="/collaborator-dashboard" element={<CollaboratorDashboard/>}/>
       <Route path="/manager-dashboard" element={<ProjectManagerDashboard/>}/>
       <Route path="/manager-dashboard/inbox" element={<Inbox/>}/>
       <Route path="/collaborator-dashboard/inbox" element={<Inbox/>}/>

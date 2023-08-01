@@ -3,7 +3,7 @@ import logoImg from "../media/gdsc-logo.png";
 import { Link } from 'react-router-dom';
 import ProjectCardDashboard from '../Components/ProjectCardDashboard';
 import { useState } from 'react';
-export default function Collaborator_dashboard() {
+export default function CollaboratorDashboard() {
     const [sidebar, showsideBar] = useState(false);
   return (
     <div>
