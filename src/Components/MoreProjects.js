@@ -9,7 +9,7 @@ function MoreProjects() {
       <Google />
       <div class="bg-white">
         <div class="mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8 ">
-          <h1 class="flex items-center text-5xl font-extrabold text-blue-950 justify-center p-5 mb-4">
+          <h1 class="flex items-center text-5xl font-extrabold text-[#05276a] justify-center p-5 mb-4">
             Explore
             <span class="bg-blue-100 text-blue-800 text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">
               PROJECTS

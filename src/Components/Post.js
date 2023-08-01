@@ -93,9 +93,7 @@ function Post(props) {
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
-                <Typography className="mt-10 font-semibold text-[#004eb3]" variant="h4" >
-                    Problem Statement
-                </Typography>
+            <h5 class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#6095f5] dark:decoration-blue-600">Problem Statement</span></h5>
 
                 <div className="mr-2">
                     <Typography className="mt-5 text-[#485e70] text-lg" gutterBottom>
@@ -105,9 +103,10 @@ function Post(props) {
 
             </Container>
             <Container align="left" maxWidth="lg" className="mb-16">
-                <Typography className="mt-10 font-semibold text-[#004eb3] mb-6" variant="h4" >
+            <h5 class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#ea4335] dark:decoration-blue-600">Plan/Timeline</span></h5>
+                {/* <Typography className="mt-10 font-semibold text-[#004eb3] mb-6" variant="h4" >
                     Plan/Timeline
-                </Typography>
+                </Typography> */}
                 <Container>
                     <ol class="relative border-l border-gray-200 dark:border-gray-700">
                         <li class="mb-10 ml-6">
@@ -145,9 +144,11 @@ function Post(props) {
             </Container>
             <Container align="left" maxWidth="lg" className="mb-10">
                 <Paper elevation={2} sx={{ p: 2, bgcolor: '#ffffff' }} className="" gutterBottom>
-                    <Typography align="center" className="mt-10 font-semibold text-[#7aa5ea]" variant="h4" >
+                <h5 align="center" class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#7aa5ea] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#fabc05] dark:decoration-blue-600">Required Prerequisites</span></h5>
+                    
+                    {/* <Typography align="center" className="mt-10 font-semibold text-[#7aa5ea]" variant="h4" >
                         Required Prerequisites
-                    </Typography>
+                    </Typography> */}
                     <Typography className="mt-5 text-[#03276a] text-lg mb-7 m-3" gutterBottom>
                         {post.prerequisite}
                     </Typography>
@@ -162,9 +163,10 @@ function Post(props) {
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
-                <Typography className="mt-10 font-semibold text-[#004eb3]" variant="h4" >
+            <h5 class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#33a852] dark:decoration-blue-600">Contributors</span></h5>
+                {/* <Typography className="mt-10 font-semibold text-[#004eb3]" variant="h4" >
                     Contributors
-                </Typography>
+                </Typography> */}
 
                 <div className="ml-2">
                 <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
