@@ -1,7 +1,7 @@
-model Projects {
+model Project {
     projectName           String 
     projectId             String           @id @default(uuid())
-    techStack             Tech[]
+    techStack             Skills[]
     githubLink            String
     slackLink             String
     whatsappLink          String
@@ -14,8 +14,8 @@ model Projects {
     projectManager        Contributor
     startDate             DateTime          
     duration              Int
-    status                Boolean
-    timeline              Timeline
+    isComplete            Boolean
+    timeline              Subtask[]
     requests              Requests[]
 }
 
@@ -26,18 +26,44 @@ model Contributor {
   lastName                String?
   createdAt               DateTime         @default(now())
   password                String
-  projectsContributed     Projects[]
-  projectsManaged         Projects[]
+  projectsContributed     Project[]
+  projectsManaged         Project[]
   githubLink              String
   linkedinLink            String
-  skills                  Tech[]
+  skills                  Skills[]
 
 }
 
-model Timeline {
+model Subtask {
     projectId             String
     taskName              String[]
-    
+    projectName           String
+    isDone                Boolean
+    deadline              DateTime
+    description           String
+}
+
+model Requests {
+    projectId             String
+    type                  RequestType
+    date                  DateTime
+    from                  Contributor
+    to                    Contributor
+}
+
+enum Skills {
+    REACT
+    REACTNATIVE
+    ...
+}
+
+enum Domain {
+    WEBDEV
+    APPDEV
+    ML
+    BLOCKCHAIN
+    WEB3
+    ...
 }
 
 enum Difficulty{
