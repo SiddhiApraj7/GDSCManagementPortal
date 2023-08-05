@@ -1,22 +1,70 @@
 import React from "react";
-import {Link} from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useFormik } from "formik";
+import { auth } from "../config/firebase";
+import { createUserWithEmailAndPassword } from "firebase/auth";
+import * as Yup from "yup"; 
+import gdsc from "../media/gdsc-logo.png"
+
+const validationSchema = Yup.object().shape({
+    name: Yup.string().required("Name is required"),
+    email: Yup.string().email("Invalid email").required("Email is required"),
+    password: Yup.string()
+      .required("Password is required")
+      .min(8, "Password must be at least 8 characters")
+      .matches(
+        /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]+$/,
+        "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character"
+      ),
+    password_confirmation: Yup.string()
+      .oneOf([Yup.ref("password"), null], "Passwords must match")
+      .required("Confirm Password is required"),
+  }); 
 export default function Register() {
+    const formik = useFormik({
+        initialValues: {
+          name: "",
+          email: "",
+          password: "",
+          password_confirmation: "",
+        },
+        validationSchema: validationSchema,
+        onSubmit: async (values) => {
+          try {
+            const { email, password } = values;
+            const userCredential = await createUserWithEmailAndPassword(
+              auth,
+              email,
+              password
+            );
+            const user = userCredential.user;
+            // Handle your success logic here
+          } catch (error) {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // Handle your error logic here
+          }
+        },
+      });
+    
+
+
     return (
-        <div className="flex gap-4 h-screen w-full">
+        <div className="lg:flex gap-4 h-screen w-full">
             
              
-                    <img src="pic5.jpg" className="h-full w-[55%]"></img>
+                    <img src="pic5.jpg" className="h-full hidden lg:flex w-[55%]"></img>
              
 
-                <div className="w-[30%] ">
+                <div className="lg:w-[30%] w-[90%] mx-auto ">
                     <div>
                     <a href="/">
-                        <img src="gdsc-logo.png" className="h-24 w-24  mx-auto rounded-full"></img>
+                        <img src={gdsc} className="lg:h-24 lg:w-24 h-10 w-10 mx-auto rounded-full"></img>
                     </a>
                
                     </div>
                     <div className="w-full mt-4 border:black border-2 rounded-2xl p-4 bg-white">
-                    <form>
+                    <form onSubmit={formik.handleSubmit}>
                         <div>
                             <label
                                 htmlFor="name"
@@ -27,9 +75,17 @@ export default function Register() {
                             <div className="flex flex-col items-start">
                                 <input
                                     type="text"
+                                    id="name"
                                     name="name"
                                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.name}
                                 />
+                                
+                                 {formik.touched.name && formik.errors.name ? (
+                  <div className="text-red-500">{formik.errors.name}</div>
+                ) : null}
                             </div>
                         </div>
                         <div className="mt-4">
@@ -43,8 +99,15 @@ export default function Register() {
                                 <input
                                     type="email"
                                     name="email"
+                                    id='email'
                                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.email}
                                 />
+                                {formik.touched.password_email && formik.errors.password_email ? (
+                  <div className="text-red-500">{formik.errors.password_email}</div>
+                ) : null}
                             </div>
                         </div>
                         <div className="mt-4">
@@ -58,8 +121,15 @@ export default function Register() {
                                 <input
                                     type="password"
                                     name="password"
+                                    id='password'
                                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.password}
                                 />
+                                {formik.touched.password && formik.errors.password ? (
+                  <div className="text-red-500">{formik.errors.password}</div>
+                ) : null}
                             </div>
                         </div>
                         <div className="mt-4">
@@ -73,8 +143,15 @@ export default function Register() {
                                 <input
                                     type="password"
                                     name="password_confirmation"
+                                    id='password_confirmation'
                                     className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                                    onChange={formik.handleChange}
+                                    onBlur={formik.handleBlur}
+                                    value={formik.values.password_confirmation}
                                 />
+                                 {formik.touched.password_confirmation && formik.errors.password_confirmation ? (
+                  <div className="text-red-500">{formik.errors.password_confirmation}</div>
+                ) : null}
                             </div>
                         </div>
                         <a
@@ -84,7 +161,7 @@ export default function Register() {
                             Forget Password?
                         </a>
                         <div className="flex items-center mt-4">
-                            <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#7a8aff] rounded-md hover:bg-[#6072ff] focus:outline-none focus:bg-purple-600">
+                            <button  type="submit" className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#7a8aff] rounded-md hover:bg-[#6072ff] focus:outline-none focus:bg-purple-600">
                                 Register
                             </button>
                         </div>
