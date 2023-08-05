@@ -1,8 +1,10 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { useFormik } from "formik";
-import { auth } from "../config/firebase";
-import { createUserWithEmailAndPassword } from "firebase/auth";
+import { auth} from "../config/firebase";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, GithubAuthProvider  } from "firebase/auth";
+
+import {useNavigate} from "react-router-dom";
 import * as Yup from "yup"; 
 import gdsc from "../media/gdsc-logo.png"
 
@@ -20,7 +22,13 @@ const validationSchema = Yup.object().shape({
       .oneOf([Yup.ref("password"), null], "Passwords must match")
       .required("Confirm Password is required"),
   }); 
+
+  
+
 export default function Register() {
+    const navigate = useNavigate();
+    const googleProvider = new GoogleAuthProvider();
+    const githubProvider = new GithubAuthProvider();
     const formik = useFormik({
         initialValues: {
           name: "",
@@ -38,6 +46,7 @@ export default function Register() {
               password
             );
             const user = userCredential.user;
+            navigate('/');
             // Handle your success logic here
           } catch (error) {
             const errorCode = error.code;
@@ -47,8 +56,28 @@ export default function Register() {
         },
       });
     
+      const signInWithGoogle = async () => {
+        try {
+            const result = await signInWithPopup(auth, googleProvider);
+            const user = result.user;
+            console.log("Logged in with Google:", user);
+            navigate('/');
+        } catch (error) {
+            console.error("Google Sign-In Error:", error);
+        }
+    };
 
-
+    const signInWithGithub = async () => {
+        try {
+            const result = await signInWithPopup(auth, githubProvider);
+            const user = result.user;
+            console.log("Logged in with Github:", user);
+            navigate('/');
+        } catch (error) {
+            console.error("Github Sign-In Error:", error);
+        }
+    };
+    
     return (
         <div className="lg:flex gap-4 h-screen w-full">
             
@@ -179,12 +208,13 @@ export default function Register() {
                         <p className="px-3 ">OR</p>
                         <hr className="w-full" />
                     </div>
-                    <div className="my-6 space-y-2">
+                    <div className="my-6 space-y-4" >
                         <button
+                        onClick={signInWithGoogle}
                             aria-label="Login with Google"
                             type="button"
                             className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
-                        >
+                            >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
                                 viewBox="0 0 32 32"
@@ -195,9 +225,10 @@ export default function Register() {
                             <p>Login with Google</p>
                         </button>
                         <button
+                            onClick={signInWithGithub}
                             aria-label="Login with GitHub"
                             role="button"
-                            className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
+                            className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
                         >
                             <svg
                                 xmlns="http://www.w3.org/2000/svg"
