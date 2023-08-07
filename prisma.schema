@@ -15,8 +15,8 @@ model Projects {
     startDate             DateTime          
     duration              Int
     status                Boolean
-    timeline              Timeline
-    requests              Requests[]
+    timeline              Subtasks[]
+    requests              Requests[]               
 }
 
 model Contributor {
@@ -34,9 +34,11 @@ model Contributor {
 
 }
 
-model Timeline {
+model Subtasks {
     projectId             String
-    taskName              String[]
+    taskName              String
+    Done                  Boolean
+    Deadline              DateTime   
     
 }
 
