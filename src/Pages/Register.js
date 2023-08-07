@@ -79,13 +79,13 @@ export default function Register() {
     };
     
     return (
-        <div className="lg:flex gap-4 h-screen w-full">
+        <div className="lg:flex gap-4 h-auto w-full">
             
              
-                    <img src="pic5.jpg" className="h-full hidden lg:flex w-[55%]"></img>
+                    <img src="pic5.jpg" className="h-full hidden lg:flex w-[50%]"></img>
              
 
-                <div className="lg:w-[30%] w-[90%] mx-auto ">
+                <div className="lg:w-[35%] w-[90%] mx-auto ">
                     <div>
                     <a href="/">
                         <img src={gdsc} className="lg:h-24 lg:w-24 h-10 w-10 mx-auto rounded-full"></img>
@@ -134,8 +134,8 @@ export default function Register() {
                                     onBlur={formik.handleBlur}
                                     value={formik.values.email}
                                 />
-                                {formik.touched.password_email && formik.errors.password_email ? (
-                  <div className="text-red-500">{formik.errors.password_email}</div>
+                                {formik.touched.email && formik.errors.email ? (
+                  <div className="text-red-500">{formik.errors.email}</div>
                 ) : null}
                             </div>
                         </div>

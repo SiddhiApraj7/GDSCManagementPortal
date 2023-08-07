@@ -48,7 +48,7 @@ const Hero = () => {
       <ThemeProvider theme={theme}>
         <Container>
           <Navbar />
-          <div class="flex flex-col justify-center text-center lg:text-left gap-20 mt-12 lg:flex-row lg:items-start  p-2">
+          <div className="flex flex-col justify-center text-center lg:text-left gap-20 mt-12 lg:flex-row lg:items-start  p-2">
             <Box sx={{ flex: "1" }} className="">
               <Typography
                 variant="body2"
@@ -62,7 +62,7 @@ const Hero = () => {
               >
                 Welcome to IIT Ropar's
               </Typography>
-              <h1 class="flex items-center text-4xl sm:text-6xl  font-extrabold text-[#04276a] justify-center mb-6">
+              <h1 className="flex items-center text-4xl sm:text-6xl  font-extrabold text-[#04276a] justify-center mb-6">
                 <div className="flex flex-col gap-5">
                   <div>
                     <span className="border-b-4 border-red-400">G</span>
@@ -72,7 +72,7 @@ const Hero = () => {
                   </div>
                   <div>
                     Management
-                    <span class="bg-blue-300 text-blue-800 text-xl sm:text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-600 dark:text-blue-100 ml-2">
+                    <span className="bg-blue-300 text-blue-800 text-xl sm:text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-600 dark:text-blue-100 ml-2">
                       Portal
                     </span>
                   </div>

@@ -132,16 +132,16 @@ export default function CollDashboard() {
               </div>
               <div className="flex mt-14 flex-col gap-4 h-auto w-2/3">
                 <h1 className="text-gray-600">Beginner</h1>
-                <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                  <div class="bg-[#16a75f] h-2 rounded-full w-[80%] text-xs text-center"></div>
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                  <div className="bg-[#16a75f] h-2 rounded-full w-[80%] text-xs text-center"></div>
                 </div>
                 <h1 className="text-gray-600">Intermediate</h1>
-                <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                  <div class="bg-[#ffba01] h-2 rounded-full w-[25%] text-xs text-center"></div>
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                  <div className="bg-[#ffba01] h-2 rounded-full w-[25%] text-xs text-center"></div>
                 </div>
                 <h1 className="text-gray-600">Advanced</h1>
-                <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                  <div class="bg-[#fe2c25] h-2 rounded-full w-[15%] text-xs text-center"></div>
+                <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
+                  <div className="bg-[#fe2c25] h-2 rounded-full w-[15%] text-xs text-center"></div>
                 </div>
               </div>
             </div>

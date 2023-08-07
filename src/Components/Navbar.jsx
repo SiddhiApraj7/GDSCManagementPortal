@@ -9,7 +9,8 @@ import HomeIcon from "@mui/icons-material/Home";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import logoImg from "../media/gdsc.svg";
 import { Container } from "@mui/system";
-import CustomButton from "./CustomButton";
+import { Link } from "react-router-dom";
+// import CustomButton from "./CustomButton";
 import {
   Drawer,
   List,
@@ -155,12 +156,9 @@ export const Navbar = () => {
         }}
       >
         <NavLink variant="body2" >Sign Up</NavLink>
-        <div className="bg-[#04276a] rounded-xl">
-          <CustomButton
-            backgroundColor="#04276a"
-            color="#fff"
-            buttonText="Register"
-          />
+        
+        <div className="bg-[#04276a] ml-2 border-2 text-white rounded-xl hover:border-2 hover:bg-neutral-100 hover:text-[#04276a] hover:border-[#04276a]">
+          <button className=" p-2 w-32"><Link to="/register">Register</Link></button>
         </div>
       </Box>
     </NavbarContainer>

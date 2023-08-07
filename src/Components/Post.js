@@ -93,7 +93,7 @@ function Post(props) {
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
-            <h5 class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#6095f5] dark:decoration-blue-600">Problem Statement</span></h5>
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#6095f5] dark:decoration-blue-600">Problem Statement</span></h5>
 
                 <div className="mr-2">
                     <Typography className="mt-5 text-[#485e70] text-lg" gutterBottom>
@@ -103,48 +103,48 @@ function Post(props) {
 
             </Container>
             <Container align="left" maxWidth="lg" className="mb-16">
-            <h5 class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#ea4335] dark:decoration-blue-600">Plan/Timeline</span></h5>
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#ea4335] dark:decoration-blue-600">Plan/Timeline</span></h5>
                 {/* <Typography className="mt-10 font-semibold text-[#004eb3] mb-6" variant="h4" >
                     Plan/Timeline
                 </Typography> */}
                 <Container>
-                    <ol class="relative border-l border-gray-200 dark:border-gray-700">
-                        <li class="mb-10 ml-6">
-                            <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                    <ol className="relative border-l border-gray-200 dark:border-gray-700">
+                        <li className="mb-10 ml-6">
+                            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                                <svg className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </span>
-                            <h3 class="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white"> Sub Task 1 </h3>
-                            <time class="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By January 13th, 2022</time>
-                            <p class="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">Brief description of the job to be done by this time.</p>
+                            <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white"> Sub Task 1 </h3>
+                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By January 13th, 2022</time>
+                            <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">Brief description of the job to be done by this time.</p>
                         </li>
-                        <li class="mb-10 ml-6">
-                            <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <li className="mb-10 ml-6">
+                            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                                <svg className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </span>
-                            <h3 class="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white"> Sub Task 2 </h3>
-                            <time class="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By July 13th, 2022</time>
-                            <p class="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">Brief description of the job to be done by this time.</p>
+                            <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white"> Sub Task 2 </h3>
+                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By July 13th, 2022</time>
+                            <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">Brief description of the job to be done by this time.</p>
                         </li>
-                        <li class="ml-6">
-                            <span class="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
-                                <svg class="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
+                        <li className="ml-6">
+                            <span className="absolute flex items-center justify-center w-6 h-6 bg-blue-100 rounded-full -left-3 ring-8 ring-white dark:ring-gray-900 dark:bg-blue-900">
+                                <svg className="w-2.5 h-2.5 text-blue-800 dark:text-blue-300" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="M20 4a2 2 0 0 0-2-2h-2V1a1 1 0 0 0-2 0v1h-3V1a1 1 0 0 0-2 0v1H6V1a1 1 0 0 0-2 0v1H2a2 2 0 0 0-2 2v2h20V4ZM0 18a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2V8H0v10Zm5-8h10a1 1 0 0 1 0 2H5a1 1 0 0 1 0-2Z" />
                                 </svg>
                             </span>
-                            <h3 class="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white"> Sub Task 3 </h3>
-                            <time class="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By Dec 2nd, 2022</time>
-                            <p class="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">Brief description of the job to be done by this time.</p>
+                            <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white"> Sub Task 3 </h3>
+                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By Dec 2nd, 2022</time>
+                            <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">Brief description of the job to be done by this time.</p>
                         </li>
                     </ol>
                 </Container>
             </Container>
             <Container align="left" maxWidth="lg" className="mb-10">
                 <Paper elevation={2} sx={{ p: 2, bgcolor: '#ffffff' }} className="" gutterBottom>
-                <h5 align="center" class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#7aa5ea] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#fabc05] dark:decoration-blue-600">Required Prerequisites</span></h5>
+                <h5 align="center" className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#7aa5ea] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#fabc05] dark:decoration-blue-600">Required Prerequisites</span></h5>
                     
                     {/* <Typography align="center" className="mt-10 font-semibold text-[#7aa5ea]" variant="h4" >
                         Required Prerequisites
@@ -163,24 +163,24 @@ function Post(props) {
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
-            <h5 class="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span class="underline underline-offset-9 decoration-8 decoration-[#33a852] dark:decoration-blue-600">Contributors</span></h5>
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#33a852] dark:decoration-blue-600">Contributors</span></h5>
                 {/* <Typography className="mt-10 font-semibold text-[#004eb3]" variant="h4" >
                     Contributors
                 </Typography> */}
 
                 <div className="ml-2">
-                <ul role="list" class="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
+                <ul role="list" className="grid gap-x-8 gap-y-12 sm:grid-cols-2 sm:gap-y-16 xl:col-span-2">
                     <li>
-                        <div class="flex items-center gap-x-6 m-6">
-                            <img class="h-16 w-16 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                        <div className="flex items-center gap-x-6 m-6">
+                            <img className="h-16 w-16 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                                 <div>
-                                    <h3 class="text-base font-semibold leading-7 tracking-tight text-[#03276a]">Leslie Alexander</h3>
-                                    <p class="text-sm font-semibold leading-6 text-[#7aa5e9]">Co-Founder / CEO</p>
+                                    <h3 className="text-base font-semibold leading-7 tracking-tight text-[#03276a]">Leslie Alexander</h3>
+                                    <p className="text-sm font-semibold leading-6 text-[#7aa5e9]">Co-Founder / CEO</p>
                                 </div>
-                                <img class="h-16 w-16 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
+                                <img className="h-16 w-16 rounded-full" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
                                 <div>
-                                    <h3 class="text-base font-semibold leading-7 tracking-tight text-[#03276a]">Leslie Alexander</h3>
-                                    <p class="text-sm font-semibold leading-6 text-[#7aa5e9]">Co-Founder / CEO</p>
+                                    <h3 className="text-base font-semibold leading-7 tracking-tight text-[#03276a]">Leslie Alexander</h3>
+                                    <p className="text-sm font-semibold leading-6 text-[#7aa5e9]">Co-Founder / CEO</p>
                                 </div>
                         </div>
                     </li>
