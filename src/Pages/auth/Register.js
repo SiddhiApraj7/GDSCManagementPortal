@@ -1,19 +1,14 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { useFormik } from "formik";
 import { auth } from "../../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  GithubAuthProvider,
-} from "firebase/auth";
-
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import gdsc from "../../media/gdsc-logo.png";
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -42,8 +37,11 @@ export default function Register() {
 
 
   const navigate = useNavigate();
-  const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
+  const {signup,signInWithGithub,signInWithGoogle,currentUser} = useAuth();
+
+
+
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -54,16 +52,20 @@ export default function Register() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const { email, password } = values;
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCredential.user;
-        notifySuccess("Account Registered successfully");
+        const { name,email, password } = values;
+        console.log(values);
+        const user = await signup(email, password,name);
+        console.log("Registered Google:", user);
+        
+      const profilePic = currentUser.photoURL;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      notifySuccess("Registered successfully");
+      setTimeout(() => {
         navigate("/");
-        // Handle your success logic here
+      }, 3000);
+     
+      // login with the credentials now
+      // Handle your success logic here
       } catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
@@ -73,34 +75,52 @@ export default function Register() {
     },
   });
 
-  const signInWithGoogle = async () => {
+  const GoogleSignIn = async (e) => {
+    e.preventDefault();
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
+      const user = await signInWithGoogle();
       console.log("Logged in with Google:", user);
-      notifySuccess("Logged In with Google successfully");
-      navigate("/");
+      
+      const name = currentUser.displayName;
+      const email = currentUser.email;
+      const profilePic = currentUser.photoURL;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      notifySuccess("Logged in successfully");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+      
     } catch (error) {
       console.error("Google Sign-In Error:", error);
       notifyError('Google Sign-In Error Occured');
     }
   };
 
-  const signInWithGithub = async () => {
+  const GithubSignIn = async (e) => {
+    e.preventDefault();
     try {
-      const result = await signInWithPopup(auth, githubProvider);
-      const user = result.user;
+      const user = await signInWithGithub();
       console.log("Logged in with Github:", user);
-      notifySuccess("Logged In with Github successfully");
-      navigate("/");
+      notifySuccess("Logged in successfully");
+      const name = currentUser.displayName;
+      const email = currentUser.email;
+      const profilePic = currentUser.photoUrl;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    
     } catch (error) {
       console.error("Github Sign-In Error:", error);
       notifyError('Github Sign-In Error Occured');
     }
   };
 
+
+
   return (
     <div className="lg:flex gap-4 h-screen w-full">
+      <ToastContainer autoClose={1000}/>
       <img src="pic5.jpg" className="h-full hidden lg:flex w-[55%]"></img>
 
       <div className="lg:w-[30%] w-[90%] mx-auto ">
@@ -240,7 +260,7 @@ export default function Register() {
           </div>
           <div className="my-6 space-y-4">
             <button
-              onClick={signInWithGoogle}
+              onClick={GoogleSignIn}
               aria-label="Login with Google"
               type="button"
               className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
@@ -255,7 +275,7 @@ export default function Register() {
               <p>Login with Google</p>
             </button>
             <button
-              onClick={signInWithGithub}
+              onClick={GithubSignIn}
               aria-label="Login with GitHub"
               role="button"
               className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
