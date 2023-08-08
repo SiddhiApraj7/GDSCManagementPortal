@@ -1,17 +1,11 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
 import { useFormik } from "formik";
 import { auth } from "../../config/firebase";
-import {
-  createUserWithEmailAndPassword,
-  GoogleAuthProvider,
-  signInWithPopup,
-  GithubAuthProvider,
-} from "firebase/auth";
-
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
-import gdsc from "../media/gdsc-logo.png";
+import gdsc from "../../media/gdsc-logo.png";
 
 const validationSchema = Yup.object().shape({
   name: Yup.string().required("Name is required"),
@@ -30,8 +24,11 @@ const validationSchema = Yup.object().shape({
 
 export default function Register() {
   const navigate = useNavigate();
-  const googleProvider = new GoogleAuthProvider();
-  const githubProvider = new GithubAuthProvider();
+  const {signup,signInWithGithub,signInWithGoogle,currentUser} = useAuth();
+
+
+
+
   const formik = useFormik({
     initialValues: {
       name: "",
@@ -42,14 +39,13 @@ export default function Register() {
     validationSchema: validationSchema,
     onSubmit: async (values) => {
       try {
-        const { email, password } = values;
-        const userCredential = await createUserWithEmailAndPassword(
-          auth,
-          email,
-          password
-        );
-        const user = userCredential.user;
-        navigate("/");
+        const { name,email, password } = values;
+        console.log(values);
+        const user = await signup(email, password,name);
+        console.log("Logged in with Google:", user);
+      const profilePic = currentUser.photoURL;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+        navigate("/"); // login with the credentials now
         // Handle your success logic here
       } catch (error) {
         const errorCode = error.code;
@@ -59,27 +55,37 @@ export default function Register() {
     },
   });
 
-  const signInWithGoogle = async () => {
+  const GoogleSignIn = async (e) => {
+    e.preventDefault();
     try {
-      const result = await signInWithPopup(auth, googleProvider);
-      const user = result.user;
+      const user = await signInWithGoogle();
       console.log("Logged in with Google:", user);
-      navigate("/");
+      const name = currentUser.displayName;
+      const email = currentUser.email;
+      const profilePic = currentUser.photoURL;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      navigate("/"); // login with the credentials now
     } catch (error) {
       console.error("Google Sign-In Error:", error);
     }
   };
 
-  const signInWithGithub = async () => {
+  const GithubSignIn = async (e) => {
+    e.preventDefault();
     try {
-      const result = await signInWithPopup(auth, githubProvider);
-      const user = result.user;
+      const user = await signInWithGithub();
       console.log("Logged in with Github:", user);
-      navigate("/");
+      const name = currentUser.displayName;
+      const email = currentUser.email;
+      const profilePic = currentUser.photoUrl;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      navigate("/"); // login with the credentials now
     } catch (error) {
       console.error("Github Sign-In Error:", error);
     }
   };
+
+
 
   return (
     <div className="lg:flex gap-4 h-screen w-full">
@@ -222,7 +228,7 @@ export default function Register() {
           </div>
           <div className="my-6 space-y-4">
             <button
-              onClick={signInWithGoogle}
+              onClick={GoogleSignIn}
               aria-label="Login with Google"
               type="button"
               className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
@@ -237,7 +243,7 @@ export default function Register() {
               <p>Login with Google</p>
             </button>
             <button
-              onClick={signInWithGithub}
+              onClick={GithubSignIn}
               aria-label="Login with GitHub"
               role="button"
               className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
