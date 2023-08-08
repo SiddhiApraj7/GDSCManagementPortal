@@ -14,6 +14,9 @@ import  {
   LandingPage
 } from '../Pages/index';
 import { Navigate } from "react-router-dom";
+import AdminDashboard from '../Pages/AdminDashboard';
+import AllProjects from '../Pages/AllProjects';
+import ProjectManagers from '../Pages/ProjectManagers';
 
 
 const Router = () => {
@@ -36,11 +39,15 @@ const Router = () => {
       <Route path="/join-project" element={<JoinProject/>}/>
       <Route path="/collaborator-dashboard" element={<PrivateRoute><CollaboratorDashboard/></PrivateRoute>}/>
       <Route path="/manager-dashboard" element={<PrivateRoute><ProjectManagerDashboard/></PrivateRoute>}/>
+      <Route path="/admin-dashboard" element={<PrivateRoute><AdminDashboard/></PrivateRoute>}/>
+      <Route path="/admin-dashboard/all-projects" element={<PrivateRoute><AllProjects/></PrivateRoute>}/>
+      <Route path="/admin-dashboard/project-managers" element={<PrivateRoute><ProjectManagers/></PrivateRoute>}/>
       <Route path="/manager-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
 
       {/* why is there again a <inbox/> ?? */}
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
       <Route path="/join-project-form" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
+
 
       </Routes>
     </>
