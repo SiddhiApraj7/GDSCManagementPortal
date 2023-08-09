@@ -8,7 +8,7 @@ import {
   signOut,
 } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc, addDoc } from "firebase/firestore";
+import { collection, doc, setDoc, addDoc , where, query} from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { GithubAuthProvider } from "firebase/auth";
@@ -37,7 +37,8 @@ export default function AuthProvider({ children }) {
       const user = userCredential.user;
 
       const colRef = collection(db, "Client");
-      
+      const existingUserQuery = query(colRef, where("email", "==", user.email));
+      if (existingUserQuery.empty) {
       await addDoc(colRef, {
         email: email,
         name: username,
@@ -52,10 +53,12 @@ export default function AuthProvider({ children }) {
           console.error("Error storing user data:", error);
           notifyError('Error storing user data');
         });
+      }
     } catch (error) {
       console.error("Error signing up:", error.message);
+      notifyError('Error storing user data');
       throw error; // Rethrow the error to be caught by the caller
-      notifyError('Error signing up');
+      
     }
   }
 
@@ -74,6 +77,41 @@ export default function AuthProvider({ children }) {
         const user = result.user;
         console.log("Logged in with Google:", user);
         const colRef = collection(db, "Client");
+        const existingUserQuery = query(colRef, where("email", "==", user.email));
+        if (existingUserQuery.empty) {
+          await addDoc(colRef, {
+            email: user.email,
+            name: user.displayName,
+            uid: user.uid,
+          })
+            .then(() => {
+              console.log("User data stored successfully");
+              return user;
+            })
+            .catch((error) => {
+              console.error("Error storing user data:", error);
+              notifyError('Error storing user data');
+              
+            });
+          
+        }
+       
+      } catch (error) {
+        console.error("Google Sign-In Error:", error);
+        notifyError('Error storing user data');
+        throw error; 
+      }
+    };
+
+  const signInWithGithub = async (e) => {
+    try {
+      const githubProvider = new GithubAuthProvider();
+      const result = await signInWithPopup(auth, githubProvider);
+      const user = result.user;
+      console.log("Logged in with Github:", user);
+      const colRef = collection(db, "Client");
+      const existingUserQuery = query(colRef, where("email", "==", user.email));
+      if (existingUserQuery.empty) {
         await addDoc(colRef, {
           email: user.email,
           name: user.displayName,
@@ -88,36 +126,12 @@ export default function AuthProvider({ children }) {
             notifyError('Error storing user data');
             
           });
-      } catch (error) {
-        console.error("Google Sign-In Error:", error);
-        notifyError('Google Sign-In Error');
+        
       }
-    };
-
-  const signInWithGithub = async (e) => {
-    try {
-      const githubProvider = new GithubAuthProvider();
-      const result = await signInWithPopup(auth, githubProvider);
-      const user = result.user;
-      console.log("Logged in with Github:", user);
-      const colRef = collection(db, "Client");
-      
-      await addDoc(colRef, {
-        email: user.email,
-        name: user.displayName,
-        uid: user.uid,
-      })
-        .then(() => {
-          console.log("User data stored successfully");
-          return user;
-        })
-        .catch((error) => {
-          console.error("Error storing user data:", error);
-          notifyError('Error storing user data');
-        });
     } catch (error) {
       console.error("Github Sign-In Error:", error);
-      notifyError('Github Sign-In Error');
+      notifyError('Error storing user data');
+      throw error;
     }
   };
 
