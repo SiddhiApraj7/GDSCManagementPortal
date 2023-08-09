@@ -55,18 +55,13 @@ export default function Register() {
         const { name,email, password } = values;
         console.log(values);
         const user = await signup(email, password,name);
-        console.log("Registered Google:", user);
-        
-      const profilePic = currentUser.photoURL;
-      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
-      notifySuccess("Registered successfully");
-      setTimeout(() => {
-        navigate("/");
-      }, 3000);
-     
-      // login with the credentials now
-      // Handle your success logic here
+        console.log("Registered user:", user);
+      /* const profilePic = currentUser.photoURL;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic})); */
+        navigate("/"); // login with the credentials now
+        // Handle your success logic here
       } catch (error) {
+        console.error("Registration Error:", error);
         const errorCode = error.code;
         const errorMessage = error.message;
         notifyError('An error occurred while registration');

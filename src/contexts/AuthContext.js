@@ -155,6 +155,15 @@ export default function AuthProvider({ children }) {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
       // setLoading(false)
+      if (user) {
+        // Update local storage with user data when user is authenticated
+        const { displayName, email, photoURL } = user;
+        localStorage.setItem("user", JSON.stringify({ name: displayName, email, profilePic: photoURL }));
+      } else {
+        // Clear local storage when user is not authenticated
+        localStorage.removeItem("user");
+      }
+      
     });
 
     return unsubscribe;

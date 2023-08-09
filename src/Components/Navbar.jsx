@@ -21,8 +21,11 @@ import {
   styled,
 } from "@mui/material";
 import { useState } from "react";
+import { useAuth } from "../contexts/AuthContext";
 
 export const Navbar = () => {
+  const { currentUser } = useAuth();
+  
   const [mobileMenu, setMobileMenu] = useState({
     left: false,
   });
@@ -155,11 +158,41 @@ export const Navbar = () => {
           gap: "1rem",
         }}
       >
-        <NavLink variant="body2" >Sign Up</NavLink>
-        
-        <div className="bg-[#04276a] ml-2 border-2 text-white rounded-xl hover:border-2 hover:bg-neutral-100 hover:text-[#04276a] hover:border-[#04276a]">
-          <button className=" p-2 w-32"><Link to="/register">Register</Link></button>
-        </div>
+
+{currentUser ? (
+          // Render user's name and profile picture
+          <Box>
+            <Typography variant="body2" color="#04276a">
+              {currentUser.name}
+            </Typography>
+            <img
+              src={currentUser.profilePic}
+              alt="Profile"
+              className="rounded-full h-8 w-8"
+            />
+          </Box>
+        ) : (
+          // Render sign up and register buttons
+          <>
+            <NavLink variant="body2">Sign Up</NavLink>
+            <div className="bg-[#04276a] rounded-xl">
+              <CustomButton
+                backgroundColor="#04276a"
+                color="#fff"
+                buttonText="Register"
+              />
+            </div>
+          </>
+        )}
+
+        {/* <NavLink variant="body2" >Sign Up</NavLink>
+        <div className="bg-[#04276a] rounded-xl">
+          <CustomButton
+            backgroundColor="#04276a"
+            color="#fff"
+            buttonText="Register"
+          />
+        </div> */}
       </Box>
     </NavbarContainer>
 
