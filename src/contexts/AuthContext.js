@@ -163,7 +163,7 @@ export default function AuthProvider({ children }) {
         // Clear local storage when user is not authenticated
         localStorage.removeItem("user");
       }
-      
+
     });
 
     return unsubscribe;

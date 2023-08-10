@@ -10,7 +10,7 @@ import ContactsIcon from "@mui/icons-material/Contacts";
 import logoImg from "../media/gdsc.svg";
 import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
-// import CustomButton from "./CustomButton";
+import CustomButton from "./CustomButton";
 import {
   Drawer,
   List,
@@ -25,7 +25,7 @@ import { useAuth } from "../contexts/AuthContext";
 
 export const Navbar = () => {
   const { currentUser } = useAuth();
-  
+
   const [mobileMenu, setMobileMenu] = useState({
     left: false,
   });
@@ -159,17 +159,31 @@ export const Navbar = () => {
         }}
       >
 
-{currentUser ? (
+        {currentUser ? (
           // Render user's name and profile picture
           <Box>
-            <Typography variant="body2" color="#04276a">
-              {currentUser.name}
-            </Typography>
-            <img
-              src={currentUser.profilePic}
-              alt="Profile"
-              className="rounded-full h-8 w-8"
-            />
+            <div className="flex">
+              <div className="mr-4 mt-2">
+                <Typography variant="body2" color="#05276a" classname="font-semibold">
+                  {JSON.parse(localStorage.getItem("user"))?.name}
+                </Typography>
+              </div>
+              <div className="mr-1">
+                {JSON.parse(localStorage.getItem("user"))?.profilePic ? (
+                  <img
+                    src={JSON.parse(localStorage.getItem("user"))?.profilePic}
+                    alt="Profile"
+                    className="rounded-full h-8 w-8"
+                  />
+                ) : (
+                  <img
+                    src="user.png"
+                    alt="Stock Profile"
+                    className="rounded-full h-8 w-8"
+                  />
+                )}
+              </div>
+            </div>
           </Box>
         ) : (
           // Render sign up and register buttons
