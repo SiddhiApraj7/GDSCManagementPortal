@@ -1,6 +1,102 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import gdsc from "../../media/gdsc-logo.png";
+import { useState } from "react";
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+import { useNavigate } from "react-router-dom";
+import { useAuth } from "../../contexts/AuthContext";
+
+
 export default function Login() {
+  const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const navigate = useNavigate();
+  const { login, resetPassword,signup,signInWithGithub,signInWithGoogle,currentUser} = useAuth();
+
+
+  const notifySuccess = (message) => {
+    toast.success(message);
+  };
+
+  const notifyError = (message) => {
+    toast.error(message);
+  };
+
+
+  const ForgotPassword = () => {
+    setForgotPasswordMode(!forgotPasswordMode);
+    // alert("Forgot Password");
+  };
+
+  const handleEmailChange = (event) => {
+    setEmail(event.target.value);
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+
+        await login(email, password);
+        const profilePic = null;
+        // add how to get name from firebase
+        const name = currentUser.displayName;
+        localStorage.setItem("user", JSON.stringify({name, email,profilePic}));
+        navigate('/');
+      }
+   catch {
+      alert("Failed to Log in");
+    }
+  };
+
+  const GoogleSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const user = await signInWithGoogle();
+      console.log("Logged in with Google:", user);
+      
+      const name = currentUser.displayName;
+      const email = currentUser.email;
+      const profilePic = currentUser.photoURL; 
+      
+
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      notifySuccess("Logged in successfully");
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+      
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      notifyError('Google Sign-In Error Occured');
+    }
+  };
+
+  const GithubSignIn = async (e) => {
+    e.preventDefault();
+    try {
+      const user = await signInWithGithub();
+      console.log("Logged in with Github:", user);
+      notifySuccess("Logged in successfully");
+      const name = currentUser.displayName;
+      const email = currentUser.email;
+      const profilePic = currentUser.photoUrl;
+      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+      setTimeout(() => {
+        navigate("/");
+      }, 3000);
+    
+    } catch (error) {
+      console.error("Github Sign-In Error:", error);
+      notifyError('Github Sign-In Error Occured');
+    }
+  };
+
   return (
     <div className="flex gap-4 h-screen w-full">
       <img src="pic5.jpg" className="h-full w-[55%]" alt="login_picture"></img>
@@ -9,12 +105,13 @@ export default function Login() {
         <div>
           <a href="/">
             <img
-              src="gdsc-logo.png"
+              src={gdsc}
               className="h-24 w-24  mx-auto rounded-full"
               alt="GDSC Logo"
             ></img>
           </a>
         </div>
+       { forgotPasswordMode?(
         <div className="w-full mt-4 border:black border-2 rounded-2xl p-4 bg-white">
           <form>
             <div className="mt-4">
@@ -32,6 +129,35 @@ export default function Login() {
                 />
               </div>
             </div>
+            <div className="flex items-center pt-10 pb-10">
+              <button className="w-full px-4 py-2 tracking-wide text-white transition-colors duration-200 transform bg-[#7a8aff] rounded-md hover:bg-[#6072ff] focus:outline-none focus:bg-purple-600">
+                Send Verification
+              </button>
+            </div>
+          </form>
+        
+        </div>
+       ):
+       (<div className="w-full mt-4 border:black border-2 rounded-2xl p-4 bg-white">
+          <form>
+            <div className="mt-4">
+              <label
+                htmlFor="email"
+                className="block text-sm font-medium text-gray-700 undefined"
+              >
+                Email
+              </label>
+              <div className="flex flex-col items-start">
+                <input
+                  type="email"
+                  name="email"
+                  value={email}
+                  onChange={handleEmailChange}
+                  required
+                  className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
+                />
+              </div>
+            </div>
             <div className="mt-4">
               <label
                 htmlFor="password"
@@ -43,12 +169,15 @@ export default function Login() {
                 <input
                   type="password"
                   name="password"
+                  value={password}
+                  onChange={handlePasswordChange}
+                  required
                   className="block w-full mt-1 border-gray-300 rounded-md shadow-sm focus:border-indigo-300 focus:ring focus:ring-indigo-200 focus:ring-opacity-50"
                 />
               </div>
             </div>
 
-            <a href="#" className="text-xs text-[#7a8aff] hover:underline">
+            <a href="#" className="text-xs text-[#7a8aff] hover:underline" onClick={ForgotPassword}>
               Forget Password?
             </a>
             <div className="flex items-center mt-4">
@@ -78,6 +207,7 @@ export default function Login() {
             <button
               aria-label="Login with Google"
               type="button"
+              onClick={GoogleSignIn}
               className="flex items-center justify-center w-full p-2 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
             >
               <svg
@@ -90,6 +220,7 @@ export default function Login() {
               <p>Login with Google</p>
             </button>
             <button
+            onClick={GithubSignIn}
               aria-label="Login with GitHub"
             //   role="button"
               className="flex items-center justify-center w-full p-4 space-x-4 border rounded-md focus:ring-2 focus:ring-offset-1 dark:border-gray-400 focus:ring-violet-400"
@@ -104,7 +235,7 @@ export default function Login() {
               <p>Login with GitHub</p>
             </button>
           </div>
-        </div>
+        </div>)}
       </div>
     </div>
   );

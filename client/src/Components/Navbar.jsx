@@ -164,7 +164,7 @@ export const Navbar = () => {
           <Box>
             <div className="flex">
               <div className="mr-4 mt-2">
-                <Typography variant="body2" color="#05276a" classname="font-semibold">
+                <Typography variant="body2" color="#05276a" className="font-semibold">
                   {JSON.parse(localStorage.getItem("user"))?.name}
                 </Typography>
               </div>

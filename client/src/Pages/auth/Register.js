@@ -53,11 +53,12 @@ export default function Register() {
     onSubmit: async (values) => {
       try {
         const { name,email, password } = values;
+        console.log("Form data:", values);
         console.log(values);
         const user = await signup(email, password,name);
         console.log("Registered user:", user);
-      /* const profilePic = currentUser.photoURL;
-      localStorage.setItem("user", JSON.stringify({name, email, profilePic})); */
+     const profilePic = null;
+      localStorage.setItem("user", JSON.stringify({name, email,profilePic}));
         navigate("/"); // login with the credentials now
         // Handle your success logic here
       } catch (error) {
@@ -78,7 +79,9 @@ export default function Register() {
       
       const name = currentUser.displayName;
       const email = currentUser.email;
-      const profilePic = currentUser.photoURL;
+      const profilePic = currentUser.photoURL; 
+      
+
       localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
       notifySuccess("Logged in successfully");
       setTimeout(() => {
