@@ -38,7 +38,7 @@ export default function AuthProvider({ children }) {
 
       const colRef = collection(db, "Client");
       const existingUserQuery = query(colRef, where("email", "==", user.email));
-      if (existingUserQuery.empty) {
+      
       await addDoc(colRef, {
         email: email,
         name: username,
@@ -53,7 +53,7 @@ export default function AuthProvider({ children }) {
           console.error("Error storing user data:", error);
           notifyError('Error storing user data');
         });
-      }
+      
     } catch (error) {
       console.error("Error signing up:", error.message);
       notifyError('Error storing user data');
