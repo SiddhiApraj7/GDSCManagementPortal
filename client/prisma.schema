@@ -1,0 +1,73 @@
+model Project {
+    projectName           String 
+    projectId             String           @id @default(uuid())
+    techStack             Skills[]
+    githubLink            String
+    slackLink             String
+    whatsappLink          String
+    overview              String
+    statement             String
+    prerequisites         String
+    difficulty            Difficulty
+    domain                String
+    contributorList       Contributor[]
+    projectManager        Contributor
+    startDate             dateTime          
+    duration              Int
+    isComplete            Boolean
+    timeline              Subtask[]
+    requests              Requests[]
+}
+
+model Contributor {
+  id                      String           @id @default(uuid())
+  firstName               String?
+  email                   String?          @unique
+  lastName                String?
+  createdAt               dateTime         @default(now())
+  password                String
+  projectsContributed     Project[]
+  projectsManaged         Project[]
+  githubLink              String
+  linkedinLink            String
+  skills                  Skills[]
+
+}
+
+model Subtask {
+    projectId             String
+    taskName              String[]
+    projectName           String
+    isDone                Boolean
+    deadline              dateTime
+    description           String
+}
+
+model Requests {
+    projectId             String
+    type                  RequestType
+    date                  dateTime
+    from                  Contributor
+    to                    Contributor
+}
+
+enum Skills {
+    REACT
+    REACTNATIVE
+    ...
+}
+
+enum Domain {
+    WEBDEV
+    APPDEV
+    ML
+    BLOCKCHAIN
+    WEB3
+    ...
+}
+
+enum Difficulty{
+    BEGINNER
+    INTERMEDIATE
+    ADVANCED
+}

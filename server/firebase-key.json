@@ -1,0 +1,14 @@
+{
+    "type": "service_account",
+    "project_id": "gdsc-management-portal",
+    "private_key_id": "de6e84dd910fc3d06ac4debe639d5ad7118071f6",
+    "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQCdkZaNENGPFTOh\ntDYO88uk0LdS1XIfF5n6Iuc/GoX7DCvsUEK3lb60oser1vMZc/QMNqpUdhRif+LP\nT0X20hwryjUE3dm64WOoO4oYJwned8Sh+WCi09Aftszy+tBEurSGBNgJR/RfOAUx\nndPPnGTn+fPCD0W5PR/NT04W0+9/yNC6ny+fq04k3a4B3OD0g9PeB0hVP47MY/Vx\nGF+CB8sqqdQp5tHZHme4VwZG5MOkXzsSWg8ZRZSEPLxQcXY5lC/LgbaGyB9slUfx\nYGWWzfdAEl8RFN7jzp3uQg6lpFn5zJCtNjUrdLApY4D6H3Ci2/TOQtPKRtzl6hj/\nTkEdCK/DAgMBAAECggEAInmPKhAq+ZZW9KNcTIs03Du6UIpY7MqaKutmEx13gQUZ\nuxuYbVh7IESZUVS3XbNMCzwOqmonbaGze05J7YXtGfuk/AqaL9ROnKliPoSUGTO1\nNwc8CIQ1firdzq/nz5HWG5iFuAohQpAcOs3gYQVD4qmClswGok/oXGBkooP+W8O5\nBioRDcS+JSO+IrFe979kSrmKYM+dzLCjEfM7B1x3JsEye9KCXTCu/terv+p8WInC\n0Hl2vYtNhJlafX8kExaRQaAi2+HkIbHMUpS9d5RtQyzPydPZCndm+gKMc4nX0LQ1\naI1y+iQsP5VfYjJWn6GtcpCQ5AUePcA2DDuJKQj+IQKBgQDbOdwuGsXhSwYc/Fw8\ng7c6svqr44qWW2MM6MulSXIHs+e0kCqJL4tTNj7cd77pJWQyX39nh0F/DGyH9cC5\n+pd20dcfyziVZ88WfxjgB4dfNFvYz0LeCUKN9DeirMDiPWaxeiyJBc9y0TvWetfR\nrMT4hA4q4vAkr/F49clxoQY1MwKBgQC4AABYqh/KHoavhnLZBEwyJuR0+1tV4XRR\nKSdOm6UOBAs/Kj23u9sGqZMAhYi4kvl5dOFGO8PvekwWc9WlXypZhwpdGf3onQeA\nJ8IVoYYZ77evgUKNtiLYKNxenccAyWmjDjVwhiP0xkykGHL447IF6JVBpZ7FcUo8\nlfYMMZN7MQKBgHCrMf/3/o8lUcT/5h+ryjW+2poQ3Z8c5LEzy8XtE0/mJEVmepX6\n+24OyQvh9xo3/2DsN7xrhTvYlMbjhOOQaNvGSPusJC6VJZd4Rr6M4AQMEtBA5Src\nM3plc1qF0rPzvp2kHtNlSxLFei1nARhf5POcWvOroqQYUNBL8fYWPeyFAoGAVMFL\nZ4wV0Jh3Gesog+aC4qcfnPMbg1eyqJ/4RzFSuj4KoDHo8/VIUq1R1W+tJrgsylGY\nYy2sd2cyHTWGOAK6Ezss/u22E6whhFrMAALDLrdJOUKlUXmQW1mXCM5MmIQucLle\nzFI9xcaCDyRj8VmQ6z/TYMXVeMVSmM3K5JsBgEECgYEAqAPVhMLucTNPOagTFYsE\nwl18DWigDW0bvcSE6w4A4kvfQnFfYNV98blqE/Cktc3Y0wkGCewuawIvOH0KEj4i\nqTP0OYePYmUV3OwqH8qr7kyaE5fw/XJVrj/9i5MH3pf6Em+uhEGlPVSunSIapcG7\nwAHc/dVr+U+wlYRNXwF+1Rg=\n-----END PRIVATE KEY-----\n",
+    "client_email": "firebase-adminsdk-n3mnk@gdsc-management-portal.iam.gserviceaccount.com",
+    "client_id": "106431660837607505698",
+    "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+    "token_uri": "https://oauth2.googleapis.com/token",
+    "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+    "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-n3mnk%40gdsc-management-portal.iam.gserviceaccount.com",
+    "universe_domain": "googleapis.com"
+}
+  
