@@ -22,6 +22,7 @@ import ProjectManagers from '../Pages/ProjectManagers';
 const Router = () => {
 
   const { currentUser } = useAuth();
+  console.log(currentUser);
   const PrivateRoute = ({children} ) => {
       return currentUser ? children : <Navigate to="/login" />;
   };
