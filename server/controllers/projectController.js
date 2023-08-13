@@ -2,50 +2,206 @@
 const axios = require('axios');
 
 const { db } = require('../db');
-
-const getResponseHostProject = () => {
-    
-}
-const getResponseJoinProject = () => {
-
-}
-
-const sendRequestHostProject = async (email) => {
+// make sure the login with institute id
+const createHostProjectRequest = async (req, res) => {
+    const { email } = req.body;
     const scriptUrl = `https://script.google.com/macros/s/AKfycbzZpwbsP--KmZWyFL3cLcs4PZ0FA10JZrSEPF4b149IGNFjnGHozoHF_hBbvY1RNTid/exec?email=${email}`;
-  
+    
     try {
       const response = await axios.get(scriptUrl);
-      const jsonData = response.data.latestEntry;
+      const { latestEntry } = response.data;
   
-
-      const requestsCollection = db.collection('RequestsAdmin'); 
-      await requestsCollection.add(jsonData);
+      const {
+        'Full Name': fullName,
+        'Email(institute id)': emailInstituteId,
+        'Contact Number': contactNumber,
+        'LinkedIn Profile Link': linkedinProfileLink,
+        'Github Profile Link': githubProfileLink,
+        'Drive Link for Resume': driveLinkForResume,
+        'Project Name': projectName,
+        'Project Domain': projectDomain,
+        'Project Overview': projectOverview,
+        'Problem Statement': problemStatement,
+        'Tech Stack': techStack,
+        'Prerequisites': prerequisites,
+        'Start Date of Project': startDateOfProject,
+        'Duration of Project': durationOfProject,
+        'Github Link of Project': githubLinkOfProject,
+        'Slack Link of Project': slackLinkOfProject,
+        'Timestamp': timestamp
+      } = latestEntry;
   
-      console.log('Data sent to Firestore successfully.');
+      // Reference the "RequestsAdmin" collection
+      const requestsAdminCollection = db.collection('RequestsAdmin');
+  
+      // Create a new document in the "RequestsAdmin" collection
+      await requestsAdminCollection.add({
+        fullName,
+        emailInstituteId,
+        contactNumber,
+        linkedinProfileLink,
+        githubProfileLink,
+        driveLinkForResume,
+        projectName,
+        projectDomain,
+        projectOverview,
+        problemStatement,
+        techStack,
+        prerequisites,
+        startDateOfProject,
+        durationOfProject,
+        githubLinkOfProject,
+        slackLinkOfProject,
+        timestamp,
+        isPending: true,
+        isApproved: false
+      });
+  
+      console.log('Request data with status added to Firestore');
+      res.json({ success: 'Request sent to Admin' });
     } catch (error) {
       console.error('Error sending data:', error);
+      res.status(400).send(error);
     }
   };
-const sendRequestJoinProject = async (email) => {
-    const scriptUrl = `https://script.google.com/macros/s/AKfycby85PCQ-RTXmDFFp9-LF9vEM3dcdbR3xboWWfTuoWEF1ht9hredrLCCpV28jU1XNCvGpg/exec?email=${email}`;
-  
+//id request collection
+const confirmProject = async (req, res) => {
+    const { requestID } = req.body;
     try {
-      const response = await axios.get(scriptUrl);
-      const jsonData = response.data.latestEntry;
+      // Reference the "RequestsAdmin" collection
+      const requestsAdminCollection = db.collection('RequestsAdmin');
+      
+      // Get the specific request document by requestID
+      const requestDocRef = requestsAdminCollection.doc(requestID);
+      const requestDoc = await requestDocRef.get();
+  
+      if (!requestDoc.exists) {
+        return res.status(404).json({ error: 'Request not found' });
+      }
+  
+      // Update the request document's status fields
+      await requestDocRef.update({
+        isApproved: true,
+        isPending: false
+      });
+  
+      // Get the requestData from the request document
+      const requestData = requestDoc.data(); // Get the entire document data
+      requestData.isApproved = true;
+      requestData.isPending = false;
+      console.log('requestData:', requestData); // Log the entire document data
+      // Reference the "Projects" collection
+      const projectsCollection = db.collection('Projects');
+  
+      // Create a new document in the "Projects" collection
+      await projectsCollection.add({
+        ...requestData,
+        // Additional project-related fields if needed
+      });
+  
+      console.log('Project confirmed and added to Projects collection');
+      res.json({ success: 'Project confirmed' });
+    } catch (error) {
+      console.error('Error confirming project:', error);
+      res.status(400).send(error);
+    }
+};
+
+
+const declineProject = async (req, res) => {
+    const { requestID } = req.body;
+    try {
+      // Reference the "RequestsAdmin" collection
+      const requestsAdminCollection = db.collection('RequestsAdmin');
+      
+      // Get the specific request document by requestID
+      const requestDocRef = requestsAdminCollection.doc(requestID);
+      const requestDoc = await requestDocRef.get();
+  
+      if (!requestDoc.exists) {
+        return res.status(404).json({ error: 'Request not found' });
+      }
+  
+      // Update the request document's status fields
+      await requestDocRef.update({
+        isApproved: false,
+        isPending: false
+      });
   
       
-      const requestsCollection = db.collection('RequestsPM'); 
-      await requestsCollection.add(jsonData);
-  
-      console.log('Data sent to Firestore successfully.');
+      console.log('Project request declined');
+      res.json({ success: 'Project request decliined by admin' });
     } catch (error) {
-      console.error('Error sending data:', error);
+      console.error('Error declining project:', error);
+      res.status(400).send(error);
     }
-}
+};
+
+// ...
+
+
+  
+  
+  
+  
+// const createJoinProjectRequest = async (email, req, res) => {
+//     const scriptUrl = `https://script.google.com/macros/s/AKfycby85PCQ-RTXmDFFp9-LF9vEM3dcdbR3xboWWfTuoWEF1ht9hredrLCCpV28jU1XNCvGpg/exec?email=${email}`;
+  
+//     try {
+//       const response = await axios.get(scriptUrl);
+//       const jsonData = response.data;
+//       const requestsCollection = db.collection('RequestsPM'); 
+//       await requestsCollection.add(jsonData);
+      
+//       res.json({ success: 'Request sent to Project Manager', jsonData });
+  
+//       console.log('Request sent to Project Manager');
+//     } catch (error) {
+//       console.error('Error sending data:', error);
+//       res.status(400).send(error);
+//     }
+// }
+
+
+
+
+// const confirmCollaorator = async (email, req, res) => {
+//     const scriptUrl = `https://script.google.com/macros/s/AKfycby85PCQ-RTXmDFFp9-LF9vEM3dcdbR3xboWWfTuoWEF1ht9hredrLCCpV28jU1XNCvGpg/exec?email=${email}`;
+  
+//     try {
+//       const response = await axios.get(scriptUrl);
+//       const jsonData = response.data;
+  
+      
+//       const requestsCollection = db.collection('Collaborators'); 
+//       await requestsCollection.add(jsonData);
+//       const projectsCollection = db.collection('Projects');
+//       const projectDocRef = projectsCollection.doc(projectId);
+    
+//       await db.runTransaction(async (transaction) => {
+//         const projectDoc = await transaction.get(projectDocRef);
+//         if (!projectDoc.exists) {
+//           throw new Error('Project not found');
+//         }
+  
+//         const collaborators = projectDoc.data().collaborators || [];
+//         collaborators.push(jsonData);
+  
+//         transaction.update(projectDocRef, { collaborators });
+//       });
+  
+//       res.json({ success: 'Collaborator Approved', jsonData });
+//       console.log('Collaborator data added to project successfully.');
+//     } catch (error) {
+//       console.error('Error adding collaborator data to project:', error);
+//       res.status(500).json({ error: 'An error occurred' });
+//     }
+// }
 
 module.exports = {
-    getResponseHostProject,
-    getResponseJoinProject,
-    sendRequestHostProject,
-    sendRequestJoinProject
+    
+    createHostProjectRequest,
+    confirmProject,
+    declineProject
+   
 }

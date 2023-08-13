@@ -17,6 +17,8 @@ import { Navigate } from "react-router-dom";
 import AdminDashboard from '../Pages/AdminDashboard';
 import AllProjects from '../Pages/AllProjects';
 import ProjectManagers from '../Pages/ProjectManagers';
+import ConfirmHostProject from '../Pages/ConfirmHostProject';
+import ConfirmJoinProject from '../Pages/ConfirmJoinProject';
 
 
 const Router = () => {
@@ -53,6 +55,8 @@ const Router = () => {
       {/* why is there again a <inbox/> ?? */}
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
       <Route path="/join-project-form" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
+      <Route path="/confirm-host-project" element={<ConfirmHostProject/>}/>
+      <Route path="/confirm-join-project" element={<ConfirmJoinProject/>}/>
 
 
       </Routes>
