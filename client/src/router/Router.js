@@ -22,11 +22,16 @@ import ProjectManagers from '../Pages/ProjectManagers';
 const Router = () => {
 
   const { currentUser } = useAuth();
-  console.log(currentUser);
-  const PrivateRoute = ({children} ) => {
-      return currentUser ? children : <Navigate to="/login" />;
+  console.log("router data",currentUser);
+  const PrivateRoute = ({ children }) => {
+    return currentUser !== null ? (
+      // Render children if currentUser is available
+      children
+    ) : (
+      // Render a loading state if currentUser is still loading
+      <div>Loading...</div>
+    );
   };
-
 
 
   return (

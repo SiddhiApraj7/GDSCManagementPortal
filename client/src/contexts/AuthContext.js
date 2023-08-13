@@ -1,6 +1,6 @@
 import React, { useContext, useState, useEffect } from "react";
 import { auth, db } from "../config/firebase";
-import { toast } from 'react-toastify';
+import { toast } from "react-toastify";
 import {
   onAuthStateChanged,
   GoogleAuthProvider,
@@ -8,9 +8,8 @@ import {
   signOut,
 } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
-
+import { getAuth, updateProfile } from "firebase/auth";
+import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { GithubAuthProvider } from "firebase/auth";
@@ -22,11 +21,11 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }) {
-  
   const notifyError = (message) => {
     toast.error(message);
   };
   const [currentUser, setCurrentUser] = useState();
+  console.log("current user:++++++", currentUser);
   // const [loading, setLoading] = useState(true)
 
   async function signup(email, password, username) {
@@ -37,6 +36,10 @@ export default function AuthProvider({ children }) {
         password
       );
       const user = userCredential.user;
+      await updateProfile(user, {
+        displayName: username,
+      });
+      localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
       console.log("user", user);
       //console.log(user);
       const colRef = collection(db, "Client");
@@ -49,25 +52,40 @@ export default function AuthProvider({ children }) {
       })
         .then(() => {
           console.log("User data stored successfully");
-          
           return user;
         })
         .catch((error) => {
           console.error("Error storing user data:", error);
-          notifyError('Error storing user data');
+          notifyError("Error storing user data");
         });
-      
     } catch (error) {
       console.error("Error signing up:", error.message);
-      notifyError('Error storing user data');
+      notifyError("Error storing user data");
       throw error; // Rethrow the error to be caught by the caller
-      
     }
   }
 
   async function login(email, password) {
     try {
       await signInWithEmailAndPassword(auth, email, password);
+      const clientRef = collection(db, "Client");
+      const q = query(clientRef, where("email", "==", email));
+      const querySnapshot = await getDocs(q);
+
+      if (!querySnapshot.empty) {
+        const clientDoc = querySnapshot.docs[0];
+        const clientData = clientDoc.data();
+        const clientName = clientData.name;
+
+        // Update the user's display name with the retrieved name
+        await updateProfile(auth.currentUser, {
+          displayName: clientName,
+        });
+        localStorage.setItem("user", JSON.stringify({ name: clientName, email, profilePic:null }));
+        return ;
+      } else {
+        throw new Error("Client data not found.");
+      }
     } catch (error) {
       throw error;
     }
@@ -79,10 +97,12 @@ export default function AuthProvider({ children }) {
       const result = await signInWithPopup(auth, googleauthprovider);
       const user = result.user;
       console.log("Logged in with Google:", user);
-      
+
       const colRef = collection(db, "Client");
-      const querySnapshot = await getDocs(query(colRef, where("email", "==", user.email)));
-  
+      const querySnapshot = await getDocs(
+        query(colRef, where("email", "==", user.email))
+      );
+
       if (querySnapshot.size === 0) {
         await addDoc(colRef, {
           email: user.email,
@@ -90,12 +110,14 @@ export default function AuthProvider({ children }) {
           uid: user.uid,
         });
         console.log("User data stored successfully");
+        localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
+        return user;
       } else {
         console.log("User with the same email already exists.");
       }
     } catch (error) {
       console.error("Google Sign-In Error:", error);
-      notifyError('Error signing in or storing user data');
+      notifyError("Error signing in or storing user data");
       throw error;
     }
   };
@@ -106,7 +128,9 @@ export default function AuthProvider({ children }) {
       const user = result.user;
       console.log("Logged in with Github:", user);
       const colRef = collection(db, "Client");
-      const querySnapshot = await getDocs(query(colRef, where("email", "==", user.email)));
+      const querySnapshot = await getDocs(
+        query(colRef, where("email", "==", user.email))
+      );
       if (querySnapshot.size === 0) {
         await addDoc(colRef, {
           email: user.email,
@@ -115,18 +139,17 @@ export default function AuthProvider({ children }) {
         })
           .then(() => {
             console.log("User data stored successfully");
+            localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
             return user;
           })
           .catch((error) => {
             console.error("Error storing user data:", error);
-            notifyError('Error storing user data');
-            
+            notifyError("Error storing user data");
           });
-        
       }
     } catch (error) {
       console.error("Github Sign-In Error:", error);
-      notifyError('Error storing user data');
+      notifyError("Error storing user data");
       throw error;
     }
   };
@@ -154,12 +177,14 @@ export default function AuthProvider({ children }) {
       if (user) {
         // Update local storage with user data when user is authenticated
         const { displayName, email, photoURL } = user;
-        localStorage.setItem("user", JSON.stringify({ name: displayName, email, profilePic: photoURL }));
+        localStorage.setItem(
+          "user",
+          JSON.stringify({ name: displayName, email, profilePic: photoURL })
+        );
       } else {
         // Clear local storage when user is not authenticated
         localStorage.removeItem("user");
       }
-
     });
 
     return unsubscribe;
