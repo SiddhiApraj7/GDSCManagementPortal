@@ -8,7 +8,9 @@ import {
   signOut,
 } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-import { collection, doc, setDoc, addDoc , where, query} from "firebase/firestore";
+
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { GithubAuthProvider } from "firebase/auth";
@@ -35,10 +37,11 @@ export default function AuthProvider({ children }) {
         password
       );
       const user = userCredential.user;
-
+      console.log("user", user);
+      //console.log(user);
       const colRef = collection(db, "Client");
-      const existingUserQuery = query(colRef, where("email", "==", user.email));
-      
+      //const existingUserQuery = query(colRef, where("email", "==", user.email));
+      //console.log(existingUserQuery);
       await addDoc(colRef, {
         email: email,
         name: username,
@@ -70,39 +73,32 @@ export default function AuthProvider({ children }) {
     }
   }
 
-    const signInWithGoogle = async (e) => {
-      try {
-        const googleauthprovider = new GoogleAuthProvider();
-        const result = await signInWithPopup(auth, googleauthprovider);
-        const user = result.user;
-        console.log("Logged in with Google:", user);
-        const colRef = collection(db, "Client");
-        const existingUserQuery = query(colRef, where("email", "==", user.email));
-        if (existingUserQuery.empty) {
-          await addDoc(colRef, {
-            email: user.email,
-            name: user.displayName,
-            uid: user.uid,
-          })
-            .then(() => {
-              console.log("User data stored successfully");
-              return user;
-            })
-            .catch((error) => {
-              console.error("Error storing user data:", error);
-              notifyError('Error storing user data');
-              
-            });
-          
-        }
-       
-      } catch (error) {
-        console.error("Google Sign-In Error:", error);
-        notifyError('Error storing user data');
-        throw error; 
+  const signInWithGoogle = async (e) => {
+    try {
+      const googleauthprovider = new GoogleAuthProvider();
+      const result = await signInWithPopup(auth, googleauthprovider);
+      const user = result.user;
+      console.log("Logged in with Google:", user);
+      
+      const colRef = collection(db, "Client");
+      const querySnapshot = await getDocs(query(colRef, where("email", "==", user.email)));
+  
+      if (querySnapshot.size === 0) {
+        await addDoc(colRef, {
+          email: user.email,
+          name: user.displayName,
+          uid: user.uid,
+        });
+        console.log("User data stored successfully");
+      } else {
+        console.log("User with the same email already exists.");
       }
-    };
-
+    } catch (error) {
+      console.error("Google Sign-In Error:", error);
+      notifyError('Error signing in or storing user data');
+      throw error;
+    }
+  };
   const signInWithGithub = async (e) => {
     try {
       const githubProvider = new GithubAuthProvider();
@@ -110,8 +106,8 @@ export default function AuthProvider({ children }) {
       const user = result.user;
       console.log("Logged in with Github:", user);
       const colRef = collection(db, "Client");
-      const existingUserQuery = query(colRef, where("email", "==", user.email));
-      if (existingUserQuery.empty) {
+      const querySnapshot = await getDocs(query(colRef, where("email", "==", user.email)));
+      if (querySnapshot.size === 0) {
         await addDoc(colRef, {
           email: user.email,
           name: user.displayName,
