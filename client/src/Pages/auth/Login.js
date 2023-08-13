@@ -6,6 +6,8 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
+import { db } from "../../config/firebase";
+import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 
 export default function Login() {
   const [forgotPasswordMode, setForgotPasswordMode] = useState(false);
@@ -83,23 +85,50 @@ export default function Login() {
     }
   };
 
+  const checkEmailExistsInClientCollection = async (email) => {
+    try{
+      console.log(email);
+      const clientRef = collection(db, "Client");
+      const querySnapshot = await getDocs(query(clientRef, where("email", "==", email)));
+  
+      //const querySnapshot = await clientRef.where("email", "==", email).get();
+      return !querySnapshot.empty;
+    } catch (error) {
+      console.error("Error checking email existence in client collection:", error);
+      return false;
+    }
+    // Replace this with your Firebase code to check if the email exists in the "client" collection
+    // You need to query the "client" collection and check if the email exists in any document
+    // Return true if the email exists, otherwise return false
+    // Example: 
+    // const clientCollection = await firebase.firestore().collection("client").where("email", "==", email).get();
+    // return !clientCollection.empty;
+    //return false; // Placeholder value
+  };
+
   const handleForgotPassword = async () => {
     try {
+      //console.log(resetPasswordEmail);
+      const emailExistsInClientCollection = await checkEmailExistsInClientCollection(resetPasswordEmail);
+
+      if (emailExistsInClientCollection) {
       await resetPassword(resetPasswordEmail);
       setResetPasswordEmail("");
       setResetPasswordError("");
-      notifySuccess(
-        "A password reset email has been sent to your email address."
-      );
-      setForgotPasswordMode(false)
+      notifySuccess("A password reset email has been sent to your email address.");
+      setForgotPasswordMode(false);
       setTimeout(() => {
         navigate("/login");
       }, 3000);
-    } catch (error) {
-      setResetPasswordError(
-        "Failed to send reset password email. Please try again."
-      );
+    } else {
+      notifyError("Email not found. Please register.");
+      setTimeout(() => {
+        navigate("/register");
+      }, 3000);
     }
+  } catch (error) {
+    setResetPasswordError("Failed to send reset password email. Please try again.");
+  }
   };
 
   const GithubSignIn = async (e) => {
