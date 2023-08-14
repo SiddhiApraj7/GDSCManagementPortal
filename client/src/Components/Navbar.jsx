@@ -165,13 +165,15 @@ export const Navbar = () => {
             <div className="flex">
               <div className="mr-4 mt-2">
                 <Typography variant="body2" color="#05276a" className="font-semibold">
-                  {JSON.parse(localStorage.getItem("user"))?.name}
+                  {/* {JSON.parse(localStorage.getItem("user"))?.name} */}
+                  {currentUser.displayName}
                 </Typography>
               </div>
               <div className="mr-1">
                 {JSON.parse(localStorage.getItem("user"))?.profilePic ? (
                   <img
-                    src={JSON.parse(localStorage.getItem("user"))?.profilePic}
+                    // src={JSON.parse(localStorage.getItem("user"))?.profilePic}
+                    src={currentUser.photoURL}
                     alt="Profile"
                     className="rounded-full h-8 w-8"
                   />

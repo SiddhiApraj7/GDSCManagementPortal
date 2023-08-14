@@ -53,14 +53,14 @@ export default function Register() {
     onSubmit: async (values) => {
       try {
         const { name,email, password } = values;
-        console.log("Form data:", values);
+        console.log("Form data**************:", values);
         console.log(values);
-        const user = await signup(email, password,name);
-        console.log("Registered user:", user);
-     const profilePic = null;
-      localStorage.setItem("user", JSON.stringify({name, email,profilePic}));
-        navigate("/"); // login with the credentials now
+        await signup(email, password,name);
+        // console.log("Registered user:", user);
         // Handle your success logic here
+        setTimeout(() => {
+          navigate("/");
+        }, 3000);
       } catch (error) {
         console.error("Registration Error:", error);
         const errorCode = error.code;
@@ -76,13 +76,7 @@ export default function Register() {
     try {
       const user = await signInWithGoogle();
       console.log("Logged in with Google:", user);
-      
-      const name = currentUser.displayName;
-      const email = currentUser.email;
-      const profilePic = currentUser.photoURL; 
-      
-
-      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
+  
       notifySuccess("Logged in successfully");
       setTimeout(() => {
         navigate("/");
@@ -100,10 +94,6 @@ export default function Register() {
       const user = await signInWithGithub();
       console.log("Logged in with Github:", user);
       notifySuccess("Logged in successfully");
-      const name = currentUser.displayName;
-      const email = currentUser.email;
-      const profilePic = currentUser.photoUrl;
-      localStorage.setItem("user", JSON.stringify({name, email, profilePic}));
       setTimeout(() => {
         navigate("/");
       }, 3000);

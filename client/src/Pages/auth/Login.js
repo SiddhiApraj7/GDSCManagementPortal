@@ -54,10 +54,9 @@ export default function Login() {
     e.preventDefault();
     try {
       await login(email, password);
-      const profilePic = null;
+      // const profilePic = null;
       // add how to get name from firebase
-      const name = currentUser.displayName;
-      localStorage.setItem("user", JSON.stringify({ name, email, profilePic }));
+      // const name = currentUser.displayName;
       navigate("/");
     } catch {
       alert("Failed to Log in");
@@ -69,12 +68,6 @@ export default function Login() {
     try {
       const user = await signInWithGoogle();
       console.log("Logged in with Google:", user);
-
-      const name = currentUser.displayName;
-      const email = currentUser.email;
-      const profilePic = currentUser.photoURL;
-
-      localStorage.setItem("user", JSON.stringify({ name, email, profilePic }));
       notifySuccess("Logged in successfully");
       setTimeout(() => {
         navigate("/");
@@ -137,10 +130,6 @@ export default function Login() {
       const user = await signInWithGithub();
       console.log("Logged in with Github:", user);
       notifySuccess("Logged in successfully");
-      const name = currentUser.displayName;
-      const email = currentUser.email;
-      const profilePic = currentUser.photoUrl;
-      localStorage.setItem("user", JSON.stringify({ name, email, profilePic }));
       setTimeout(() => {
         navigate("/");
       }, 3000);

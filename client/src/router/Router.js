@@ -19,16 +19,22 @@ import AllProjects from '../Pages/AllProjects';
 import ProjectManagers from '../Pages/ProjectManagers';
 import ConfirmHostProject from '../Pages/ConfirmHostProject';
 import ConfirmJoinProject from '../Pages/ConfirmJoinProject';
+import AdminInbox from '../Pages/AdminInbox';
 
 
 const Router = () => {
 
   const { currentUser } = useAuth();
-  console.log(currentUser);
-  const PrivateRoute = ({children} ) => {
-      return currentUser ? children : <Navigate to="/login" />;
+  console.log("router data",currentUser);
+  const PrivateRoute = ({ children }) => {
+    return currentUser !== null ? (
+      // Render children if currentUser is available
+      children
+    ) : (
+      // Render a loading state if currentUser is still loading
+      <div>Loading...</div>
+    );
   };
-
 
 
   return (
@@ -42,10 +48,11 @@ const Router = () => {
       <Route path="/join-project" element={<JoinProject/>}/>
       <Route path="/collaborator-dashboard" element={<PrivateRoute><CollaboratorDashboard/></PrivateRoute>}/>
       <Route path="/manager-dashboard" element={<PrivateRoute><ProjectManagerDashboard/></PrivateRoute>}/>
-      <Route path="/admin-dashboard" element={<PrivateRoute><AdminDashboard/></PrivateRoute>}/>
+      <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
       <Route path="/admin-dashboard/all-projects" element={<PrivateRoute><AllProjects/></PrivateRoute>}/>
       <Route path="/admin-dashboard/project-managers" element={<PrivateRoute><ProjectManagers/></PrivateRoute>}/>
       <Route path="/manager-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
+      <Route path="/admin-dashboard/inbox" element={<AdminInbox/>}/>
 
       {/* why is there again a <inbox/> ?? */}
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
