@@ -3,6 +3,7 @@ import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container } from '@mui/material';
 import Post from '../Components/Post';
 import Navbar from '../Components/Navbar';
+/* import { useLocation } from 'react-router-dom'; */
 
 
 const theme = createTheme({
@@ -25,6 +26,14 @@ const mainFeaturedPost = {
 };
 
 export default function JoinProject() {
+    /* const location = useLocation();
+   const { state } = location;
+
+   const {
+    name, projectName, contactNumber, resume, email, githubLinkOfProject, githubProfileLink, linkedinProfileLink,
+    prerequisites, problemStatement, projectDomain, projectOverview, slackLink, startDateOfProject, techStack
+   } = state; */
+
     return (
         <ThemeProvider theme={theme}>
             <div className="bg-[#f2f0f0] h-full flex flex-col justify-center items-center">

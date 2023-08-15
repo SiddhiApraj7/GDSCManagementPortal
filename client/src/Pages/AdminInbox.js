@@ -12,7 +12,7 @@ import Request from '../Components/Request';
 
 export default function AdminInbox() {
     const [sidebar, showsideBar] = useState(false);
-    const [requestsArray, setRequestsArray] = useState();
+    const [requestsArray, setRequestsArray] = useState([]);
 
     
 
@@ -21,32 +21,49 @@ export default function AdminInbox() {
         try {
             const requestsRef = collection(db, "RequestsAdmin");
             console.log(requestsRef);
-            const unsubscribe = onSnapshot(requestsRef, (snapshot) => {
+
+            
+            return onSnapshot(requestsRef, (snapshot) => {
                 const Array = [];
-
+          
                 snapshot.forEach((doc) => {
-                    const request = doc.data();
-                    Array.push(request);
+                  const request = doc.data();
+                  Array.push(request);
                 });
-
+                console.log("hello",Array);
+          
                 setRequestsArray(Array);
-
+          
                 // Now you have all requests in the requestsArray
-                console.log(requestsArray);
-
+                console.log("second",requestsArray);
+          
                 // If you want to perform further operations with the array, you can do so here
-            });
+              });
 
             // Remember to unsubscribe when you're done using the listener
-            return unsubscribe;
         } catch (error) {
             console.error("Error fetching requests:", error);
         }
     };
 
-    /*const unsubscribe = allRequests();*/
- 
     useEffect(() => {
+        setUnsubscribe(() => allRequests());
+        //console.log(requestsArray);
+
+        // Clean up the listener when the component unmounts
+        return () => {
+          if (unsubscribe) {
+            unsubscribe();
+          }
+          console.log(requestsArray);
+        };
+      }, []);
+      
+      const [unsubscribe, setUnsubscribe] = useState(null);
+
+     /*const unsubscribe = allRequests();*/
+ 
+    /*useEffect(() => {
         //const unsubscribe = allRequests();
 
         // Clean up the listener when the component unmounts
@@ -56,7 +73,7 @@ export default function AdminInbox() {
         };
         //return ()=allRequests();
 
-    }, []); 
+    }, []);  */
 
     const determineType = async (pending,approved) => {
         if(pending && !approved)
@@ -258,7 +275,7 @@ export default function AdminInbox() {
                 <><div className="p-4 sm:ml-64 mt-20 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
                      {requestsArray && requestsArray.map((request) => (
                         <Request
-                        key={request.uuid}
+                        key={request.uid}
                         type = {determineType(request.isPending,request.isApproved)}
                         name={request.fullName}
                         projectName = {request.projectName}
