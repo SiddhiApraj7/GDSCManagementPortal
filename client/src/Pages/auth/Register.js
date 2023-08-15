@@ -65,7 +65,7 @@ export default function Register() {
         console.error("Registration Error:", error);
         const errorCode = error.code;
         const errorMessage = error.message;
-        notifyError('An error occurred while registration');
+        //notifyError('An error occurred while registration');
         // Handle your error logic here
       }
     },
@@ -84,7 +84,7 @@ export default function Register() {
       
     } catch (error) {
       console.error("Google Sign-In Error:", error);
-      notifyError('Google Sign-In Error Occured');
+      //notifyError('Google Sign-In Error Occured');
     }
   };
 
@@ -100,7 +100,7 @@ export default function Register() {
     
     } catch (error) {
       console.error("Github Sign-In Error:", error);
-      notifyError('Github Sign-In Error Occured');
+      //notifyError('Github Sign-In Error Occured');
     }
   };
 
