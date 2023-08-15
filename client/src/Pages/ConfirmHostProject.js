@@ -1,10 +1,44 @@
-import React from 'react'
+import React from 'react';
+import axios from 'axios';
+import { useAuth } from '../contexts/AuthContext';
 
 export default function ConfirmHostProject() {
 
-  const handleClick = () => {
+    const { currentUser } = useAuth(); // Assuming useAuth() gives you access to the current user
+    //const [loading, setLoading] = useState(false);
 
-  }
+    
+  
+    const handleClick = async () => {
+      try {
+        //setLoading(true);
+  
+        if (currentUser) {
+          const email = currentUser.email;
+            console.log(email);
+          const response = await axios.post(
+            'http://localhost:3000/requests/create-project-request',
+            {
+              email: email,
+            }
+          );
+  
+          if (response.status === 200) {
+            // API call successful
+            console.log("API call successful");
+          } else {
+            // API call failed
+            console.error("API call failed");
+          }
+        }
+      } catch (error) {
+        console.error("Error calling API:", error);
+      } finally {
+        //setLoading(false);
+      }
+    };
+
+
   return (
     <div align="center" className="mt-16">
         

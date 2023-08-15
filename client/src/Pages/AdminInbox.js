@@ -27,8 +27,9 @@ export default function AdminInbox() {
                 const Array = [];
           
                 snapshot.forEach((doc) => {
+                  const requestId = doc.id;
                   const request = doc.data();
-                  Array.push(request);
+                  Array.push({id:requestId,...request});
                 });
                 console.log("hello",Array);
           
@@ -273,9 +274,10 @@ export default function AdminInbox() {
             )}
             {!sidebar && (
                 <><div className="p-4 sm:ml-64 mt-20 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                     {requestsArray && requestsArray.map((request) => (
+                     {requestsArray && requestsArray.map((request,i) => (
                         <Request
-                        key={request.uid}
+                        key={i}
+                        id={request.id}
                         type = {determineType(request.isPending,request.isApproved)}
                         name={request.fullName}
                         projectName = {request.projectName}
