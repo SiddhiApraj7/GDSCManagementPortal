@@ -4,7 +4,7 @@ const axios = require('axios');
 const { db } = require('../db');
 
 const createJoinProjectRequest = async (req, res) => {
-    const { email } = req.body;
+    const { email, projectID } = req.body;
     const scriptUrl = `https://script.google.com/macros/s/AKfycbyiVVqSYrlaAiPULTYxnZxqhT-P4qhMsBNTM4ywEM4osfYKj4a0VSuwN3FtVd6TA_H69w/exec?email=${email}`;
     
     try {
@@ -28,6 +28,7 @@ const createJoinProjectRequest = async (req, res) => {
   
       // Create a new document in the "RequestsAdmin" collection
       await requestsPMCollection.add({
+        projectID,
         fullName,
         emailInstituteId,
         contactNumber,
@@ -69,6 +70,8 @@ const createJoinProjectRequest = async (req, res) => {
         isPending: false
       });
       
+      //*******************update the role of user,add this projectid to the user's project collaborated field****************
+      //******************add this collaborator to the collaborators array of the projectID */
       console.log('Collaborator confirmed');
       res.json({ success: 'Collaborator confirmed' });
     } catch (error) {

@@ -16,10 +16,17 @@ import Link from '@mui/material/Link';
 import { Chip } from '@mui/material';
 import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { useNavigate } from 'react-router';
 export default function ProjectCard(props) {
 
-  const { projectInfo } = props;
+  const { projectInfo, projectId } = props;
+  console.log(projectId);
+  const navigate = useNavigate(); // Hook to handle navigation
+
+  const handleExploreMoreClick = () => {
+    navigate(`/projects/${projectId}`);
+  };
+
   return (
     
       <Card
@@ -32,19 +39,20 @@ export default function ProjectCard(props) {
             // 16:9
             pt: '56.25%',
           }}
-          image={projectInfo.image}
-          alt={projectInfo.imageText}
+          image={"https://source.unsplash.com/random?wallpapers"}
+          alt={'project image description'}
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Grid gutterBottom spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="flex-row mb-2">
-            <Chip label={projectInfo.difficulty} variant="outlined" className="text-[#004eb3] border-[#004eb3] bg-white" sx={{mr:2}}/>
-            <Chip label={projectInfo.domain} className="text-[#f2f0f0] bg-[#004eb3] text-right justify-end" />
+            <Chip label="Beginner" variant="outlined" className="text-[#004eb3] border-[#004eb3] bg-white" sx={{mr:2}}/>
+            <Chip label={projectInfo.projectDomain} className="text-[#f2f0f0] bg-[#004eb3] text-right justify-end" />
           </Grid>
           <Typography variant="h4" component="h2" className="text-[#03276a] font-semibold mb-2">
-            {projectInfo.title}
+            {projectInfo.projectName}
           </Typography>
           <Typography gutterBottom variant="h7" component="h2" className="text-[#004eb3] font-light">
-            {projectInfo.manager}
+            {projectInfo.fullName
+}
           </Typography>
 
           <Typography variant="h9" component="h3" className="text-[#4284f3] text-sm font-light">
@@ -52,7 +60,11 @@ export default function ProjectCard(props) {
           </Typography>
         </CardContent>
         <CardActions >
-          <Button size="small" className="text-neutral-500 ml-60">Explore More</Button>
+        <Link to={`/projects/${projectId}`} className="text-neutral-500 ml-60">
+        <Button size="small" onClick={handleExploreMoreClick}>
+          Explore More
+        </Button>
+        </Link>
         </CardActions>
       </Card>
    

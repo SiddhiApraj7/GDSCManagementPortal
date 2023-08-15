@@ -11,7 +11,7 @@ import Button from '@mui/material/Button';
 
 function Post(props) {
     const { post } = props;
-
+console.log(post);
     return (
         <div>
             <Paper
@@ -23,11 +23,11 @@ function Post(props) {
                     backgroundSize: 'cover',
                     backgroundRepeat: 'no-repeat',
                     backgroundPosition: 'center',
-                    backgroundImage: `url(${post.image})`,
+                    backgroundImage: `url(${"https://source.unsplash.com/random?wallpapers"})`,
                 }}
             >
                 {/* Increase the priority of the hero background image */}
-                {<img style={{ display: 'none' }} src={post.image} alt={post.imageText} />}
+                {<img style={{ display: 'none' }} src={"https://source.unsplash.com/random?wallpapers"} alt={"main image description"} />}
                 <Box
                     sx={{
                         position: 'absolute',
@@ -47,9 +47,9 @@ function Post(props) {
                                 pr: { md: 0 },
                             }}
                         >
-                            <Chip label={post.difficulty} className="text-[#f2f0f0] bg-[#004eb3] text-right mb-4" />
+                            <Chip label={"Beginner"} className="text-[#f2f0f0] bg-[#004eb3] text-right mb-4" />
                             <Typography component="h1" variant="h3" color="inherit" gutterBottom>
-                                {post.title}
+                                {post.projectName}
                             </Typography>
 
                         </Box>
@@ -67,16 +67,18 @@ function Post(props) {
                             className="text-[#004eb3] font-semibold"
                             gutterBottom
                         >
-                            {post.manager}
+                            {post.FullName}
                         </Typography>
                         <Typography variant="h7" align="left" color="text.secondary" paragraph className="text-[#7aa5eb] font-light mb-6">
-                            {post.domain}
+                            {post.projectDomain}
                         </Typography>
                     </div>
                     <div>
-                        <Typography variant="h7" align="right" color="text.secondary" paragraph className="text-neutral-500 font-light mr-6">
-                            {post.startDate}  |  {post.duration} months
-                        </Typography>
+                        {post.startDateOfProject && (
+    <Typography variant="h7" align="right" color="text.secondary" paragraph className="text-neutral-500 font-light mr-6">
+      {post.startDateOfProject.slice(0, 10)}  |  {post.durationOfProject} months
+    </Typography>
+  )}
                     </div>
                 </div>
             </Container>
@@ -149,16 +151,16 @@ function Post(props) {
                     {/* <Typography align="center" className="mt-10 font-semibold text-[#7aa5ea]" variant="h4" >
                         Required Prerequisites
                     </Typography> */}
-                    <Typography className="mt-5 text-[#03276a] text-lg mb-7 m-3" gutterBottom>
-                        {post.prerequisite}
+                    <Typography className="mt-10 text-center text-[#03276a] text-lg mb-7 m-3" gutterBottom>
+                        {post.prerequisites}
                     </Typography>
-                    <div className="mb-5">
+                    {/* <div className="mb-5">
                         <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
                         <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
                         <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
                         <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
                         <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
-                    </div>
+                    </div> */}
                 </Paper>
             </Container>
 

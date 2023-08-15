@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
+import { useParams } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container } from '@mui/material';
 import Post from '../Components/Post';
 import Navbar from '../Components/Navbar';
+import { db } from "../config/firebase";
+import { doc, getDoc } from 'firebase/firestore';
+
 /* import { useLocation } from 'react-router-dom'; */
 
 
@@ -26,6 +30,26 @@ const mainFeaturedPost = {
 };
 
 export default function JoinProject() {
+    const { projectId } = useParams();
+    const [projectDetails, setProjectDetails] = useState([]);
+
+    useEffect(() => {
+      const fetchProjectDetails = async () => {
+        try {
+          const projectDocRef = doc(db, 'Projects', projectId);
+          const projectDocSnapshot = await getDoc(projectDocRef);
+          if (projectDocSnapshot.exists()) {
+            setProjectDetails(projectDocSnapshot.data());
+          } else {
+            console.log('Project not found');
+          }
+        } catch (error) {
+          console.error('Error fetching project details:', error);
+        }
+      };
+  
+      fetchProjectDetails();
+    }, [projectId]);
     /* const location = useLocation();
    const { state } = location;
 
@@ -33,14 +57,14 @@ export default function JoinProject() {
     name, projectName, contactNumber, resume, email, githubLinkOfProject, githubProfileLink, linkedinProfileLink,
     prerequisites, problemStatement, projectDomain, projectOverview, slackLink, startDateOfProject, techStack
    } = state; */
-
+//console.log(projectDetails);
     return (
         <ThemeProvider theme={theme}>
             <div className="bg-[#f2f0f0] h-full flex flex-col justify-center items-center">
                 <Navbar />
                 <Container maxWidth="lg">
                     <main>
-                        <Post post={mainFeaturedPost} />
+                        <Post post={projectDetails} />
                     </main>
                 </Container>
             </div>

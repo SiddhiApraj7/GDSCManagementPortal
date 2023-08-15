@@ -9,7 +9,7 @@ import {
 } from "firebase/auth";
 import { createUserWithEmailAndPassword } from "firebase/auth";
 import { getAuth, updateProfile } from "firebase/auth";
-import { collection, addDoc, query, where, getDocs } from "firebase/firestore";
+import { collection, addDoc, query, where, getDocs, serverTimestamp  } from "firebase/firestore";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { GithubAuthProvider } from "firebase/auth";
@@ -49,6 +49,13 @@ export default function AuthProvider({ children }) {
         email: email,
         name: username,
         uid: user.uid,
+        isCollaborator: false,
+        profilepic : currentUser.photoURL,
+        isAdmin: false,
+        isProjectManager: false,
+        projectHosted: [], // An array that will later store references to project documents
+        projectCollaborated: [], // An array that will later store references to project documents
+        joinDate:  serverTimestamp(), // Initialize with null and update later
       })
         .then(() => {
           console.log("User data stored successfully");
@@ -108,6 +115,13 @@ export default function AuthProvider({ children }) {
           email: user.email,
           name: user.displayName,
           uid: user.uid,
+          isCollaborator: false,
+          profilepic : currentUser.photoURL,
+          isAdmin: false,
+          isProjectManager: false,
+          projectHosted: [], // An array that will later store references to project documents
+          projectCollaborated: [], // An array that will later store references to project documents
+          joinDate: serverTimestamp(), // Initialize with null and update later
         });
         console.log("User data stored successfully");
         localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
@@ -121,7 +135,7 @@ export default function AuthProvider({ children }) {
       throw error;
     }
   };
-  const signInWithGithub = async (e) => {
+  const signInWithGithub = async () => {
     try {
       const githubProvider = new GithubAuthProvider();
       const result = await signInWithPopup(auth, githubProvider);
@@ -136,6 +150,13 @@ export default function AuthProvider({ children }) {
           email: user.email,
           name: user.displayName,
           uid: user.uid,
+          isCollaborator: false,
+          profilepic : currentUser.photoURL,
+          isAdmin: false,
+          isProjectManager: false,
+          projectHosted: [], // An array that will later store references to project documents
+          projectCollaborated: [], // An array that will later store references to project documents
+          joinDate: serverTimestamp(), // Initialize with null and update later
         })
           .then(() => {
             console.log("User data stored successfully");

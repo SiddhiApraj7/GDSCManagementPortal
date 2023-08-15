@@ -1,13 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
-
+import { useNavigate } from 'react-router';
 export default function ConfirmHostProject() {
 
     const { currentUser } = useAuth(); // Assuming useAuth() gives you access to the current user
     //const [loading, setLoading] = useState(false);
 
-    
+    const navigate = useNavigate();
   
     const handleClick = async () => {
       try {
@@ -26,6 +26,8 @@ export default function ConfirmHostProject() {
           if (response.status === 200) {
             // API call successful
             console.log("API call successful");
+            navigate("/")
+
           } else {
             // API call failed
             console.error("API call failed");

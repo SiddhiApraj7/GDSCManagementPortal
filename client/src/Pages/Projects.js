@@ -1,29 +1,24 @@
-import Navbar from '../Components/Navbar'
-import * as React from 'react';
+import React, { useState, useEffect } from 'react';
+import Navbar from '../Components/Navbar';
 import Google from '../Components/Google';
-
-/* import AppBar from '@mui/material/AppBar';
-import Button from '@mui/material/Button';
-import Card from '@mui/material/Card';
-import CardActions from '@mui/material/CardActions';
-import CardContent from '@mui/material/CardContent';
-import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
-import Link from '@mui/material/Link';
-import { Chip } from '@mui/material';
-import Stack from '@mui/material/Stack';
-import Toolbar from '@mui/material/Toolbar'; */
-
+import { db } from "../config/firebase";
+import { collection, getDocs } from 'firebase/firestore';
 import Grid from '@mui/material/Grid';
 import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
+// import { createTheme, ThemeProvider } from '@mui/material/styles';
+// import ProjectCard from '../Components/ProjectCard';
+// import Grid from '@mui/material/Grid';
+// import Box from '@mui/material/Box';
+// import Typography from '@mui/material/Typography';
+// import Container from '@mui/material/Container';
 
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 import ProjectCard from '../Components/ProjectCard';
 
-const cards = [1, 2, 3, 4, 5, 6, 7, 8, 9];
+
 
 // TODO remove, this demo shouldn't need to reset the theme.
 const theme = createTheme({
@@ -43,6 +38,28 @@ const theme = createTheme({
 };
 
 export default function Projects() {
+  const [projectDetails, setProjectDetails] = useState([]);
+  const [projectIds, setProjectIds] = useState([]);
+  useEffect(() => {
+    const fetchProjects = async () => {
+      try {
+        const projectsCollectionRef = collection(db, 'Projects');
+        const projectsSnapshot = await getDocs(projectsCollectionRef);
+        const projectsData = projectsSnapshot.docs.map((doc) => doc.data());
+        setProjectDetails(projectsData);
+
+        const idsArray = projectsSnapshot.docs.map((doc) => doc.id);
+        setProjectIds(idsArray);
+      } catch (error) {
+        console.error('Error fetching projects:', error);
+      }
+    };
+
+    fetchProjects();
+  }, []);
+
+  console.log(projectDetails[0]);
+  const cards = [...Array(projectDetails.length).keys()];
   return (
     <ThemeProvider theme={theme}>
     <div className="bg-[#f2f0f0] h-full flex flex-col justify-center items-center" >
@@ -72,7 +89,7 @@ export default function Projects() {
           <Grid container spacing={4} columns={12}>
             {cards.map((card) => (
               <Grid item key={card} xs={12} sm={6} md={4}>
-                <ProjectCard projectInfo={projectInfo}/>
+                <ProjectCard projectInfo={projectDetails[card]} projectId={projectIds[card]}/>
               </Grid>
             ))}
           </Grid>

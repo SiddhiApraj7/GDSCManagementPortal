@@ -10,7 +10,7 @@ const createHostProjectRequest = async (req, res) => {
     try {
       const response = await axios.get(scriptUrl);
       const { latestEntry } = response.data;
-  
+  console.log(latestEntry);
       const {
         'Full Name': fullName,
         'Email(institute id)': emailInstituteId,
@@ -94,10 +94,31 @@ const confirmProject = async (req, res) => {
       const projectsCollection = db.collection('Projects');
   
       // Create a new document in the "Projects" collection
-      await projectsCollection.add({
+      const newProjectDocRef = await projectsCollection.add({
         ...requestData,
         // Additional project-related fields if needed
       });
+
+
+
+      //******adding the link to user with this project in the projectHosted field and updating the role of user ************
+
+
+      const userEmail = requestData.emailInstituteId;
+      const clientCollection = db.collection('Client');
+      // Find the user document based on the fetched email
+      const userQuery = await clientCollection.where('email', '==', userEmail).get();
+
+
+       // Update the user's "projectHosted" field with the new project document reference
+       if (!userQuery.empty) {
+        const userDocRef = userQuery.docs[0].ref;
+        await userDocRef.update({
+          projectHosted: admin.firestore.FieldValue.arrayUnion(newProjectDocRef),
+          isProjectManager: true
+        });
+    }
+    // project manager role update 
   
       console.log('Project confirmed and added to Projects collection');
       res.json({ success: 'Project confirmed' });

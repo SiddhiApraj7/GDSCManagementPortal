@@ -45,7 +45,7 @@ const Router = () => {
       <Route path="/register" element={<Register/>}/>
       <Route path="/host-project" element={<PrivateRoute><HostProject/></PrivateRoute>}/>
       <Route path="/projects" element={<Projects/>}/>
-      <Route path="/join-project" element={<JoinProject/>}/>
+      <Route path="/projects/:projectId" element={<JoinProject />} />
       <Route path="/collaborator-dashboard" element={<PrivateRoute><CollaboratorDashboard/></PrivateRoute>}/>
       <Route path="/manager-dashboard" element={<PrivateRoute><ProjectManagerDashboard/></PrivateRoute>}/>
       <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
@@ -57,8 +57,8 @@ const Router = () => {
       {/* why is there again a <inbox/> ?? */}
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
       <Route path="/join-project-form" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
-      <Route path="/confirm-host-project" element={<ConfirmHostProject/>}/>
-      <Route path="/confirm-join-project" element={<ConfirmJoinProject/>}/>
+      <Route path="/confirm-host-project" element={<PrivateRoute><ConfirmHostProject/></PrivateRoute>}/>
+      <Route path="/confirm-join-project" element={<PrivateRoute><ConfirmJoinProject/></PrivateRoute>}/>
 
 
       </Routes>
