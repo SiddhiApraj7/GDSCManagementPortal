@@ -1,103 +1,285 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
+import axios from 'axios';
+//import { useAuth } from '../contexts/AuthContext';
+import { Button, Modal, Box, Typography } from '@mui/material';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+
+
 
 export default function Request({ key, id, type, name, projectName, contactNumber, resume, email, githubLinkOfProject, githubProfileLink, linkedinProfileLink,
     prerequisites, problemStatement, projectDomain, projectOverview, slackLink, startDateOfProject, techStack }) {
     console.log("Id", id);
+    console.log("type", type);
+
+    //const { currentUser } = useAuth();
+    const [open, setOpen] = React.useState(false);
+    const handleOpen = () => setOpen(true);
+    const handleClose = () => setOpen(false);
+
+    const theme = createTheme({
+        typography: {
+            fontFamily: 'Poppins, sans-serif',
+        },
+    });
+
+    const handleApproveClick = async () => {
+        try {
+            //setLoading(true);
+
+
+            const response = await axios.post(
+                'http://localhost:3000/requests/approve-project-request',
+                {
+                    requestID: id,
+                }
+            );
+
+            if (response.status === 200) {
+                // API call successful
+                console.log("API call successful");
+            } else {
+                // API call failed
+                console.error("API call failed");
+            }
+
+        } catch (error) {
+            console.error("Error calling API:", error);
+        } finally {
+            //setLoading(false);
+        }
+    };
+
+    const handleDeclineClick = async () => {
+        try {
+            //setLoading(true);
+
+            const response = await axios.post(
+                'http://localhost:3000/requests/decline-project-request',
+                {
+                    requestID: id,
+                }
+            );
+
+            if (response.status === 200) {
+                // API call successful
+                console.log("API call successful");
+            } else {
+                // API call failed
+                console.error("API call failed");
+            }
+
+        } catch (error) {
+            console.error("Error calling API:", error);
+        } finally {
+            //setLoading(false);
+        }
+    };
+
+    const style = {
+        position: 'absolute',
+        top: '50%',
+        left: '50%',
+        transform: 'translate(-50%, -50%)',
+        width: 400,
+        bgcolor: 'background.paper',
+        boxShadow: 24,
+        p: 4,
+    };
 
 
     return (
-        <div className="p-2">
-              {type === "1" && ( 
-                <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 my-2">
+        <ThemeProvider theme={theme}>
+            <div className="p-2">
+                {(type == 1) && (
+                    <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
-                    <div>
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
-                    </div>
-                    <div className="pl-2 flex gap-48">
-                        <div className="mb-2 text-base font-normal">
-                            <span className="font-medium text-gray-900 dark:text-white">{name} </span> wants to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
+                        <div>
+                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         </div>
-                        <div align="right" className="flex gap-3 justify-end">
-                            <div>
-                                <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-400 rounded-lg hover:bg-[#00a04f] "> Approve </button>
+                        <div className="pl-2 flex  w-full justify-between">
+                            <div className="mb-2 text-base font-normal">
+                                <span className="font-medium text-gray-900 dark:text-white">{name} </span> wants to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
                             </div>
-                            <div>
-                                <button className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-500  rounded-lg hover:bg-red-600 "> Decline </button>
-                            </div>
-                            <div>
-                                <button data-modal-target="defaultModal" data-modal-toggle="defaultModal" className="block text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2 text-center dark:bg-blue-600 " type="button">Read More</button>
-                                <div id="defaultModal" tabIndex="-1" aria-hidden="true" className="fixed top-0 left-0 right-0 z-50 hidden w-full p-4 overflow-x-hidden overflow-y-auto md:inset-0 h-[calc(100%-1rem)] max-h-full">
-                                    <div className="relative w-full max-w-2xl max-h-full">
+                            <div align="right" className="flex gap-3">
+                                <div>
+                                    <button onClick={handleApproveClick} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-green-400 rounded-lg hover:bg-[#00a04f] "> Approve </button>
+                                </div>
+                                <div>
+                                    <button onClick={handleDeclineClick} className="inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-red-500  rounded-lg hover:bg-red-600 "> Decline </button>
+                                </div>
+                                <div>
+                                    <button onClick={handleOpen} className="block text-white bg-blue-700 hover:bg-blue-800 font-medium rounded-lg text-sm px-5 py-2 text-center " type="button">Read More</button>
+                                    <Modal
+                                        open={open}
+                                        onClose={handleClose}
+                                        aria-labelledby="modal-modal-title"
+                                        aria-describedby="modal-modal-description"
+                                    >
+                                        <Box sx={style} className="rounded-lg w-max ">
+                                            <Typography align="center" id="modal-modal-title" variant="h6" component="h2" className="text-blue-700">
+                                                {projectName}
+                                            </Typography>
 
-                                        <div className="relative bg-white rounded-lg shadow dark:bg-gray-700">
 
-                                            <div className="flex items-start justify-between p-4 border-b rounded-t dark:border-gray-600">
-                                                <h3 className="text-xl font-semibold text-gray-900 dark:text-white">
-                                                    Terms of Service
-                                                </h3>
-                                                <button type="button" className="text-gray-400 bg-transparent hover:bg-gray-200 hover:text-gray-900 rounded-lg text-sm w-8 h-8 ml-auto inline-flex justify-center items-center dark:hover:bg-gray-600 dark:hover:text-white" data-modal-hide="defaultModal">
-                                                    <svg className="w-3 h-3" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                                        <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
-                                                    </svg>
-                                                    <span className="sr-only">Close modal</span>
-                                                </button>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 2 }} className="text-slate-900 font-semibold">
+                                                    Domain:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 2 }}>
+                                                    {projectDomain}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Project Overview:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {projectOverview}
+                                                </Typography>
                                             </div>
 
-                                            <div className="p-6 space-y-6">
-                                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                                    With less than a month to go before the European Union enacts new consumer privacy laws for its citizens, companies around the world are updating their terms of service agreements to comply.
-                                                </p>
-                                                <p className="text-base leading-relaxed text-gray-500 dark:text-gray-400">
-                                                    The European Union’s General Data Protection Regulation (G.D.P.R.) goes into effect on May 25 and is meant to ensure a common set of data rights in the European Union. It requires organizations to notify users as soon as possible of high-risk data breaches that could personally affect them.
-                                                </p>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1}} className="text-slate-900 font-semibold">
+                                                    Problem Statement:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {problemStatement}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Tech Stack:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {techStack}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Prerequisites:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {prerequisites}
+                                                </Typography>
+                                            </div>
+                                            {startDateOfProject &&<div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Start Date:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {startDateOfProject.slice(0, 10)}
+                                                </Typography>
+                                            </div>}
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Project Github Link:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {githubLinkOfProject}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Project Slack Link:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {slackLink}
+                                                </Typography>
                                             </div>
 
-                                            <div className="flex items-center p-6 space-x-2 border-t border-gray-200 rounded-b dark:border-gray-600">
-                                                <button data-modal-hide="defaultModal" type="button" className="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">I accept</button>
-                                                <button data-modal-hide="defaultModal" type="button" className="text-gray-500 bg-white hover:bg-gray-100 focus:ring-4 focus:outline-none focus:ring-blue-300 rounded-lg border border-gray-200 text-sm font-medium px-5 py-2.5 hover:text-gray-900 focus:z-10 dark:bg-gray-700 dark:text-gray-300 dark:border-gray-500 dark:hover:text-white dark:hover:bg-gray-600 dark:focus:ring-gray-600">Decline</button>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Project Manager:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {name}
+                                                </Typography>
                                             </div>
-                                        </div>
-                                    </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Contact Number:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {contactNumber}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Email:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {email}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Resume:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {resume}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Linked In:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {linkedinProfileLink}
+                                                </Typography>
+                                            </div>
+                                            <div className="flex gap-3">
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }} className="text-slate-900 font-semibold">
+                                                    Github:
+                                                </Typography>
+                                                <Typography id="modal-modal-description" sx={{ mt: 1 }}>
+                                                    {githubProfileLink}
+                                                </Typography>
+                                            </div>
+
+
+
+                                        </Box>
+                                    </Modal>
                                 </div>
                             </div>
                         </div>
                     </div>
-                </div>
-             )}  
+                )}
 
-            {type === "2" && (
-                <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 my-2">
-                    <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
-                    <div className="pl-2 flex gap-36">
-                        <div className="mb-2 text-base font-normal">
-                            You allowed <span className="font-medium text-gray-900 dark:text-white">{name}</span> to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
-                        </div>
-                        <div align="right" className="flex gap-3 justify-end">
-                            <div className="text-base font-normal text-green-400">
-                                Approved
+                {(type == 2) && (
+                    <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <div align="right" className="pl-2 w-full flex justify-between">
+                            <div className="mb-2 text-base font-normal">
+                                You allowed <span className="font-medium text-gray-900 dark:text-white">{name}</span> to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
+                            </div>
+                            <div align="right" className="flex gap-3 justify-end">
+                                <div className="text-base font-normal text-green-400">
+                                    Approved
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
+                )}
 
-            {type === "3" && (
-                <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 my-2">
-                    <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
-                    <div className="pl-2 flex gap-14">
-                        <div className="mb-2 text-base font-normal">
-                            You declined <span className="font-medium text-gray-900 dark:text-white">{name} </span>'s request to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
-                        </div>
-                        <div align="right" className="flex gap-3 justify-end">
-                            <div className="text-base font-normal text-red-500">
-                                Declined
+                {(type == 3) && (
+                    <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <div align="right" className="pl-2 flex w-full justify-between">
+                            <div className="mb-2 text-base font-normal">
+                                You declined <span className="font-medium text-gray-900 dark:text-white">{name} </span>'s request to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
+                            </div>
+                            <div align="right" className="flex gap-3 justify-end">
+                                <div className="text-base font-normal text-red-500">
+                                    Declined
+                                </div>
                             </div>
                         </div>
                     </div>
-                </div>
-            )}
-        </div>
+                )}
+            </div>
+        </ThemeProvider>
     )
 }
 

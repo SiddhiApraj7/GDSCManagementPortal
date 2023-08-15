@@ -14,7 +14,7 @@ export default function AdminInbox() {
     const [sidebar, showsideBar] = useState(false);
     const [requestsArray, setRequestsArray] = useState([]);
 
-    
+
 
 
     const allRequests = async () => {
@@ -22,24 +22,24 @@ export default function AdminInbox() {
             const requestsRef = collection(db, "RequestsAdmin");
             console.log(requestsRef);
 
-            
+
             return onSnapshot(requestsRef, (snapshot) => {
                 const Array = [];
-          
+
                 snapshot.forEach((doc) => {
-                  const requestId = doc.id;
-                  const request = doc.data();
-                  Array.push({id:requestId,...request});
+                    const requestId = doc.id;
+                    const request = doc.data();
+                    Array.push({ id: requestId, ...request });
                 });
-                console.log("hello",Array);
-          
+                console.log("hello", Array);
+
                 setRequestsArray(Array);
-          
+
                 // Now you have all requests in the requestsArray
-                console.log("second",requestsArray);
-          
+                console.log("second", requestsArray);
+
                 // If you want to perform further operations with the array, you can do so here
-              });
+            });
 
             // Remember to unsubscribe when you're done using the listener
         } catch (error) {
@@ -53,45 +53,27 @@ export default function AdminInbox() {
 
         // Clean up the listener when the component unmounts
         return () => {
-          if (unsubscribe) {
-            unsubscribe();
-          }
-          console.log(requestsArray);
-        };
-      }, []);
-      
-      const [unsubscribe, setUnsubscribe] = useState(null);
-
-     /*const unsubscribe = allRequests();*/
- 
-    /*useEffect(() => {
-        //const unsubscribe = allRequests();
-
-        // Clean up the listener when the component unmounts
-        return () => { 
-            allRequests();
+            if (unsubscribe) {
+                unsubscribe();
+            }
             console.log(requestsArray);
         };
-        //return ()=allRequests();
+    }, []);
 
-    }, []);  */
+    const [unsubscribe, setUnsubscribe] = useState(null);
 
-    const determineType = async (pending,approved) => {
-        if(pending && !approved)
-        {
+    const determineType = (pending, approved) => {
+        if (pending && !approved) {
             return 1;
         }
-        else if(!pending && approved)
-        {
+        else if (!pending && approved) {
             return 2;
         }
-        else if(!pending && !approved)
-        {
+        else if (!pending && !approved) {
             return 3;
         }
     }
 
-    //const unsubscribe = allRequests();
 
     return (
         <div>
@@ -274,106 +256,29 @@ export default function AdminInbox() {
             )}
             {!sidebar && (
                 <><div className="p-4 sm:ml-64 mt-20 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                     {requestsArray && requestsArray.map((request,i) => (
+                    {requestsArray && requestsArray.map((request, i) => (
+
                         <Request
-                        key={i}
-                        id={request.id}
-                        type = {determineType(request.isPending,request.isApproved)}
-                        name={request.fullName}
-                        projectName = {request.projectName}
-                        contactNumber = {request.contactNumber}
-                        resume = {request.driveLinkForResume}
-                        email = {request.emailInstituteId}
-                        githubLinkOfProject = {request.githubLinkOfProject}
-                        githubProfileLink = {request.githubProfileLink}
-                        linkedinProfileLink = {request.linkedinProfileLink}
-                        prerequisites = {request.prerequisites}
-                        problemStatement = {request.problemStatement}
-                        projectDomain = {request.projectDomain}
-                        projectOverview = {request.projectOverview}
-                        slackLink = {request.slackLinkOfProject}
-                        startDateOfProject = {request.startDateOfProject}
-                        techStack = {request.techStack} />
-                    ))} 
-                    {/* <time className="text-lg font-semibold text-gray-900 dark:text-white">January 13th, 2022</time>
-                    <ol className="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
-                        <li>
-                            <a href="#" className="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="Jese Leos image" />
-                                <div className="text-gray-600 dark:text-gray-400">
-                                    <div className="text-base font-normal"><span className="font-medium text-gray-900 dark:text-white">Jese Leos</span> likes <span className="font-medium text-gray-900 dark:text-white">Bonnie Green's</span> post in <span className="font-medium text-gray-900 dark:text-white"> How to start with Flowbite library</span></div>
-                                    <div className="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
-                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                        <li>
-                            <a href="#" className="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
-                                <div>
-                                    <div className="text-base font-normal text-gray-600 dark:text-gray-400"><span className="font-medium text-gray-900 dark:text-white">Bonnie Green</span> react to <span className="font-medium text-gray-900 dark:text-white">Thomas Lean's</span> comment</div>
-                                    <span className="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                                    </span>
-                                </div>
-                            </a>
-                        </li>
-                    </ol>
-                </div>
-                    <div className="p-4 sm:ml-64 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                        <time className="text-lg font-semibold text-gray-900 dark:text-white">January 12th, 2022</time>
-                        <ol className="mt-3 divide-y divider-gray-200 dark:divide-gray-700">
-                            <li>
-                                <a href="#" className="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-3.jpg" alt="Laura Romeros image" />
-                                    <div className="text-gray-600 dark:text-gray-400">
-                                        <div className="text-base font-normal"><span className="font-medium text-gray-900 dark:text-white">Laura Romeros</span> likes <span className="font-medium text-gray-900 dark:text-white">Bonnie Green's</span> post in <span className="font-medium text-gray-900 dark:text-white"> How to start with Flowbite library</span></div>
-                                        <div className="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
-                                        <span className="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                                        </span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="Mike Willi image" />
-                                    <div>
-                                        <div className="text-base font-normal text-gray-600 dark:text-gray-400"><span className="font-medium text-gray-900 dark:text-white">Mike Willi</span> react to <span className="font-medium text-gray-900 dark:text-white">Thomas Lean's</span> comment</div>
-                                        <span className="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                                        </span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="Jese Leos image" />
-                                    <div className="text-gray-600 dark:text-gray-400">
-                                        <div className="text-base font-normal"><span className="font-medium text-gray-900 dark:text-white">Jese Leos</span> likes <span className="font-medium text-gray-900 dark:text-white">Bonnie Green's</span> post in <span className="font-medium text-gray-900 dark:text-white"> How to start with Flowbite library</span></div>
-                                        <div className="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
-                                        <span className="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                                        </span>
-                                    </div>
-                                </a>
-                            </li>
-                            <li>
-                                <a href="#" className="items-center block p-3 sm:flex hover:bg-gray-100 dark:hover:bg-gray-700">
-                                    <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-1.jpg" alt="Bonnie Green image" />
-                                    <div className="text-gray-600 dark:text-gray-400">
-                                        <div className="text-base font-normal"><span className="font-medium text-gray-900 dark:text-white">Bonnie Green</span> likes <span className="font-medium text-gray-900 dark:text-white">Bonnie Green's</span> post in <span className="font-medium text-gray-900 dark:text-white"> Top figma designs</span></div>
-                                        <div className="text-sm font-normal">"I wanted to share a webinar zeroheight."</div>
-                                        <span className="inline-flex items-center text-xs font-normal text-gray-500 dark:text-gray-400">
-
-                                        </span>
-                                    </div>
-                                </a>
-                            </li>
-                        </ol> */}
-                    </div></>
+                            key={i}
+                            id={request.id}
+                            type={determineType(request.isPending, request.isApproved)}
+                            name={request.fullName}
+                            projectName={request.projectName}
+                            contactNumber={request.contactNumber}
+                            resume={request.driveLinkForResume}
+                            email={request.emailInstituteId}
+                            githubLinkOfProject={request.githubLinkOfProject}
+                            githubProfileLink={request.githubProfileLink}
+                            linkedinProfileLink={request.linkedinProfileLink}
+                            prerequisites={request.prerequisites}
+                            problemStatement={request.problemStatement}
+                            projectDomain={request.projectDomain}
+                            projectOverview={request.projectOverview}
+                            slackLink={request.slackLinkOfProject}
+                            startDateOfProject={request.startDateOfProject}
+                            techStack={request.techStack} />
+                    ))}
+                </div></>
             )}
 
 
