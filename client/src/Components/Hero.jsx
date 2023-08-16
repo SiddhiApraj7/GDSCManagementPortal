@@ -18,7 +18,7 @@ const theme = createTheme({
   },
 });
 
-const Hero = () => {
+const Hero = ({name}) => {
 
   const { currentUser } = useAuth();
 
@@ -50,6 +50,7 @@ const Hero = () => {
   });
 
   return (
+    <div id={name}>
     <Box sx={{ backgroundColor: "#E6F0FF", minHeight: "80vh" }}>
       <ThemeProvider theme={theme}>
         <Container>
@@ -144,6 +145,7 @@ const Hero = () => {
         </Container>
       </ThemeProvider>
     </Box>
+    </div>
   );
 };
 

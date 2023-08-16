@@ -7,10 +7,10 @@ import AboutUs from '../Components/AboutUs';
 export default function LandingPage() {
   return (
     <>
-      <Hero />
-      <About/>
-      <MoreProjects/>
-      <AboutUs/>
+      <Hero name="hero"/>
+      <About name="top-projects"/>
+      <MoreProjects name="projects"/>
+      <AboutUs name="about-us"/>
       {/* <Companies />
       <Guide />
       <Properties />
