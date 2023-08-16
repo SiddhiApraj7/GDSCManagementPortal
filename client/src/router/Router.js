@@ -57,8 +57,8 @@ const Router = () => {
       {/* why is there again a <inbox/> ?? */}
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
       <Route path="/join-project-form" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
-      <Route path="/confirm-host-project" element={<PrivateRoute><ConfirmHostProject/></PrivateRoute>}/>
-      <Route path="/confirm-join-project" element={<PrivateRoute><ConfirmJoinProject/></PrivateRoute>}/>
+      <Route path="/confirm-host-project" element={<ConfirmHostProject/>}/>
+      <Route path="/confirm-join-project" element={<ConfirmJoinProject/>}/>
 
 
       </Routes>

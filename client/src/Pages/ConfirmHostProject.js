@@ -13,11 +13,11 @@ export default function ConfirmHostProject() {
       try {
         //setLoading(true);
   
-        if (currentUser) {
+        
           const email = currentUser.email;
             console.log(email);
           const response = await axios.post(
-            'http://localhost:3001/requests/create-project-request',
+            'http://localhost:3000/requests/create-project-request',
             {
               email: email,
             }
@@ -26,17 +26,16 @@ export default function ConfirmHostProject() {
           if (response.status === 200) {
             // API call successful
             console.log("API call successful");
-            navigate("/")
+            
 
           } else {
             // API call failed
             console.error("API call failed");
           }
-        }
       } catch (error) {
         console.error("Error calling API:", error);
       } finally {
-        //setLoading(false);
+        navigate("/");
       }
     };
 

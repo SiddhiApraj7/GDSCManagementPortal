@@ -1,18 +1,50 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 
-
-import { useEffect } from 'react';
 const HostProject = () => {
- 
+  useEffect(() => {
+    let load = 0;
+
+    const handleFormLoad = () => {
+      /* Execute on every reload of the iFrame */
+      load++;
+      if (load >= 4) {
+        /* Second reload is a submit */
+        window.location.href = "http://localhost:3001/confirm-host-project"; // Redirect to the desired page
+      }
+    };
+
+    // Attach the 'load' event listener to the iframe
+    const iframe = document.getElementById('gform');
+    if (iframe) {
+      iframe.onload = handleFormLoad;
+    }
+
+    // Clean up the event listener when the component unmounts
+    return () => {
+      if (iframe) {
+        iframe.onload = null;
+      }
+    };
+  }, []);
+
   return (
     <div className='bg-gradient-to-b from-[#9fa0a9] to-white'>
-      <iframe className='mx-auto pt-4 w-full' src="https://docs.google.com/forms/d/e/1FAIpQLSekmjdfAmX0CPsvBK3bqGg8Zs7uAQnes_b66Ce11DDQU77WVg/viewform?embedded=true" width="640" height="5000" frameborder="2" marginheight="0" marginwidth="0">Loading…</iframe>
-     
+      <iframe
+        id='gform'
+        className='mx-auto pt-4 w-full'
+        src="https://docs.google.com/forms/d/e/1FAIpQLSekmjdfAmX0CPsvBK3bqGg8Zs7uAQnes_b66Ce11DDQU77WVg/viewform?embedded=true"
+        width="640"
+        height="5000"
+        title="Google Form"
+      >
+        Loading…
+      </iframe>
     </div>
   );
 };
 
 export default HostProject;
+
 // import React from 'react'
 // import { useFormik } from 'formik';
 // import * as Yup from 'yup';

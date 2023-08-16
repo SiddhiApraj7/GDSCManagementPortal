@@ -114,9 +114,11 @@ const confirmProject = async (req, res) => {
        // Update the user's "projectHosted" field with the new project document reference
        if (!userQuery.empty) {
         const userDocRef = userQuery.docs[0].ref;
+
+        // Push the projectID of the newly added project to the user's "projectHosted" array
         await userDocRef.update({
-          projectHosted: admin.firestore.FieldValue.arrayUnion(newProjectDocRef),
-          isProjectManager: true
+            projectHosted: admin.firestore.FieldValue.arrayUnion(newProjectDocRef.id), // Push projectID
+            isProjectManager: true
         });
     }
     // project manager role update 
