@@ -1,11 +1,13 @@
 import React from 'react';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
-
+import { useParams } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 export default function ConfirmJoinProject() {
 
+  const navigate = useNavigate();
   const { currentUser } = useAuth();
-
+  const { projectId } = useParams();
   const handleClick = async () => {
     try {
       //setLoading(true);
@@ -17,6 +19,7 @@ export default function ConfirmJoinProject() {
           'http://localhost:3000/requests/create-collaborator-request',
           {
             email: email,
+            projectID : projectId
           }
         );
 
@@ -31,7 +34,7 @@ export default function ConfirmJoinProject() {
     } catch (error) {
       console.error("Error calling API:", error);
     } finally {
-      //setLoading(false);
+      navigate("/");
     }
   };
 

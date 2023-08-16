@@ -1,8 +1,9 @@
 import React from 'react';
-
+import { useParams } from 'react-router-dom';
 
 import { useEffect } from 'react';
 const JoinProjectForm = () => {
+  const { projectId } = useParams();
   useEffect(() => {
     let load = 0;
 
@@ -11,7 +12,7 @@ const JoinProjectForm = () => {
       load++;
       if (load >= 3) {
         /* Second reload is a submit */
-        window.location.href = "http://localhost:3001/confirm-join-project"; // Redirect to the desired page
+        window.location.href = `http://localhost:3001/confirm-join-project/${projectId}`; // Redirect to the desired page
       }
     };
 

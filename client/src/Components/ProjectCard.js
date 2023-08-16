@@ -60,11 +60,11 @@ export default function ProjectCard(props) {
           </Typography>
         </CardContent>
         <CardActions >
-        <Link to={`/projects/${projectId}`} className="text-neutral-500 ml-60">
-        <Button size="small" onClick={handleExploreMoreClick}>
+        
+        <Button size="small" className="text-[#004eb3] ml-60" onClick={handleExploreMoreClick}>
           Explore More
         </Button>
-        </Link>
+        
         </CardActions>
       </Card>
    

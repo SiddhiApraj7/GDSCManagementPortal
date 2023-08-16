@@ -64,7 +64,7 @@ export default function JoinProject() {
                 <Navbar />
                 <Container maxWidth="lg">
                     <main>
-                        <Post post={projectDetails} />
+                        <Post post={projectDetails} projectId={projectId} />
                     </main>
                 </Container>
             </div>

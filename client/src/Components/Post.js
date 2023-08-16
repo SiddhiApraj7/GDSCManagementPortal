@@ -7,10 +7,14 @@ import Box from '@mui/material/Box';
 import { Chip } from '@mui/material';
 import Container from '@mui/material/Container';
 import Button from '@mui/material/Button';
-
+import { useNavigate } from 'react-router';
 
 function Post(props) {
-    const { post } = props;
+    const navigate = useNavigate();
+    const { post, projectId } = props;
+    const handleApplyNowClick = () => {
+        navigate(`/join-project-form/${projectId}`);
+      };
 console.log(post);
     return (
         <div>
@@ -91,7 +95,7 @@ console.log(post);
                 </Container>
             </div>
             <Container align="center">
-                <Button variant="contained" className="text-white bg-[#03276a] hover:text-[#03276a] hover:bg-[#86adea] mb-10">Apply Now</Button>
+                <Button onClick={handleApplyNowClick} variant="contained" className="text-white bg-[#03276a] hover:text-[#03276a] hover:bg-[#86adea] mb-10">Apply Now</Button>
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">

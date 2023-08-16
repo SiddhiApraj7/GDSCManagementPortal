@@ -20,6 +20,7 @@ import ProjectManagers from '../Pages/ProjectManagers';
 import ConfirmHostProject from '../Pages/ConfirmHostProject';
 import ConfirmJoinProject from '../Pages/ConfirmJoinProject';
 import AdminInbox from '../Pages/AdminInbox';
+import CollaboratorInbox from '../Pages/CollaboratorInbox';
 
 
 const Router = () => {
@@ -55,10 +56,10 @@ const Router = () => {
       <Route path="/admin-dashboard/inbox" element={<AdminInbox/>}/>
 
       {/* why is there again a <inbox/> ?? */}
-      <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><Inbox/></PrivateRoute>}/>
-      <Route path="/join-project-form" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
+      <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><CollaboratorInbox/></PrivateRoute>}/>
+      <Route path="/join-project-form/:projectId" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
       <Route path="/confirm-host-project" element={<ConfirmHostProject/>}/>
-      <Route path="/confirm-join-project" element={<ConfirmJoinProject/>}/>
+      <Route path="/confirm-join-project/:projectId" element={<ConfirmJoinProject/>}/>
 
 
       </Routes>
