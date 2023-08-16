@@ -190,13 +190,16 @@ export const Navbar = () => {
         ) : (
           // Render sign up and register buttons
           <>
-            <NavLink variant="body2">Sign Up</NavLink>
+            <Link to="/login" ><div className="p-2"><NavLink variant="body2" className="p-1">Log In</NavLink></div></Link>
             <div className="bg-[#04276a] rounded-xl">
+              <Link to="/register">
+                {/* <button className="bg-[#04276a] text-white text-semibold text-center"> Register </button> */}
               <CustomButton
                 backgroundColor="#04276a"
                 color="#fff"
                 buttonText="Register"
               />
+              </Link>
             </div>
           </>
         )}
