@@ -4,43 +4,125 @@ import { useState } from 'react';
 import logoImg from "../media/gdsc-logo.png";
 import ProjectCard from '../Components/ProjectCard';
 import { db } from "../config/firebase";
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, doc, getDoc, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { onSnapshot } from 'firebase/firestore';
-import Request from '../Components/Request';
+import ManagerRequest from '../Components/ManagerRequest';
 import { useAuth } from '../contexts/AuthContext';
 
-export default function AdminInbox() {
+export default function ManagerInbox() {
     const [sidebar, showsideBar] = useState(false);
-    const [requestsArray, setRequestsArray] = useState([]);
+    const [collaboratorRequestsArray, setCollaboratorRequestsArray] = useState([]);
+    const [managerRequestsArray, setManagerRequestsArray] = useState([]);
 
-    const { currentUser } = useAuth(); 
+    const { currentUser } = useAuth();
 
 
-    const allRequests = async () => {
+    const allCollaboratorRequests = async () => {
         try {
-          const currentUserEmail = currentUser.email; // Replace with the actual email
-      
-          const requestsRef = collection(db, "RequestsProjectManager");
-          const querySnapshot = await getDocs(
-            query(requestsRef, where("projectManagerEmail", "==", currentUserEmail))
-          );
-      
-          const Array = querySnapshot.docs.map((doc) => {
-            const requestId = doc.id;
-            const request = doc.data();
-            return { id: requestId, ...request };
-          });
-      
-          setRequestsArray(Array);
+            const currentUserEmail = currentUser.email; // Replace with the actual email
+
+            const requestsRef = collection(db, "RequestsProjectManager");
+            const querySnapshot = await getDocs(
+                query(requestsRef, where("projectManagerEmail", "==", currentUserEmail))
+            );
+
+            return onSnapshot(requestsRef, (snapshot) => {
+                const Array = [];
+
+                snapshot.forEach((doc) => {
+                    const requestId = doc.id;
+                    const request = doc.data();
+                    Array.push({ id: requestId, ...request });
+                });
+                console.log("hello", Array);
+
+                setCollaboratorRequestsArray(Array);
+
+                // Now you have all requests in the requestsArray
+                console.log("second", collaboratorRequestsArray);
+
+                // If you want to perform further operations with the array, you can do so here
+            });
+
+            /* const Array = querySnapshot.docs.map((doc) => {
+              const requestId = doc.id;
+              const request = doc.data();
+              return { id: requestId, ...request };
+            }); */
+
+            //setCollaboratorRequestsArray(Array);
         } catch (error) {
-          console.error("Error fetching requests:", error);
+            console.error("Error fetching requests:", error);
         }
-      };
-      
+    };
+
+    const allManagerRequests = async () => {
+        try {
+            const currentUserEmail = currentUser.email; // Replace with the actual email
+
+            const requestsRef = collection(db, "RequestsAdmin");
+            const querySnapshot = await getDocs(
+                query(requestsRef, where("projectManagerEmail", "==", currentUserEmail))
+            );
+
+            return onSnapshot(requestsRef, (snapshot) => {
+                const Array = [];
+
+                snapshot.forEach((doc) => {
+                    const requestId = doc.id;
+                    const request = doc.data();
+                    Array.push({ id: requestId, ...request });
+                });
+                console.log("hello", Array);
+
+                setManagerRequestsArray(Array);
+
+                // Now you have all requests in the requestsArray
+                console.log("second", managerRequestsArray);
+
+                // If you want to perform further operations with the array, you can do so here
+            });
+
+            /* const Array = querySnapshot.docs.map((doc) => {
+              const requestId = doc.id;
+              const request = doc.data();
+              return { id: requestId, ...request };
+            }); */
+
+            //setCollaboratorRequestsArray(Array);
+        } catch (error) {
+            console.error("Error fetching requests:", error);
+        }
+    };
+
+    const determineName = async (projectID) => {
+        
+        const projectsRef = collection(db, "Projects");
+        const projectDocRef = doc(projectsRef, projectID);
+        
+        try {
+            const projectSnapshot = await getDoc(projectDocRef);
+            console.log("sakshi",projectSnapshot);
+
+            if (projectSnapshot.exists()) {
+                // The document exists, and you can access its data using projectSnapshot.data()
+                const projectData = projectSnapshot.data();
+                console.log("Project data:", projectData);
+                
+                //return projectData.projectName;
+            } else {
+                console.log("Project not found.");
+            }
+        } catch (error) {
+            console.error("Error fetching project:", error);
+        }
+    };
+
 
     useEffect(() => {
-        setUnsubscribe(() => allRequests());
+        setUnsubscribe(() => allCollaboratorRequests());
+        setUnsubs(() => allManagerRequests());
         //console.log(requestsArray);
 
         // Clean up the listener when the component unmounts
@@ -48,11 +130,16 @@ export default function AdminInbox() {
             if (unsubscribe) {
                 unsubscribe();
             }
-            console.log(requestsArray);
+            if(unsubs) {
+                unsubs();
+            }
+            console.log(collaboratorRequestsArray);
+            console.log(managerRequestsArray);
         };
     }, []);
 
     const [unsubscribe, setUnsubscribe] = useState(null);
+    const [unsubs, setUnsubs] = useState(null);
 
     const determineType = (pending, approved) => {
         if (pending && !approved) {
@@ -63,6 +150,18 @@ export default function AdminInbox() {
         }
         else if (!pending && !approved) {
             return 3;
+        }
+    }
+
+    const determineType2 = (pending, approved) => {
+        if (pending && !approved) {
+            return 4;
+        }
+        else if (!pending && approved) {
+            return 5;
+        }
+        else if (!pending && !approved) {
+            return 6;
         }
     }
 
@@ -87,19 +186,11 @@ export default function AdminInbox() {
                                 <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6" />
                             </svg>
                             )
-
-
                             }
-
 
                         </div>
                         <div className="flex items-center">
                             <div className="flex items-center ml-3">
-
-
-
-
-
 
                             </div>
                         </div>
@@ -125,32 +216,11 @@ export default function AdminInbox() {
                         </li>
 
                         <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                    <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-                                </svg>
-                                <Link to="/admin-dashboard/all-projects" className="flex-1 ml-3 whitespace-nowrap">All Projects</Link>
-                            </a>
-
-                        </li>
-
-                        <li>
-
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                    <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                                </svg>
-                                <Link to="/admin-dashboard/project-managers" className="flex-1 ml-3 whitespace-nowrap">All Project Managers</Link>
-                            </a>
-
-                        </li>
-
-                        <li>
                             <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                                 </svg>
-                                <Link to="/admin-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
+                                <Link to="/manager-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
                                 <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
                             </div>
                         </li>
@@ -195,32 +265,11 @@ export default function AdminInbox() {
                             </li>
 
                             <li>
-                                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        <path d="M6.143 0H1.857A1.857 1.857 0 0 0 0 1.857v4.286C0 7.169.831 8 1.857 8h4.286A1.857 1.857 0 0 0 8 6.143V1.857A1.857 1.857 0 0 0 6.143 0Zm10 0h-4.286A1.857 1.857 0 0 0 10 1.857v4.286C10 7.169 10.831 8 11.857 8h4.286A1.857 1.857 0 0 0 18 6.143V1.857A1.857 1.857 0 0 0 16.143 0Zm-10 10H1.857A1.857 1.857 0 0 0 0 11.857v4.286C0 17.169.831 18 1.857 18h4.286A1.857 1.857 0 0 0 8 16.143v-4.286A1.857 1.857 0 0 0 6.143 10Zm10 0h-4.286A1.857 1.857 0 0 0 10 11.857v4.286c0 1.026.831 1.857 1.857 1.857h4.286A1.857 1.857 0 0 0 18 16.143v-4.286A1.857 1.857 0 0 0 16.143 10Z" />
-                                    </svg>
-                                    <Link to="/admin-dashboard/all-projects" className="flex-1 ml-3 whitespace-nowrap">All Projects</Link>
-                                </a>
-
-                            </li>
-
-                            <li>
-
-                                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
-                                        <path d="M14 2a3.963 3.963 0 0 0-1.4.267 6.439 6.439 0 0 1-1.331 6.638A4 4 0 1 0 14 2Zm1 9h-1.264A6.957 6.957 0 0 1 15 15v2a2.97 2.97 0 0 1-.184 1H19a1 1 0 0 0 1-1v-1a5.006 5.006 0 0 0-5-5ZM6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9ZM8 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h11a1 1 0 0 0 1-1v-2a5.006 5.006 0 0 0-5-5Z" />
-                                    </svg>
-                                    <Link to="/admin-dashboard/project-managers" className="flex-1 ml-3 whitespace-nowrap">All Project Managers</Link>
-                                </a>
-
-                            </li>
-
-                            <li>
                                 <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                                     </svg>
-                                    <Link to="/admin-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
+                                    <Link to="/manager-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
                                     <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
                                 </div>
                             </li>
@@ -248,9 +297,9 @@ export default function AdminInbox() {
             )}
             {!sidebar && (
                 <><div className="p-4 sm:ml-64 mt-20 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
-                    {requestsArray && requestsArray.map((request, i) => (
+                    {collaboratorRequestsArray && collaboratorRequestsArray.map((request, i) => (
 
-                        <Request
+                        <ManagerRequest
                             key={i}
                             id={request.id}
                             type={determineType(request.isPending, request.isApproved)}
@@ -258,17 +307,30 @@ export default function AdminInbox() {
                             contactNumber={request.contactNumber}
                             resume={request.driveLinkForResume}
                             email={request.emailInstituteId}
-                            githubLinkOfProject={request.githubLinkOfProject}
+                            projectID={request.projectID}
+                            projectName="Blockchain Technology"
                             githubProfileLink={request.githubProfileLink}
                             linkedinProfileLink={request.linkedinProfileLink}
-                            prerequisites={request.prerequisites}
-                            problemStatement={request.problemStatement}
-                            projectDomain={request.projectDomain}
-                            projectOverview={request.projectOverview}
-                            slackLink={request.slackLinkOfProject}
-                            startDateOfProject={request.startDateOfProject}
-                            techStack={request.techStack} />
+                            hoursCanDedicate={request.hoursCanDedicate}
+                            reasonToJoin={request.ReasonToJoin} />
+
+                            
                     ))}
+                    
+                </div>
+                <div className="p-4 sm:ml-64 mb-4 border border-gray-100 rounded-lg bg-gray-50 dark:bg-gray-800 dark:border-gray-700">
+                    {managerRequestsArray && managerRequestsArray.map((request, i) => (
+
+                        <ManagerRequest
+                            key={i}
+                            id={request.id}
+                            type={determineType2(request.isPending, request.isApproved)}
+                            projectName={request.projectName}
+                         />
+
+                            
+                    ))}
+                    
                 </div></>
             )}
 
