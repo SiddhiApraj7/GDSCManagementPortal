@@ -1,6 +1,7 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
+import { Link as ScrollLink } from "react-scroll";
 import MenuIcon from "@mui/icons-material/Menu";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
 import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
@@ -83,6 +84,7 @@ export const Navbar = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
+    cursor:"pointer",
     gap: theme.spacing(3),
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -142,11 +144,59 @@ export const Navbar = () => {
         </Box>
 
         <NavbarLinksBox>
-          <NavLink variant="body2">Home</NavLink>
-          <NavLink variant="body2">Features</NavLink>
-          <NavLink variant="body2">Services</NavLink>
-          <NavLink variant="body2">Listed</NavLink>
-          <NavLink variant="body2">Contact</NavLink>
+          
+          <ScrollLink
+            to="hero"  // The "to" prop should match the element's ID you want to scroll to
+            spy={true}
+            smooth={true}
+            duration={500}
+            className="text-[#05276a] font-bold text-sm"
+          >
+            <div className="p-2">
+            Home
+            </div>
+          </ScrollLink>
+          
+          
+          <ScrollLink
+            to="top-projects"
+            spy={true}
+            smooth={true}
+            duration={500}
+            className="text-[#05276a] font-bold text-sm"
+          >
+            <div className="p-2">
+            Top Projects
+            </div>
+          </ScrollLink>
+          
+          
+          <ScrollLink
+            to="projects"
+            spy={true}
+            smooth={true}
+            duration={500}
+            className="text-[#05276a] font-bold text-sm"
+          >
+            <div className="p-2">
+            Projects
+            </div>
+          </ScrollLink>
+          
+          
+          <ScrollLink
+            to="about-us"
+            spy={true}
+            smooth={true}
+            duration={500}
+            className="text-[#05276a] font-bold text-sm"
+          >
+            <div className="p-2">
+            About Us
+            </div>
+          </ScrollLink>
+          
+          {/* <NavLink variant="body2">Contact</NavLink> */}
         </NavbarLinksBox>
       </Box>
 
@@ -190,13 +240,16 @@ export const Navbar = () => {
         ) : (
           // Render sign up and register buttons
           <>
-            <NavLink variant="body2">Sign Up</NavLink>
+            <Link to="/login" ><div className="p-2"><NavLink variant="body2" className="p-1">Log In</NavLink></div></Link>
             <div className="bg-[#04276a] rounded-xl">
-              <CustomButton
-                backgroundColor="#04276a"
-                color="#fff"
-                buttonText="Register"
-              />
+              <Link to="/register">
+                {/* <button className="bg-[#04276a] text-white text-semibold text-center"> Register </button> */}
+                <CustomButton
+                  backgroundColor="#04276a"
+                  color="#fff"
+                  buttonText="Register"
+                />
+              </Link>
             </div>
           </>
         )}

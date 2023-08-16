@@ -9,6 +9,8 @@ import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 import Lottie from "lottie-react";
 import animationData from "../media/animation_lkpvsxvp.json";
+import { Link } from "react-router-dom";
+import { useAuth } from '../contexts/AuthContext';
 
 const theme = createTheme({
   typography: {
@@ -16,7 +18,11 @@ const theme = createTheme({
   },
 });
 
-const Hero = () => {
+const Hero = ({name}) => {
+
+  const { currentUser } = useAuth();
+
+
   const CustomBox = styled(Box)(({ theme }) => ({
     display: "flex",
     justifyContent: "center",
@@ -44,6 +50,7 @@ const Hero = () => {
   });
 
   return (
+    <div id={name}>
     <Box sx={{ backgroundColor: "#E6F0FF", minHeight: "80vh" }}>
       <ThemeProvider theme={theme}>
         <Container>
@@ -97,22 +104,29 @@ const Hero = () => {
             />
             </span>
             </div> */}
+            
+            <Link to={currentUser ? "/projects" : "/register"}>
               <Fab
                 size="medium"
                 variant="extended"
-                className="bg-[#04276a] text-gray-300"
+                className="bg-[#04276a] text-gray-300 hover:text-[#04276a]"
                 sx={{ mr: 2 }}
               >
                 Join Project
               </Fab>
+              </Link>
+              
+              <Link to={currentUser ? "/host-project" : "/register"}>
               <Fab
                 size="medium"
                 variant="extended"
-                className="bg-neutral-100 text-[#04276a]"
+                className="bg-neutral-100 text-[#04276a] hover:bg-[#04276a] hover:text-neutral-100"
               >
                 Host Project
               </Fab>
+              </Link>
             </Box>
+            
 
             <Box className="items-start" sx={{ flex: "1.25" }}>
               {/* <img
@@ -131,6 +145,7 @@ const Hero = () => {
         </Container>
       </ThemeProvider>
     </Box>
+    </div>
   );
 };
 

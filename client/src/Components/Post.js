@@ -95,7 +95,7 @@ console.log(post);
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
-            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#6095f5] dark:decoration-blue-600">Problem Statement</span></h5>
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> Problem Statement</h5>
 
                 <div className="mr-2">
                     <Typography className="mt-5 text-[#485e70] text-lg" gutterBottom>
@@ -105,7 +105,7 @@ console.log(post);
 
             </Container>
             <Container align="left" maxWidth="lg" className="mb-16">
-            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#ea4335] dark:decoration-blue-600">Plan/Timeline</span></h5>
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white">Plan/Timeline</h5>
                 {/* <Typography className="mt-10 font-semibold text-[#004eb3] mb-6" variant="h4" >
                     Plan/Timeline
                 </Typography> */}
@@ -146,7 +146,7 @@ console.log(post);
             </Container>
             <Container align="left" maxWidth="lg" className="mb-10">
                 <Paper elevation={2} sx={{ p: 2, bgcolor: '#ffffff' }} className="" gutterBottom>
-                <h5 align="center" className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#7aa5ea] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#fabc05] dark:decoration-blue-600">Required Prerequisites</span></h5>
+                <h5 align="center" className="mb-4 mt-3 text-4xl font-semibold leading-none tracking-tight text-[#7aa5ea] md:text-2xl lg:text-4xl dark:text-white"> Required Prerequisites</h5>
                     
                     {/* <Typography align="center" className="mt-10 font-semibold text-[#7aa5ea]" variant="h4" >
                         Required Prerequisites
@@ -165,7 +165,7 @@ console.log(post);
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
-            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> <span className="underline underline-offset-9 decoration-8 decoration-[#33a852] dark:decoration-blue-600">Contributors</span></h5>
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> Contributors</h5>
                 {/* <Typography className="mt-10 font-semibold text-[#004eb3]" variant="h4" >
                     Contributors
                 </Typography> */}

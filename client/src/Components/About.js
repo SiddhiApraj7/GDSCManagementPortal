@@ -32,9 +32,10 @@ const projects = [
   }
 ]
 
-const About = () => {
+const About = ({name}) => {
 
   return (
+    <div id={name}>
 <div className="bg-white py-24 sm:py-32">
   <div className="mx-auto max-w-7xl px-6 lg:px-8">
     <div className="mx-auto items-center lg:mx-0 lg:text-center ">
@@ -63,6 +64,7 @@ const About = () => {
           ))}
         </div>
   </div>
+</div>
 </div>
   );
 };
