@@ -14,7 +14,7 @@ export default function ConfirmJoinProject() {
         const email = currentUser.email;
           console.log(email);
         const response = await axios.post(
-          'http://localhost:3000/requests/create-collaborator-request',
+          'http://localhost:3001/requests/create-collaborator-request',
           {
             email: email,
           }

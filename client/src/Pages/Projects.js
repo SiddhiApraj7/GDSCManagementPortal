@@ -45,10 +45,18 @@ export default function Projects() {
       try {
         const projectsCollectionRef = collection(db, 'Projects');
         const projectsSnapshot = await getDocs(projectsCollectionRef);
-        const projectsData = projectsSnapshot.docs.map((doc) => doc.data());
+
+        const projectsData = projectsSnapshot.docs
+          .filter((doc) => doc.data().isApproved === true && doc.data().isPending === false)
+          .map((doc) => doc.data());
+
         setProjectDetails(projectsData);
 
-        const idsArray = projectsSnapshot.docs.map((doc) => doc.id);
+        // Filter project IDs based on conditions
+        const idsArray = projectsSnapshot.docs
+          .filter((doc) => doc.data().isApproved === true && doc.data().isPending === false)
+          .map((doc) => doc.id);
+        
         setProjectIds(idsArray);
       } catch (error) {
         console.error('Error fetching projects:', error);
@@ -56,7 +64,8 @@ export default function Projects() {
     };
 
     fetchProjects();
-  }, []);
+}, []);
+
 
   console.log(projectDetails[0]);
   const cards = [...Array(projectDetails.length).keys()];

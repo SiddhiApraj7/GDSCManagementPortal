@@ -8,7 +8,7 @@ export default function ConfirmHostProject() {
     //const [loading, setLoading] = useState(false);
 
     const navigate = useNavigate();
-  
+  console.log(currentUser);
     const handleClick = async () => {
       try {
         //setLoading(true);
@@ -17,7 +17,7 @@ export default function ConfirmHostProject() {
           const email = currentUser.email;
             console.log(email);
           const response = await axios.post(
-            'http://localhost:3000/requests/create-project-request',
+            'http://localhost:3001/requests/create-project-request',
             {
               email: email,
             }

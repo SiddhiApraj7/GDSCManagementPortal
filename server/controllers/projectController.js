@@ -96,6 +96,7 @@ const confirmProject = async (req, res) => {
       // Create a new document in the "Projects" collection
       const newProjectDocRef = await projectsCollection.add({
         ...requestData,
+        collaborators : []
         // Additional project-related fields if needed
       });
 

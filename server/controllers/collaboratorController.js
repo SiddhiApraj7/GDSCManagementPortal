@@ -25,10 +25,18 @@ const createJoinProjectRequest = async (req, res) => {
   
       // Reference the "RequestsAdmin" collection
       const requestsPMCollection = db.collection('RequestsProjectManager');
+      const projectDocRef = db.collection('Projects').doc(projectID);
+      const projectDoc = await projectDocRef.get();
+      if (!projectDoc.exists) {
+          return res.status(404).json({ error: 'Project not found' });
+      }
+      const projectData = projectDoc.data();
+      const projectManagerEmail = projectData.email;
   
       // Create a new document in the "RequestsAdmin" collection
       await requestsPMCollection.add({
         projectID,
+        projectManagerEmail,
         fullName,
         emailInstituteId,
         contactNumber,
@@ -69,9 +77,40 @@ const createJoinProjectRequest = async (req, res) => {
         isApproved: true,
         isPending: false
       });
+
+      const requestData = requestDoc.data();
+        const projectID = requestData.projectID;
+
+        // Reference the "Projects" collection
+        const projectsCollection = db.collection('Projects');
+        const projectDocRef = projectsCollection.doc(projectID);
+
+        // Get the specific project document by projectID
+        const projectDoc = await projectDocRef.get();
+
+        if (!projectDoc.exists) {
+            return res.status(404).json({ error: 'Project not found' });
+        }
+
+        // Reference the "Client" collection
+        const clientCollection = db.collection('Client');
+
+        // Update user's role and add project to their projectCollaborated array
+        const userQuery = await clientCollection.where('email', '==', requestData.emailInstituteId).get();
+
+        if (!userQuery.empty) {
+            const userDocRef = userQuery.docs[0].ref;
+            await userDocRef.update({
+              isCollaborator: true, // Update user role
+              projectCollaborated: admin.firestore.FieldValue.arrayUnion(projectDocRef) // Add project to user's projectCollaborated array
+            });
+        }
+
+        // Add user to the collaborators array of the corresponding project
+        await projectDocRef.update({
+          collaborators: admin.firestore.FieldValue.arrayUnion(userDocRef) // Add user to project's collaborators array
+        });
       
-      //*******************update the role of user,add this projectid to the user's project collaborated field****************
-      //******************add this collaborator to the collaborators array of the projectID */
       console.log('Collaborator confirmed');
       res.json({ success: 'Collaborator confirmed' });
     } catch (error) {
