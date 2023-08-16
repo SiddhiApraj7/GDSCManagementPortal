@@ -1,5 +1,7 @@
 'use strict';
 const axios = require('axios');
+const admin = require("firebase-admin");
+const { FieldValue } = admin.firestore;
 
 const { db } = require('../db');
 
@@ -25,14 +27,15 @@ const createJoinProjectRequest = async (req, res) => {
   
       // Reference the "RequestsAdmin" collection
       const requestsPMCollection = db.collection('RequestsProjectManager');
-      const projectDocRef = db.collection('Projects').doc(projectID);
+     const requestsProjectscollection = db.collection("Projects");
+      const projectDocRef = requestsProjectscollection.doc(projectID);
       const projectDoc = await projectDocRef.get();
       if (!projectDoc.exists) {
           return res.status(404).json({ error: 'Project not found' });
       }
       const projectData = projectDoc.data();
-      const projectManagerEmail = projectData.email;
-  
+      const projectManagerEmail = projectData.emailInstituteId;
+  console.log(projectData);
       // Create a new document in the "RequestsAdmin" collection
       await requestsPMCollection.add({
         projectID,
@@ -61,24 +64,24 @@ const createJoinProjectRequest = async (req, res) => {
   const confirmCollaborator = async (req, res) => {
     const { requestID } = req.body;
     try {
-      // Reference the "RequestsAdmin" collection
-      const requestsPMCollection = db.collection('RequestsProjectManager');
-      
-      // Get the specific request document by requestID
-      const requestDocRef = requestsPMCollection.doc(requestID);
-      const requestDoc = await requestDocRef.get();
-  
-      if (!requestDoc.exists) {
-        return res.status(404).json({ error: 'Request not found' });
-      }
-  
-      // Update the request document's status fields
-      await requestDocRef.update({
-        isApproved: true,
-        isPending: false
-      });
+        // Reference the "RequestsAdmin" collection
+        const requestsPMCollection = db.collection('RequestsProjectManager');
 
-      const requestData = requestDoc.data();
+        // Get the specific request document by requestID
+        const requestDocRef = requestsPMCollection.doc(requestID);
+        const requestDoc = await requestDocRef.get();
+
+        if (!requestDoc.exists) {
+            return res.status(404).json({ error: 'Request not found' });
+        }
+
+        // Update the request document's status fields
+        await requestDocRef.update({
+            isApproved: true,
+            isPending: false
+        });
+
+        const requestData = requestDoc.data();
         const projectID = requestData.projectID;
 
         // Reference the "Projects" collection
@@ -95,29 +98,32 @@ const createJoinProjectRequest = async (req, res) => {
         // Reference the "Client" collection
         const clientCollection = db.collection('Client');
 
+        let userDocRef; // Declare userDocRef at a higher scope
+
         // Update user's role and add project to their projectCollaborated array
         const userQuery = await clientCollection.where('email', '==', requestData.emailInstituteId).get();
 
         if (!userQuery.empty) {
-            const userDocRef = userQuery.docs[0].ref;
+            userDocRef = userQuery.docs[0].ref; // Assign userDocRef within the if block
             await userDocRef.update({
-              isCollaborator: true, // Update user role
-              projectCollaborated: admin.firestore.FieldValue.arrayUnion(projectDocRef) // Add project to user's projectCollaborated array
+                isCollaborator: true,
+                projectCollaborated: FieldValue.arrayUnion(projectDocRef.id)
             });
         }
 
         // Add user to the collaborators array of the corresponding project
         await projectDocRef.update({
-          collaborators: admin.firestore.FieldValue.arrayUnion(userDocRef) // Add user to project's collaborators array
+            collaborators: FieldValue.arrayUnion(userDocRef.id)
         });
-      
-      console.log('Collaborator confirmed');
-      res.json({ success: 'Collaborator confirmed' });
+
+        console.log('Collaborator confirmed');
+        res.json({ success: 'Collaborator confirmed' });
     } catch (error) {
-      console.error('Error confirming collaborator:', error);
-      res.status(400).send(error);
+        console.error('Error confirming collaborator:', error);
+        res.status(400).send(error);
     }
 };
+
 const declineCollaborator = async (req, res) => {
   const { requestID } = req.body;
   try {

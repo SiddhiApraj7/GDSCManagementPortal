@@ -8,44 +8,36 @@ import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import Request from '../Components/Request';
-
+import { useAuth } from '../contexts/AuthContext';
 
 export default function AdminInbox() {
     const [sidebar, showsideBar] = useState(false);
     const [requestsArray, setRequestsArray] = useState([]);
 
-
+    const { currentUser } = useAuth(); 
 
 
     const allRequests = async () => {
         try {
-            const requestsRef = collection(db, "RequestsProjectManager");
-            console.log(requestsRef);
-
-
-            return onSnapshot(requestsRef, (snapshot) => {
-                const Array = [];
-
-                snapshot.forEach((doc) => {
-                    const requestId = doc.id;
-                    const request = doc.data();
-                    Array.push({ id: requestId, ...request });
-                });
-                console.log("hello", Array);
-
-                setRequestsArray(Array);
-
-                // Now you have all requests in the requestsArray
-                console.log("second", requestsArray);
-
-                // If you want to perform further operations with the array, you can do so here
-            });
-
-            // Remember to unsubscribe when you're done using the listener
+          const currentUserEmail = currentUser.email; // Replace with the actual email
+      
+          const requestsRef = collection(db, "RequestsProjectManager");
+          const querySnapshot = await getDocs(
+            query(requestsRef, where("projectManagerEmail", "==", currentUserEmail))
+          );
+      
+          const Array = querySnapshot.docs.map((doc) => {
+            const requestId = doc.id;
+            const request = doc.data();
+            return { id: requestId, ...request };
+          });
+      
+          setRequestsArray(Array);
         } catch (error) {
-            console.error("Error fetching requests:", error);
+          console.error("Error fetching requests:", error);
         }
-    };
+      };
+      
 
     useEffect(() => {
         setUnsubscribe(() => allRequests());
@@ -263,7 +255,6 @@ export default function AdminInbox() {
                             id={request.id}
                             type={determineType(request.isPending, request.isApproved)}
                             name={request.fullName}
-                            projectName={request.projectName}
                             contactNumber={request.contactNumber}
                             resume={request.driveLinkForResume}
                             email={request.emailInstituteId}

@@ -1,5 +1,7 @@
 'use strict';
 const axios = require('axios');
+const admin = require("firebase-admin");
+const { FieldValue } = admin.firestore;
 
 const { db } = require('../db');
 // make sure the login with institute id
@@ -99,16 +101,19 @@ const confirmProject = async (req, res) => {
         collaborators : []
         // Additional project-related fields if needed
       });
+      // console.log("id====",newProjectDocRef.id);
 
-
+      console.log("helooooooo",newProjectDocRef)
 
       //******adding the link to user with this project in the projectHosted field and updating the role of user ************
 
 
       const userEmail = requestData.emailInstituteId;
+      console.log(userEmail);
       const clientCollection = db.collection('Client');
       // Find the user document based on the fetched email
       const userQuery = await clientCollection.where('email', '==', userEmail).get();
+      console.log(userQuery);
 
 
        // Update the user's "projectHosted" field with the new project document reference
@@ -117,10 +122,11 @@ const confirmProject = async (req, res) => {
 
         // Push the projectID of the newly added project to the user's "projectHosted" array
         await userDocRef.update({
-            projectHosted: admin.firestore.FieldValue.arrayUnion(newProjectDocRef.id), // Push projectID
+            projectHosted: FieldValue.arrayUnion(newProjectDocRef.id), // Push projectID
             isProjectManager: true
         });
     }
+    
     // project manager role update 
   
       console.log('Project confirmed and added to Projects collection');
