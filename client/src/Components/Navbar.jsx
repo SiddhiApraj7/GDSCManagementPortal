@@ -27,6 +27,12 @@ import { useAuth } from "../contexts/AuthContext";
 export const Navbar = () => {
   const { currentUser } = useAuth();
 
+  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
+
+  const toggleDropdown = () => {
+    setIsDropdownOpen(!isDropdownOpen);
+  };
+
   const [mobileMenu, setMobileMenu] = useState({
     left: false,
   });
@@ -84,7 +90,7 @@ export const Navbar = () => {
     display: "flex",
     alignItems: "center",
     justifyContent: "center",
-    cursor:"pointer",
+    cursor: "pointer",
     gap: theme.spacing(3),
     [theme.breakpoints.down("md")]: {
       display: "none",
@@ -144,7 +150,7 @@ export const Navbar = () => {
         </Box>
 
         <NavbarLinksBox>
-          
+
           <ScrollLink
             to="hero"  // The "to" prop should match the element's ID you want to scroll to
             spy={true}
@@ -153,11 +159,11 @@ export const Navbar = () => {
             className="text-[#05276a] font-bold text-sm"
           >
             <div className="p-2">
-            Home
+              Home
             </div>
           </ScrollLink>
-          
-          
+
+
           <ScrollLink
             to="top-projects"
             spy={true}
@@ -166,11 +172,11 @@ export const Navbar = () => {
             className="text-[#05276a] font-bold text-sm"
           >
             <div className="p-2">
-            Top Projects
+              Top Projects
             </div>
           </ScrollLink>
-          
-          
+
+
           <ScrollLink
             to="projects"
             spy={true}
@@ -179,11 +185,11 @@ export const Navbar = () => {
             className="text-[#05276a] font-bold text-sm"
           >
             <div className="p-2">
-            Projects
+              Projects
             </div>
           </ScrollLink>
-          
-          
+
+
           <ScrollLink
             to="about-us"
             spy={true}
@@ -192,10 +198,10 @@ export const Navbar = () => {
             className="text-[#05276a] font-bold text-sm"
           >
             <div className="p-2">
-            About Us
+              About Us
             </div>
           </ScrollLink>
-          
+
           {/* <NavLink variant="body2">Contact</NavLink> */}
         </NavbarLinksBox>
       </Box>
@@ -235,7 +241,34 @@ export const Navbar = () => {
                   />
                 )}
               </div>
+              <div>
+                <button onClick={toggleDropdown} className="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800">oo</button>
+
+              {/* <button className="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+            Dashboard
+          </button> */}
             </div>
+            {isDropdownOpen && (
+          <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-30 mr-12 absolute right-0 mt-10">
+            <button
+              onClick={() => {
+                // Handle dashboard click
+              }}
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full text-left"
+            >
+              Dashboard
+            </button>
+            <button
+              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full text-left"
+            >
+              Log Out
+            </button>
+          </div>
+        )}
+            </div>
+            <Box/>
+
+
           </Box>
         ) : (
           // Render sign up and register buttons
