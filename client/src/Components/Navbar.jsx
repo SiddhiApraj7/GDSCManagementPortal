@@ -32,10 +32,7 @@ export const Navbar = () => {
   const { currentUser } = useAuth();
   const Navigate = useNavigate();
 
-
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false);
-
-  const toggleDropdown = async() => {
+  const handleDashboardClick = async () => {
     // console.log(isDropdownOpen);
     // Navigate("/dashboard");
     // if(isDropdownOpen){
@@ -49,28 +46,28 @@ export const Navbar = () => {
       const clientRef = collection(db, "Client");
       const q = query(clientRef, where("email", "==", currentUser.email));
       const querySnapshot = await getDocs(q);
-      
-      if (!querySnapshot.empty) {
-          const userData = querySnapshot.docs[0].data();
-          const isProjectManager = userData.isProjectManager;
-          const isAdmin = userData.isAdmin;
 
-          if(isAdmin){
-            Navigate("/admin-dashboard");
-          }
-          else if(isProjectManager){
-            Navigate("/manager-dashboard");
-          }
-          else{
-            Navigate("/collaborator-dashboard");
-          }
+      if (!querySnapshot.empty) {
+        const userData = querySnapshot.docs[0].data();
+        const isProjectManager = userData.isProjectManager;
+        const isAdmin = userData.isAdmin;
+
+        if (isAdmin) {
+          Navigate("/admin-dashboard");
+        }
+        else if (isProjectManager) {
+          Navigate("/manager-dashboard");
+        }
+        else {
+          Navigate("/collaborator-dashboard");
+        }
       } else {
-          console.log('User not found.');
+        console.log('User not found.');
       }
-  } catch (error) {
+    } catch (error) {
       console.error('Error fetching isProjectManager:', error);
       throw error;
-  }
+    }
 
   };
 
@@ -282,29 +279,14 @@ export const Navbar = () => {
                   />
                 )}
               </div>
-            
-                <button onClick={toggleDropdown} ><div className="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800">oo</div></button>
+
+              <div classname="p-2">
+                <button onClick={handleDashboardClick} className="ml-5 nline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800">Dashboard</button>
+              </div>
 
               {/* <button className="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Dashboard
           </button> */}
-            {isDropdownOpen && (
-          <div className="z-10 bg-white divide-y divide-gray-100 rounded-lg shadow w-30 mr-12 absolute right-0 mt-10">
-            <button
-              onClick={() => {
-                // Handle dashboard click
-              }}
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full text-left"
-            >
-              Dashboard
-            </button>
-            <button
-              className="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:hover:bg-gray-600 dark:text-gray-200 dark:hover:text-white w-full text-left"
-            >
-              Log Out
-            </button>
-          </div>
-        )}
             </div>
             {/* <Box/> */}
 

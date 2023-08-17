@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { Container } from '@mui/material';
 import Post from '../Components/Post';
-import Navbar from '../Components/Navbar';
+import NavbarProjects from '../Components/NavbarProjects';
 import { db } from "../config/firebase";
 import { doc, getDoc } from 'firebase/firestore';
 
@@ -61,7 +61,7 @@ export default function JoinProject() {
     return (
         <ThemeProvider theme={theme}>
             <div className="bg-[#f2f0f0] h-full flex flex-col justify-center items-center">
-                <Navbar />
+                <NavbarProjects />
                 <Container maxWidth="lg">
                     <main>
                         <Post post={projectDetails} projectId={projectId} />
