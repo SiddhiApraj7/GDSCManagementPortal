@@ -4,10 +4,10 @@ import { useAuth } from '../contexts/AuthContext';
 import { useParams } from 'react-router-dom';
 import { useNavigate } from 'react-router';
 export default function ConfirmJoinProject() {
-
   const navigate = useNavigate();
   const { currentUser } = useAuth();
   const { projectId } = useParams();
+  console.log(projectId);
   const handleClick = async () => {
     try {
       //setLoading(true);
@@ -15,6 +15,7 @@ export default function ConfirmJoinProject() {
       if (currentUser) {
         const email = currentUser.email;
           console.log(email);
+          
         const response = await axios.post(
           'http://localhost:3000/requests/create-collaborator-request',
           {

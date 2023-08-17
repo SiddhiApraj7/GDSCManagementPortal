@@ -8,6 +8,7 @@ import { db } from "../config/firebase";
 export default function CollaboratorRequests({ key, id, type, name, projectID }) {
     console.log("Id", id);
     console.log("type", type);
+    console.log("project id",projectID);
     const theme = createTheme({
         typography: {
             fontFamily: 'Poppins, sans-serif',
@@ -21,15 +22,17 @@ export default function CollaboratorRequests({ key, id, type, name, projectID })
     const [projectManagerName, setProjectManagerName] = useState('');
     const [projectName, setProjectName] = useState('');
 
-    const getProjectDetails = async (projectId) => {
+    const getProjectDetails = async (projectID) => {
         try {
             const projectDocRef = doc(db, 'Projects', projectID);
             const projectDocSnap = await getDoc(projectDocRef);
+            console.log("sid",projectID);
             
             if (projectDocSnap.exists()) {
                 const projectData = projectDocSnap.data();
                 setProjectManagerName(projectData.fullName);
                 setProjectName(projectData.projectName); // Store the projectName
+                console.log("tannu",projectName)
             } else {
                 console.log('Project document not found');
             }
@@ -135,7 +138,7 @@ export default function CollaboratorRequests({ key, id, type, name, projectID })
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 w-full flex justify-between">
                             <div className="mb-2 text-base font-normal">
-                                 <span className="font-medium text-gray-900 dark:text-white">Your</span>request to join the project - <span className="font-medium text-gray-900 dark:text-white">{projectName} is approved.</span>
+                                 <span className="font-medium text-gray-900 dark:text-white">Your </span>request to join the project - <span className="font-medium text-gray-900 dark:text-white">{projectName} is approved.</span>
                             </div>
                             <div align="right" className="flex gap-3 justify-end">
                                 <div className="text-base font-normal text-green-400">

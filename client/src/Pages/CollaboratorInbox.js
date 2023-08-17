@@ -34,6 +34,7 @@ export default function CollaboratorInbox() {
 
             console.log("Fetched requests:", newArray);
             setRequestsArray(newArray); // Update the state with fetched data
+            console.log("heee",requestsArray);
         });
     } catch (error) {
         console.error("Error fetching requests:", error);
