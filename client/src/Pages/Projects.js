@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import Navbar from '../Components/Navbar';
+import NavbarProjects from '../Components/NavbarProjects';
 import Google from '../Components/Google';
 import { db } from "../config/firebase";
 import { collection, getDocs } from 'firebase/firestore';
@@ -72,7 +72,7 @@ export default function Projects() {
   return (
     <ThemeProvider theme={theme}>
     <div className="bg-[#f2f0f0] h-full flex flex-col justify-center items-center" >
-     <Navbar />
+     <NavbarProjects />
      <Box
           sx={{
             bgcolor: '#f2f0f0',

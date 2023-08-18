@@ -23,24 +23,6 @@ function AboutUs({ name }) {
             <a href="#">Top Collaborators<span aria-hidden="true">&rarr;</span></a>
             <a href="#">Contact Us<span aria-hidden="true">&rarr;</span></a>
           </div>
-          <dl className="mt-16 grid grid-cols-1 gap-8 sm:mt-20 sm:grid-cols-2 lg:grid-cols-4">
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-300">Ongoing Projects</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-white">12</dd>
-            </div>
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-300">Collaborators</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-white">300+</dd>
-            </div>
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-300">Daily Collaboration Requests</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-white">40</dd>
-            </div>
-            <div className="flex flex-col-reverse">
-              <dt className="text-base leading-7 text-gray-300">Project Managers</dt>
-              <dd className="text-2xl font-bold leading-9 tracking-tight text-white">45</dd>
-            </div>
-          </dl>
         </div>
       </div>
     </div>
