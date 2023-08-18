@@ -7,7 +7,7 @@ const { db } = require('../db');
 
 const createJoinProjectRequest = async (req, res) => {
     const { email, projectID } = req.body;
-    const scriptUrl = `https://script.google.com/macros/s/AKfycbyiVVqSYrlaAiPULTYxnZxqhT-P4qhMsBNTM4ywEM4osfYKj4a0VSuwN3FtVd6TA_H69w/exec?email=${email}`;
+    const scriptUrl = `https://script.google.com/macros/s/AKfycbyZHFpLojRhTgBrr9_xFv6kbhUF4j9OfDWeo3a26ut5pe1RlvYf39glHBAfU6_GRjfZ1Q/exec?email=${email}`;
     
     try {
       const response = await axios.get(scriptUrl);
