@@ -16,6 +16,11 @@ export default function ProjectManagerDashboard() {
    const [profilepic, setProfilepic] = useState("");
    const [projectsHosted, setProjectsHosted] = useState(0);
    const [skillsArray, setSkillsArray] = useState([]);
+   const [projectData, setProjectData] = useState([]);
+
+   const [percentBeg, setPercentBeg] = useState(0);
+   const [percentInt, setPercentInt] = useState(0);
+   const [percentAdv, setPercentAdv] = useState(0);
 
 
    useEffect(() => {
@@ -37,6 +42,11 @@ export default function ProjectManagerDashboard() {
                   setProjectsHosted(p.length);
 
                   const newSkillsArray = [];
+                  const newProjectData = [];
+                  let beginnerCount = 0;
+                  let intermediateCount = 0;
+                  let advancedCount = 0;
+                  let count = 0;
 
                   for (const projectId of p) {
                      const projectDocRef = doc(db, "Projects", projectId);
@@ -44,21 +54,48 @@ export default function ProjectManagerDashboard() {
 
                      if (projectDocSnapshot.exists()) {
                         const projectData = projectDocSnapshot.data();
+                        newProjectData.push(projectData);
 
                         if (projectData.projectDomain && !newSkillsArray.includes(projectData.projectDomain)) {
                            newSkillsArray.push(projectData.projectDomain);
                         }
+
+                        switch (projectData.difficultyLevel) {
+                           case "Beginner":
+                              beginnerCount++;
+                              break;
+                           case "Intermediate":
+                              intermediateCount++;
+                              break;
+                           case "Advanced":
+                              advancedCount++;
+                              break;
+                           default:
+                              break;
+
+                        }
                      }
+
+                     count = beginnerCount + intermediateCount + advancedCount;
+
+                     console.log("Beginner Projects:", beginnerCount);
+                     console.log("Intermediate Projects:", intermediateCount);
+                     console.log("Advanced Projects:", advancedCount);
+
+                     setPercentBeg(((beginnerCount / count) * 100));
+                     setPercentInt(((intermediateCount / count) * 100));
+                     setPercentAdv(((advancedCount / count) * 100));
+
+                     setSkillsArray(newSkillsArray);
+                     setProjectData(newProjectData);
+
                   }
-
-                  setSkillsArray(newSkillsArray);
-
-               }
-               if (userData.profilepic) {
-                  setProfilepic(userData.profilepic);
-               }
-               else {
-                  setProfilepic("user.png");
+                  if (userData.profilepic) {
+                     setProfilepic(userData.profilepic);
+                  }
+                  else {
+                     setProfilepic("user.png");
+                  }
                }
             }
          } catch (error) {
@@ -67,11 +104,12 @@ export default function ProjectManagerDashboard() {
       };
 
       fetchDetails();
-      console.log("lalalala", skillsArray);
+      
    }, []);
 
    useEffect(() => {
       console.log("lalalala", skillsArray);
+      console.log("tttt",percentInt);
    }, [skillsArray]);
 
 
@@ -185,7 +223,7 @@ export default function ProjectManagerDashboard() {
                      <div className="lg:flex h-auto pb-8 p-2 rounded bg-gray-50 dark:bg-gray-800">
                         <div>
                            <h1 className="lg:text-2xl text-sm lg:p-4 p-2 font-semibold text-[#05276a] dark:text-gray-500">
-                              Projects Completed
+                              Projects Hosted
                            </h1>
                            <div className='rounded-full flex justify-center w-20 h-20 lg:w-32 lg:h-32 ml-2 lg:ml-4 border-4 lg:border-8 border-[#487fe6]'>
                               <h1 className='text-center text-4xl font-semibold my-auto'>{projectsHosted}</h1>
@@ -195,15 +233,15 @@ export default function ProjectManagerDashboard() {
                            <h1 className='text-gray-600'>Beginner</h1>
                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
 
-                              <div className="bg-[#16a75f] h-2 rounded-full w-[80%] text-xs text-center" ></div>
+                              {percentBeg>0 && <div className={`bg-[#16a75f] h-2 rounded-full w-[${percentBeg}%] text-xs text-center`}></div>}
                            </div>
                            <h1 className='text-gray-600'>Intermediate</h1>
                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                              <div className="bg-[#ffba01] h-2 rounded-full w-[25%] text-xs text-center" ></div>
+                              {percentInt>0 && <div className={`bg-[#ffba01] h-2 rounded-full w-[${percentInt}%] text-xs text-center`} ></div>}
                            </div>
                            <h1 className='text-gray-600'>Advanced</h1>
                            <div className="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                              <div className="bg-[#fe2c25] h-2 rounded-full w-[15%] text-xs text-center" ></div>
+                              {percentAdv>0 && <div className={`bg-[#fe2c25] h-2 rounded-full w-[${percentAdv}%] text-xs text-center`} ></div>}
                            </div>
                         </div>
                      </div>
@@ -213,11 +251,15 @@ export default function ProjectManagerDashboard() {
                            Skills
                         </h1>
                         <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 '>
-                        {skillsArray.map((skill, index) => (
-                           <div key={index} className="rounded-2xl p-2 text-[#05276a] border-[#487fe6] border-2  bg-blue-100">
-                              <h1 className="text-center">{skill}</h1>
-                           </div>
-                        ))}
+                           {skillsArray.map((skill, index) => (
+                              <div key={index} className={`rounded-2xl p-2 border-2 ${index % 4 === 0 ? "text-[#802f2c] border-[#fe2c25] bg-red-50" :
+                                 index % 4 === 1 ? "text-[#05276a] border-[#487fe6] bg-blue-100" :
+                                    index % 4 === 2 ? "text-[#0C5631] border-[#17a75f] bg-green-50" :
+                                       " text-[#C97705] border-[#ffba00] bg-yellow-50"
+                                 }`}>
+                                 <h1 className="text-center">{skill}</h1>
+                              </div>
+                           ))}
                         </div>
                         {/* <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 '>
                            <div className='rounded-2xl p-2 text-[#05276a] border-[#487fe6] border-2  bg-blue-100'><h1 className="text-center ">ML</h1></div>
@@ -231,12 +273,19 @@ export default function ProjectManagerDashboard() {
                   </div>
                   <h1 className='text-4xl text-[#05276a] font-semibold my-10'>Active Projects</h1>
                   <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-16 h-auto mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                     <ProjectCardDashboard />
-                     <ProjectCardDashboard />
-                     <ProjectCardDashboard />
-                     <ProjectCardDashboard />
-                     <ProjectCardDashboard />
-                     <ProjectCardDashboard />
+                     {projectData && projectData.map((project, i) => (
+
+                        <ProjectCardDashboard
+                           key={i}
+                           name={project.projectName}
+                           problem={project.problemStatement}
+                           domain={project.projectDomain}
+                           github={project.githubLinkOfProject}
+                           slack={project.slackLinkOfProject}
+                        />
+
+
+                     ))}
                   </div>
 
                </div>
