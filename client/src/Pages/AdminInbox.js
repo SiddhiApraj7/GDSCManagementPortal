@@ -266,7 +266,7 @@ export default function AdminInbox() {
                             projectName={request.projectName}
                             contactNumber={request.contactNumber}
                             resume={request.driveLinkForResume}
-                            email={request.emailInstituteId}
+                            email={request.email}
                             githubLinkOfProject={request.githubLinkOfProject}
                             githubProfileLink={request.githubProfileLink}
                             linkedinProfileLink={request.linkedinProfileLink}

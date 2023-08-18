@@ -306,7 +306,7 @@ export default function ManagerInbox() {
                             name={request.fullName}
                             contactNumber={request.contactNumber}
                             resume={request.driveLinkForResume}
-                            email={request.emailInstituteId}
+                            email={request.email}
                             projectID={request.projectID}
                             projectName="Blockchain Technology"
                             githubProfileLink={request.githubProfileLink}

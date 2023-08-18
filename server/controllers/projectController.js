@@ -15,7 +15,7 @@ const createHostProjectRequest = async (req, res) => {
   console.log(latestEntry);
       const {
         'Full Name': fullName,
-        'Email(institute id)': emailInstituteId,
+        'Email': email,
         'Contact Number': contactNumber,
         'LinkedIn Profile Link': linkedinProfileLink,
         'Github Profile Link': githubProfileLink,
@@ -30,6 +30,14 @@ const createHostProjectRequest = async (req, res) => {
         'Duration of Project': durationOfProject,
         'Github Link of Project': githubLinkOfProject,
         'Slack Link of Project': slackLinkOfProject,
+        'Difficulty level of Project' : difficultyLevel,
+        'Subtask 1 - Description' : subtask1,
+        'Subtask 2 - Description' : subtask2,
+        'Subtask 3 - Description' : subtask3,
+        'Subtask 1 - tentative deadline' : subtask1Deadline,
+        'Subtask 2 - tentative deadline' : subtask2Deadline,
+        'Subtask 3 - tentative deadline' : subtask3Deadline,
+
         'Timestamp': timestamp
       } = latestEntry;
   
@@ -39,7 +47,7 @@ const createHostProjectRequest = async (req, res) => {
       // Create a new document in the "RequestsAdmin" collection
       await requestsAdminCollection.add({
         fullName,
-        emailInstituteId,
+        email,
         contactNumber,
         linkedinProfileLink,
         githubProfileLink,
@@ -51,12 +59,19 @@ const createHostProjectRequest = async (req, res) => {
         techStack,
         prerequisites,
         startDateOfProject,
+        difficultyLevel,
         durationOfProject,
         githubLinkOfProject,
         slackLinkOfProject,
         timestamp,
         isPending: true,
-        isApproved: false
+        isApproved: false,
+        subtask1,
+        subtask1Deadline,
+        subtask2,
+        subtask2Deadline,
+        subtask3,
+        subtask3Deadline
       });
   
       console.log('Request data with status added to Firestore');
@@ -108,7 +123,7 @@ const confirmProject = async (req, res) => {
       //******adding the link to user with this project in the projectHosted field and updating the role of user ************
 
 
-      const userEmail = requestData.emailInstituteId;
+      const userEmail = requestData.email;
       console.log(userEmail);
       const clientCollection = db.collection('Client');
       // Find the user document based on the fetched email

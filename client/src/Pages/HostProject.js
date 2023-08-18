@@ -7,7 +7,7 @@ const HostProject = () => {
     const handleFormLoad = () => {
       /* Execute on every reload of the iFrame */
       load++;
-      if (load >= 4) {
+      if (load >= 5) {
         /* Second reload is a submit */
         window.location.href = "http://localhost:3001/confirm-host-project"; // Redirect to the desired page
       }

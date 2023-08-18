@@ -15,7 +15,7 @@ const createJoinProjectRequest = async (req, res) => {
       console.log(latestEntry);
       const {
         'Full Name': fullName,
-        'Email(institute id)': emailInstituteId,
+        'Email': email,
         'Contact Number': contactNumber,
         'LinkedIn Profile Link': linkedinProfileLink,
         'Github Profile Link': githubProfileLink,
@@ -34,14 +34,14 @@ const createJoinProjectRequest = async (req, res) => {
           return res.status(404).json({ error: 'Project not found' });
       }
       const projectData = projectDoc.data();
-      const projectManagerEmail = projectData.emailInstituteId;
+      const projectManagerEmail = projectData.email;
   console.log(projectData);
       // Create a new document in the "RequestsAdmin" collection
       await requestsPMCollection.add({
         projectID,
         projectManagerEmail,
         fullName,
-        emailInstituteId,
+        email,
         contactNumber,
         linkedinProfileLink,
         githubProfileLink,
@@ -101,7 +101,7 @@ const createJoinProjectRequest = async (req, res) => {
         let userDocRef; // Declare userDocRef at a higher scope
 
         // Update user's role and add project to their projectCollaborated array
-        const userQuery = await clientCollection.where('email', '==', requestData.emailInstituteId).get();
+        const userQuery = await clientCollection.where('email', '==', requestData.email).get();
 
         if (!userQuery.empty) {
             userDocRef = userQuery.docs[0].ref; // Assign userDocRef within the if block

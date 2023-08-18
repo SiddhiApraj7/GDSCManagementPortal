@@ -22,7 +22,7 @@ export default function CollaboratorInbox() {
         const requestsRef = collection(db, "RequestsProjectManager");
         console.log(requestsRef);
 
-        const q = query(requestsRef, where("emailInstituteId", "==", currentUser.email));
+        const q = query(requestsRef, where("email", "==", currentUser.email));
         return onSnapshot(q, (snapshot) => {
             const newArray = []; // Rename the array to avoid confusion
 

@@ -40,6 +40,7 @@ export default function JoinProject() {
           const projectDocSnapshot = await getDoc(projectDocRef);
           if (projectDocSnapshot.exists()) {
             setProjectDetails(projectDocSnapshot.data());
+           
           } else {
             console.log('Project not found');
           }

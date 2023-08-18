@@ -161,7 +161,7 @@ export default function Collaborator_dashboard() {
          <div className="lg:flex h-auto pb-8 p-2 rounded bg-gray-50 dark:bg-gray-800">
             <div>
             <h1 className="lg:text-2xl text-sm lg:p-4 p-2 font-semibold text-[#05276a] dark:text-gray-500">
-              Projects Completed
+              Projects Hosted
             </h1>
             <div className='rounded-full flex justify-center w-20 h-20 lg:w-32 lg:h-32 ml-2 lg:ml-4 border-4 lg:border-8 border-[#487fe6]'>
             <h1 className='text-center text-4xl font-semibold my-auto'>4</h1>

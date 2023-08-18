@@ -44,7 +44,7 @@ export default function ProjectCard(props) {
         />
         <CardContent sx={{ flexGrow: 1 }}>
           <Grid gutterBottom spacing={3} columnSpacing={{ xs: 1, sm: 2, md: 3 }} className="flex-row mb-2">
-            <Chip label="Beginner" variant="outlined" className="text-[#004eb3] border-[#004eb3] bg-white" sx={{mr:2}}/>
+            <Chip label={projectInfo.difficultyLevel || "Beginner"} variant="outlined" className="text-[#004eb3] border-[#004eb3] bg-white" sx={{mr:2}}/>
             <Chip label={projectInfo.projectDomain} className="text-[#f2f0f0] bg-[#004eb3] text-right justify-end" />
           </Grid>
           <Typography variant="h4" component="h2" className="text-[#03276a] font-semibold mb-2">
@@ -76,7 +76,7 @@ ProjectCard.propTypes = {
       image: PropTypes.string.isRequired,
       imageText: PropTypes.string.isRequired,
       title: PropTypes.string.isRequired,
-      difficulty: PropTypes.string.isRequired,
+      difficultyLevel: PropTypes.string.isRequired,
       manager: PropTypes.string.isRequired,
       domain: PropTypes.string.isRequired,
       startDate: PropTypes.string.isRequired,
