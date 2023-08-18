@@ -3,8 +3,116 @@ import logoImg from "../media/gdsc-logo.png";
 import { Link } from "react-router-dom";
 import ProjectCardDashboard from "../Components/ProjectCardDashboard";
 import { useState } from "react";
+import { useEffect } from 'react';
+import { useAuth } from "../contexts/AuthContext";
+import { collection, query, where, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import { db } from "../config/firebase";
+
 export default function CollaboratorDashboard() {
   const [sidebar, showsideBar] = useState(false);
+
+  const [isManager, setIsManager] = useState(false);
+  const { currentUser } = useAuth();
+  const [name, setName] = useState('');
+  const [profilepic, setProfilepic] = useState("");
+  const [projectsCollaborated, setProjectsCollaborated] = useState(0);
+  const [skillsArray, setSkillsArray] = useState([]);
+  const [projectData, setProjectData] = useState([]);
+
+  const [percentBeg, setPercentBeg] = useState(0);
+  const [percentInt, setPercentInt] = useState(0);
+  const [percentAdv, setPercentAdv] = useState(0);
+
+
+  useEffect(() => {
+
+    // Fetch the isCollaborator field from the Client collection in Firebase
+    const fetchDetails = async () => {
+      try {
+        const clientRef = collection(db, "Client");
+        const q = query(clientRef, where("email", "==", currentUser.email));
+        const querySnapshot = await getDocs(q);
+
+        if (!querySnapshot.empty) {
+          const userData = querySnapshot.docs[0].data();
+          setIsManager(userData.isProjectManager);
+          setName(userData.name);
+
+          if (userData.projectCollaborated) {
+            const p = userData.projectCollaborated;
+            setProjectsCollaborated(p.length);
+
+            const newSkillsArray = [];
+            const newProjectData = [];
+            let beginnerCount = 0;
+            let intermediateCount = 0;
+            let advancedCount = 0;
+            let count = 0;
+
+            for (const projectId of p) {
+              const projectDocRef = doc(db, "Projects", projectId);
+              const projectDocSnapshot = await getDoc(projectDocRef);
+
+              if (projectDocSnapshot.exists()) {
+                const projectData = projectDocSnapshot.data();
+                newProjectData.push(projectData);
+
+                if (projectData.projectDomain && !newSkillsArray.includes(projectData.projectDomain)) {
+                  newSkillsArray.push(projectData.projectDomain);
+                }
+
+                switch (projectData.difficultyLevel) {
+                  case "Beginner":
+                    beginnerCount++;
+                    break;
+                  case "Intermediate":
+                    intermediateCount++;
+                    break;
+                  case "Advanced":
+                    advancedCount++;
+                    break;
+                  default:
+                    break;
+
+                }
+              }
+
+              count = beginnerCount + intermediateCount + advancedCount;
+
+              console.log("Beginner Projects:", beginnerCount);
+              console.log("Intermediate Projects:", intermediateCount);
+              console.log("Advanced Projects:", advancedCount);
+
+              setPercentBeg(((beginnerCount / count) * 100));
+              setPercentInt(((intermediateCount / count) * 100));
+              setPercentAdv(((advancedCount / count) * 100));
+
+              setSkillsArray(newSkillsArray);
+              setProjectData(newProjectData);
+
+            }
+            if (userData.profilepic) {
+              setProfilepic(userData.profilepic);
+            }
+            else {
+              setProfilepic("user.png");
+            }
+          }
+        }
+      } catch (error) {
+        console.error('Error fetching isManager:', error);
+      }
+    };
+
+    fetchDetails();
+
+  }, []);
+
+  useEffect(() => {
+    console.log("lalalala", skillsArray);
+    console.log("tttt", percentInt);
+  }, [skillsArray]);
+
   return (
     <div>
       <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -78,10 +186,10 @@ export default function CollaboratorDashboard() {
           <div className="flex flex-col gap-4 mb-10 mt-4">
             <img
               className="w-20 h-20 rounded-full mx-auto"
-              src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+              src={profilepic}
               alt="user photo"
             />
-            <h1 className="text-center text-lg">Yash Rai</h1>
+            <h1 className="text-center text-md text-[#05276a]">{name}</h1>
           </div>
 
           <ul className="space-y-2 font-medium">
@@ -100,9 +208,19 @@ export default function CollaboratorDashboard() {
                   <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                   <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                 </svg>
-                <span className="ml-3">Dashboard</span>
+                <Link to="/collaborator-dashboard"><span className="ml-3">Dashboard</span></Link>
               </a>
             </li>
+
+            {isManager && (<li>
+              <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                  <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                  <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                </svg>
+                <Link to="/manager-dashboard" className="flex-1 ml-3 whitespace-nowrap">Manager</Link>
+              </a>
+            </li>)}
 
             <li>
               <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -121,9 +239,6 @@ export default function CollaboratorDashboard() {
                 >
                   Inbox
                 </Link>
-                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                  3
-                </span>
               </div>
             </li>
 
@@ -150,7 +265,7 @@ export default function CollaboratorDashboard() {
                 <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
               </a>
             </li>
-            <li>
+            {/* <li>
               <a
                 href="#"
                 className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -172,7 +287,7 @@ export default function CollaboratorDashboard() {
                 </svg>
                 <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
               </a>
-            </li>
+            </li> */}
           </ul>
         </div>
       </aside>
@@ -183,26 +298,26 @@ export default function CollaboratorDashboard() {
               <div className="lg:flex h-auto pb-8 p-2 rounded bg-gray-50 dark:bg-gray-800">
                 <div>
                   <h1 className="lg:text-2xl text-sm lg:p-4 p-2 font-semibold text-[#05276a] dark:text-gray-500">
-                    Projects Completed
+                    Projects Collaborated
                   </h1>
                   <div className="rounded-full flex justify-center w-20 h-20 lg:w-32 lg:h-32 ml-2 lg:ml-4 border-4 lg:border-8 border-[#487fe6]">
                     <h1 className="text-center text-4xl font-semibold my-auto">
-                      4
+                      {projectsCollaborated}
                     </h1>
                   </div>
                 </div>
                 <div className="flex mt-14 flex-col gap-4 h-auto w-full lg:w-2/3">
                   <h1 className="text-gray-600">Beginner</h1>
                   <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                    <div class="bg-[#16a75f] h-2 rounded-full w-[80%] text-xs text-center"></div>
+                    {percentBeg > 0 && <div className={`bg-[#16a75f] h-2 rounded-full w-[${percentBeg}%] text-xs text-center`}></div>}
                   </div>
                   <h1 className="text-gray-600">Intermediate</h1>
                   <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                    <div class="bg-[#ffba01] h-2 rounded-full w-[25%] text-xs text-center"></div>
+                    {percentInt > 0 && <div className={`bg-[#ffba01] h-2 rounded-full w-[${percentInt}%] text-xs text-center`} ></div>}
                   </div>
                   <h1 className="text-gray-600">Advanced</h1>
                   <div class="w-full bg-gray-200 rounded-full h-2 dark:bg-gray-700">
-                    <div class="bg-[#fe2c25] h-2 rounded-full w-[15%] text-xs text-center"></div>
+                    {percentAdv > 0 && <div className={`bg-[#fe2c25] h-2 rounded-full w-[${percentAdv}%] text-xs text-center`} ></div>}
                   </div>
                 </div>
               </div>
@@ -211,25 +326,16 @@ export default function CollaboratorDashboard() {
                 <h1 className="lg:text-2xl text-sm lg:p-4 p-2 font-semibold text-[#05276a] dark:text-gray-500">
                   Skills
                 </h1>
-                <div className="grid lg:grid-cols-3 grid-cols-1 gap-4 ">
-                  <div className="rounded-2xl p-2 text-[#05276a] border-[#487fe6] border-2  bg-blue-100">
-                    <h1 className="text-center ">ML</h1>
-                  </div>
-                  <div className="rounded-2xl p-2 text-[#0C5631] border-[#17a75f] border-2 bg-green-50">
-                    <h1 className="text-center">Web Dev</h1>
-                  </div>
-                  <div className="rounded-2xl p-2 text-[#802f2c] border-[#fe2c25] border-2 bg-red-50">
-                    <h1 className="text-center">App Dev</h1>
-                  </div>
-                  <div className="rounded-2xl p-2 text-[#05276a] border-[#487fe6] border-2 bg-blue-100">
-                    <h1 className="text-center">ML</h1>
-                  </div>
-                  <div className="rounded-2xl p-2 text-[#0C5631] border-[#17a75f] border-2 bg-green-50">
-                    <h1 className="text-center">Web Dev</h1>
-                  </div>
-                  <div className="rounded-2xl p-2 text-[#802f2c] border-[#fe2c25] border-2 bg-red-50">
-                    <h1 className="text-center">App Dev</h1>
-                  </div>
+                <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 '>
+                  {skillsArray.map((skill, index) => (
+                    <div key={index} className={`rounded-2xl p-2 border-2 ${index % 4 === 0 ? "text-[#802f2c] border-[#fe2c25] bg-red-50" :
+                      index % 4 === 1 ? "text-[#05276a] border-[#487fe6] bg-blue-100" :
+                        index % 4 === 2 ? "text-[#0C5631] border-[#17a75f] bg-green-50" :
+                          " text-[#C97705] border-[#ffba00] bg-yellow-50"
+                      }`}>
+                      <h1 className="text-center">{skill}</h1>
+                    </div>
+                  ))}
                 </div>
               </div>
             </div>
@@ -272,12 +378,17 @@ export default function CollaboratorDashboard() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto mb-4 rounded bg-gray-50 dark:bg-gray-800">
-              <ProjectCardDashboard />
-              <ProjectCardDashboard />
-              <ProjectCardDashboard />
-              <ProjectCardDashboard />
-              <ProjectCardDashboard />
-              <ProjectCardDashboard />
+              {projectData && projectData.map((project, i) => (
+
+                <ProjectCardDashboard
+                  key={i}
+                  name={project.projectName}
+                  problem={project.problemStatement}
+                  domain={project.projectDomain}
+                  github={project.githubLinkOfProject}
+                  slack={project.slackLinkOfProject}
+                />
+              ))}
             </div>
           </div>
         </div>
@@ -292,10 +403,10 @@ export default function CollaboratorDashboard() {
             <div className="flex flex-col gap-4 mb-10 mt-4">
               <img
                 className="w-20 h-20 rounded-full mx-auto"
-                src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
+                src={profilepic}
                 alt="user photo"
               />
-              <h1 className="text-center text-lg">Yash Rai</h1>
+              <h1 className="text-center text-md text-[#05276a]">{name}</h1>
             </div>
 
             <ul className="space-y-2 font-medium">
@@ -314,9 +425,19 @@ export default function CollaboratorDashboard() {
                     <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                     <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                   </svg>
-                  <span className="ml-3">Dashboard</span>
+                  <Link to="/collaborator-dashboard"><span className="ml-3">Dashboard</span></Link>
                 </a>
               </li>
+
+              {isManager && (<li>
+                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                  <svg className="w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 22 21">
+                    <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
+                    <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
+                  </svg>
+                  <Link to="/manager-dashboard" className="flex-1 ml-3 whitespace-nowrap">Manager</Link>
+                </a>
+              </li>)}
 
               <li>
                 <div className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
@@ -335,9 +456,6 @@ export default function CollaboratorDashboard() {
                   >
                     Inbox
                   </Link>
-                  <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">
-                    3
-                  </span>
                 </div>
               </li>
 
@@ -364,7 +482,7 @@ export default function CollaboratorDashboard() {
                   <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
                 </a>
               </li>
-              <li>
+              {/* <li>
                 <a
                   href="#"
                   className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
@@ -386,7 +504,7 @@ export default function CollaboratorDashboard() {
                   </svg>
                   <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
                 </a>
-              </li>
+              </li> */}
             </ul>
           </div>
         </aside>
