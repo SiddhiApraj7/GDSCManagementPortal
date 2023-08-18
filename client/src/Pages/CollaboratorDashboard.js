@@ -7,6 +7,7 @@ import { useEffect } from 'react';
 import { useAuth } from "../contexts/AuthContext";
 import { collection, query, where, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
 import { db } from "../config/firebase";
+import user from '../media/user.png'
 
 export default function CollaboratorDashboard() {
   const [sidebar, showsideBar] = useState(false);
@@ -95,7 +96,7 @@ export default function CollaboratorDashboard() {
               setProfilepic(userData.profilepic);
             }
             else {
-              setProfilepic("user.png");
+              setProfilepic(user);
             }
           }
         }

@@ -20,6 +20,7 @@ function Post(props) {
     const emailid = currentUser?.email;
     const navigate = useNavigate();
     const { post, projectId } = props;
+    console.log("hello :)",post);
     const handleApplyNowClick = () => {
         navigate(`/join-project-form/${projectId}`);
       };
@@ -254,7 +255,7 @@ console.log(collaboratorsData);
                                 </svg>
                             </span>
                             <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white">Subtask 2</h3>
-                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask2Deadline?.slice(0, 10)}</time>
+                            {post.subtask2Deadline && (<time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask2Deadline.slice(0, 10)}</time>)}
                             <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">{post.subtask2}</p>
                         </li>
                         <li className="ml-6">
