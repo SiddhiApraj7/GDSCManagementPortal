@@ -26,6 +26,7 @@ import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import { db } from "../config/firebase";
 import { collection, query, where, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import user from '../media/user.png'
 
 
 export const Navbar = () => {
@@ -273,7 +274,7 @@ export const Navbar = () => {
                   />
                 ) : (
                   <img
-                    src="user.png"
+                    src={user}
                     alt="Stock Profile"
                     className="rounded-full h-8 w-8"
                   />

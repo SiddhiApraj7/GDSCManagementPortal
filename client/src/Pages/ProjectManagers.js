@@ -5,9 +5,70 @@ import logoImg from "../media/gdsc-logo.png";
 import Manager from '../Components/Manager'
 import ProjectCard from '../Components/ProjectCard';
 import { Container } from '@mui/material';
+import { useAuth } from '../contexts/AuthContext';
+import { db } from "../config/firebase";
+import { collection, doc, getDoc, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { useEffect } from 'react';
+import user from '../media/user.png'
 
 export default function ProjectManagers() {
     const [sidebar, showsideBar] = useState(false);
+    const [name, setName] = useState('');
+    const [profilepic, setProfilepic] = useState("");
+    const { currentUser } = useAuth();
+    const [managerData, setManagerData] = useState([]);
+
+    useEffect(() => {
+        //console.log(requestsArray);
+
+        const fetchBasics = async () => {
+            try {
+                const clientRef = collection(db, "Client");
+                const q = query(clientRef, where("email", "==", currentUser.email));
+                const querySnapshot = await getDocs(q);
+
+                if (!querySnapshot.empty) {
+                    const userData = querySnapshot.docs[0].data();
+                    setName(userData.name);
+                    if (userData.profilepic) {
+                        setProfilepic(userData.profilepic);
+                    }
+                    else {
+                        setProfilepic({user});
+                    }
+                }
+
+                const managersRef = collection(db, "Client");
+                const managersQuerySnapshot = await getDocs(managersRef);
+
+                const fetchedManagerData = [];
+                managersQuerySnapshot.forEach((doc) => {
+                    const managerData = doc.data();
+                    if (managerData.isProjectManager) {
+                        fetchedManagerData.push(managerData);
+                    }
+                });
+
+                setManagerData(fetchedManagerData);
+
+            } catch (error) {
+                console.error('Error fetching Admin:', error);
+            }
+        };
+
+        fetchBasics();
+
+        // Clean up the listener when the component unmounts
+        /*  return () => {
+             if (unsubscribe) {
+                 unsubscribe();
+             }
+             if (unsubs) {
+                 unsubs();
+             }
+         }; */
+    }, []);
+
     return (
         <div>
             <nav className="fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
@@ -50,8 +111,8 @@ export default function ProjectManagers() {
             <aside id="logo-sidebar" className="fixed top-0 left-0 z-40 w-64 h-screen pt-20 transition-transform -translate-x-full bg-white border-r border-gray-200 sm:translate-x-0 dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
                 <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
                     <div className='flex flex-col gap-4 mb-10 mt-4'>
-                        <img className="w-20 h-20 rounded-full mx-auto" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
-                        <h1 className='text-center text-lg'>Yash Rai</h1>
+                        <img className="w-20 h-20 rounded-full mx-auto" src={profilepic} alt="user photo" />
+                        <h1 className='text-center text-md text-[#05276a]'>{name}</h1>
                     </div>
                     <ul className="space-y-2 font-medium">
                         <li>
@@ -60,7 +121,7 @@ export default function ProjectManagers() {
                                     <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                                     <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                                 </svg>
-                                <Link to="/collaborator-dashboard" className="ml-3">Dashboard</Link>
+                                <Link to="/admin-dashboard" className="ml-3">Dashboard</Link>
                             </a>
                         </li>
 
@@ -90,8 +151,7 @@ export default function ProjectManagers() {
                                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                     <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                                 </svg>
-                                <Link to="/collaborator-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
-                                <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                                <Link to="/admin-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
                             </div>
                         </li>
 
@@ -104,14 +164,14 @@ export default function ProjectManagers() {
                                 <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
                             </a>
                         </li>
-                        <li>
+                        {/* <li>
                             <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                 <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                                     <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
                                 </svg>
                                 <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
                             </a>
-                        </li>
+                        </li> */}
                     </ul>
                 </div>
             </aside>
@@ -119,8 +179,8 @@ export default function ProjectManagers() {
                 <aside id="logo-sidebar" className="mt-20 w-full mx-auto dark:bg-gray-800 dark:border-gray-700" aria-label="Sidebar">
                     <div className="h-full px-3 pb-4 overflow-y-auto bg-white dark:bg-gray-800">
                         <div className='flex flex-col gap-4 mb-10 mt-4'>
-                            <img className="w-20 h-20 rounded-full mx-auto" src="https://flowbite.com/docs/images/people/profile-picture-5.jpg" alt="user photo" />
-                            <h1 className='text-center text-lg'>Yash Rai</h1>
+                            <img className="w-20 h-20 rounded-full mx-auto" src={profilepic} alt="user photo" />
+                            <h1 className='text-center text-md text-[#05276a]'>{name}</h1>
                         </div>
                         <ul className="space-y-2 font-medium">
                             <li>
@@ -129,7 +189,7 @@ export default function ProjectManagers() {
                                         <path d="M16.975 11H10V4.025a1 1 0 0 0-1.066-.998 8.5 8.5 0 1 0 9.039 9.039.999.999 0 0 0-1-1.066h.002Z" />
                                         <path d="M12.5 0c-.157 0-.311.01-.565.027A1 1 0 0 0 11 1.02V10h8.975a1 1 0 0 0 1-.935c.013-.188.028-.374.028-.565A8.51 8.51 0 0 0 12.5 0Z" />
                                     </svg>
-                                    <Link to="/collaborator-dashboard" className="ml-3">Dashboard</Link>
+                                    <Link to="/admin-dashboard" className="ml-3">Dashboard</Link>
                                 </a>
                             </li>
 
@@ -138,8 +198,7 @@ export default function ProjectManagers() {
                                     <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="currentColor" viewBox="0 0 20 20">
                                         <path d="m17.418 3.623-.018-.008a6.713 6.713 0 0 0-2.4-.569V2h1a1 1 0 1 0 0-2h-2a1 1 0 0 0-1 1v2H9.89A6.977 6.977 0 0 1 12 8v5h-2V8A5 5 0 1 0 0 8v6a1 1 0 0 0 1 1h8v4a1 1 0 0 0 1 1h2a1 1 0 0 0 1-1v-4h6a1 1 0 0 0 1-1V8a5 5 0 0 0-2.582-4.377ZM6 12H4a1 1 0 0 1 0-2h2a1 1 0 0 1 0 2Z" />
                                     </svg>
-                                    <Link to="/collaborator-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
-                                    <span className="inline-flex items-center justify-center w-3 h-3 p-3 ml-3 text-sm font-medium text-blue-800 bg-blue-100 rounded-full dark:bg-blue-900 dark:text-blue-300">3</span>
+                                    <Link to="/admin-dashboard/inbox" className="flex-1 ml-3 whitespace-nowrap">Inbox</Link>
                                 </div>
                             </li>
 
@@ -152,14 +211,14 @@ export default function ProjectManagers() {
                                     <span className="flex-1 ml-3 whitespace-nowrap">Log Out</span>
                                 </a>
                             </li>
-                            <li>
+                            {/* <li>
                                 <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
                                     <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
                                         <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
                                     </svg>
                                     <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
                                 </a>
-                            </li>
+                            </li> */}
                         </ul>
                     </div>
                 </aside>
@@ -167,7 +226,7 @@ export default function ProjectManagers() {
             {!sidebar && (
                 <>
                     <div className="p-4 sm:ml-64 mt-14">
-                    <div className='lg:flex w-full lg:mb-0 items-center mb-2 justify-between'>
+                        <div className='lg:flex w-full lg:mb-0 items-center mb-2 justify-between'>
                             <h1 className='text-4xl  text-[#05276a] font-semibold my-10'>Project Managers</h1>
                             <form className='flex'>
 
@@ -182,14 +241,20 @@ export default function ProjectManagers() {
                         </div>
 
                         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 h-auto mb-4 rounded bg-gray-50 dark:bg-gray-800">
-                            <Manager />
-                            <Manager />
-                            <Manager />
-                            <Manager />
-                            <Manager />
-                            <Manager />
+                            {managerData && managerData.map((manager, i) => (
+
+                                <Manager
+                                    key={i}
+                                    name={manager.name}
+                                    projects={manager.projectHosted.length}
+                                    pic={manager.profilepic}
+                                    email={manager.email}
+                                />
+
+
+                            ))}
                         </div>
-                     </div>
+                    </div>
                 </>
             )}
 

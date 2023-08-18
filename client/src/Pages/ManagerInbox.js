@@ -9,6 +9,7 @@ import { useEffect } from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import ManagerRequest from '../Components/ManagerRequest';
 import { useAuth } from '../contexts/AuthContext';
+import user from '../media/user.png'
 
 export default function ManagerInbox() {
     const [sidebar, showsideBar] = useState(false);
@@ -142,7 +143,7 @@ export default function ManagerInbox() {
                         setProfilepic(userData.profilepic);
                     }
                     else {
-                        setProfilepic("user.png");
+                        setProfilepic({user});
                     }
                 }
             } catch (error) {
