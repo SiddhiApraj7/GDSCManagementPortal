@@ -7,7 +7,7 @@ const { db } = require('../db');
 // make sure the login with institute id
 const createHostProjectRequest = async (req, res) => {
     const { email } = req.body;
-    const scriptUrl = `https://script.google.com/macros/s/AKfycbzZpwbsP--KmZWyFL3cLcs4PZ0FA10JZrSEPF4b149IGNFjnGHozoHF_hBbvY1RNTid/exec?email=${email}`;
+    const scriptUrl = `https://script.google.com/macros/s/AKfycbw5UfLcjEOcC-YRvEjDKOT7Qe7VkDkR797XkgOyQ0dz4Jzp7QWooDonvawp_aVLxDHK/exec?email=${email}`;
     
     try {
       const response = await axios.get(scriptUrl);

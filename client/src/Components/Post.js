@@ -220,6 +220,16 @@ console.log(collaboratorsData);
                 </div>
 
             </Container>
+            <Container align="left" maxWidth="lg" className=" mt-10 mb-16">
+            <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> Problem Overview</h5>
+
+                <div className="mr-2">
+                    <Typography className="mt-5 text-[#485e70] text-lg" gutterBottom>
+                        {post.projectOverview}
+                    </Typography>
+                </div>
+
+            </Container>
             <Container align="left" maxWidth="lg" className="mb-16">
             <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white">Plan/Timeline</h5>
                 {/* <Typography className="mt-10 font-semibold text-[#004eb3] mb-6" variant="h4" >
@@ -234,7 +244,7 @@ console.log(collaboratorsData);
                                 </svg>
                             </span>
                             <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white">Subtask 1</h3>
-                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask1Deadline}</time>
+                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask1Deadline?.slice(0, 10)}</time>
                             <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">{post.subtask1}</p>
                         </li>
                         <li className="mb-10 ml-6">
@@ -244,7 +254,7 @@ console.log(collaboratorsData);
                                 </svg>
                             </span>
                             <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white">Subtask 2</h3>
-                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask1Deadline}</time>
+                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask2Deadline?.slice(0, 10)}</time>
                             <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">{post.subtask2}</p>
                         </li>
                         <li className="ml-6">
@@ -254,7 +264,7 @@ console.log(collaboratorsData);
                                 </svg>
                             </span>
                             <h3 className="flex items-center ml-2 mb-1 text-lg font-semibold text-[#03276a] dark:text-white">Subtask 3 </h3>
-                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask3Deadline}</time>
+                            <time className="block ml-2 mb-2 text-sm font-normal leading-none text-[#004eb3] dark:text-gray-500">By {post.subtask3Deadline?.slice(0, 10)}</time>
                             <p className="mb-4 ml-2 text-base font-normal text-gray-500 dark:text-gray-400">{post.subtask3}</p>
                         </li>
                     </ol>
@@ -346,6 +356,7 @@ Post.propTypes = {
         startDate: PropTypes.string.isRequired,
         duration: PropTypes.string.isRequired,
         problemStatement: PropTypes.string.isRequired,
+        projectOverview : PropTypes.string.isRequired,
         prerequisites : PropTypes.string.isRequired,
         techStack: PropTypes.string.isRequired,
         subtask1: PropTypes.string.isRequired,
