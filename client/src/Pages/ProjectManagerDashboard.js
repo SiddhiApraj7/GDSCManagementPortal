@@ -78,13 +78,13 @@ export default function ProjectManagerDashboard() {
 
                      count = beginnerCount + intermediateCount + advancedCount;
 
-                     console.log("Beginner Projects:", beginnerCount);
-                     console.log("Intermediate Projects:", intermediateCount);
-                     console.log("Advanced Projects:", advancedCount);
+                     
 
-                     setPercentBeg(((beginnerCount / count) * 100));
-                     setPercentInt(((intermediateCount / count) * 100));
-                     setPercentAdv(((advancedCount / count) * 100));
+                     setPercentBeg(parseInt((beginnerCount / count) * 100));
+                     setPercentInt(parseInt((intermediateCount / count) * 100));
+                     setPercentAdv(parseInt((advancedCount / count) * 100));
+
+                     
 
                      setSkillsArray(newSkillsArray);
                      setProjectData(newProjectData);
@@ -110,6 +110,9 @@ export default function ProjectManagerDashboard() {
    useEffect(() => {
       console.log("lalalala", skillsArray);
       console.log("tttt",percentInt);
+      console.log("Beginner Projects:", percentBeg);
+                     console.log("Intermediate Projects:", percentInt);
+                     console.log("Advanced Projects:", percentAdv);
    }, [skillsArray]);
 
 

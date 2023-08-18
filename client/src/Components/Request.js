@@ -116,7 +116,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                                         aria-labelledby="modal-modal-title"
                                         aria-describedby="modal-modal-description"
                                     >
-                                        <Box sx={style} className="rounded-lg w-max ">
+                                        <Box sx={style} className="rounded-lg w-[80%]">
                                             <Typography align="center" id="modal-modal-title" variant="h6" component="h2" className="text-blue-700">
                                                 {projectName}
                                             </Typography>
