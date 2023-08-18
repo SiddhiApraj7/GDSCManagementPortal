@@ -31,7 +31,7 @@ export default function ProjectCard(props) {
     
       <Card
         sx={{ height: '100%', display: 'flex', flexDirection: 'column' }}
-        className="bg-[#dfe9f7] z-50 shadow-md rounded-xl"
+        className="bg-[#dfe9f7] z-50 shadow-md rounded-xl hover:scale-110 transition-all duration-200"
       >
         <CardMedia
           component="div"

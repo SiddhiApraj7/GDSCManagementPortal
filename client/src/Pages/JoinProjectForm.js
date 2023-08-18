@@ -10,7 +10,7 @@ const JoinProjectForm = () => {
     const handleFormLoad = () => {
       /* Execute on every reload of the iFrame */
       load++;
-      if (load >= 3) {
+      if (load >= 2) {
         /* Second reload is a submit */
         window.location.href = `http://localhost:3001/confirm-join-project/${projectId}`; // Redirect to the desired page
       }
@@ -31,7 +31,7 @@ const JoinProjectForm = () => {
   }, []);
  
   return (
-    <div className='bg-gradient-to-b h-full from-[#9fa0a9] to-white'>
+    <div className='bg-gradient-to-b from-[#9fa0a9] to-white'>
       <iframe  id='gform' className='mx-auto pt-4 w-full' src="https://docs.google.com/forms/d/e/1FAIpQLSdLY00poFAM3bWHZv9H3p9EoOLbnL0TlPbeJkey6w2BWpmaLA/viewform?embedded=true" width="640" height="5000" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
     </div>
   );

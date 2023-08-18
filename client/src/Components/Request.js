@@ -92,12 +92,12 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
         <ThemeProvider theme={theme}>
             <div className="p-2">
                 {(type == 1) && (
-                    <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
+                    <div className="items-center block p-3 md:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
-                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                            <img className="w-12 h-12 lg:mb-3 lg:mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         </div>
-                        <div className="pl-2 flex  w-full justify-between">
+                        <div className="md:pl-2 md:flex  md:w-full md:justify-between">
                             <div className="mb-2 text-base font-normal">
                                 <span className="font-medium text-gray-900 dark:text-white">{name} </span> wants to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
                             </div>
@@ -250,7 +250,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                 {(type == 2) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
-                        <div align="right" className="pl-2 w-full flex justify-between">
+                        <div align="right" className="pl-2 w-full md:flex justify-between">
                             <div className="mb-2 text-base font-normal">
                                 You allowed <span className="font-medium text-gray-900 dark:text-white">{name}</span> to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
                             </div>
@@ -263,7 +263,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                     </div>
                 )}
 
-                {(type == 3) && (
+                {(type == 3) && ( 
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 flex w-full justify-between">

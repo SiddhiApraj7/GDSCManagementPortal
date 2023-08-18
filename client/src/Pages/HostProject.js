@@ -1,15 +1,16 @@
-import React, { useEffect } from 'react';
-
+import React from 'react';
+import { useEffect } from 'react';
 const HostProject = () => {
+
   useEffect(() => {
     let load = 0;
 
     const handleFormLoad = () => {
       /* Execute on every reload of the iFrame */
       load++;
-      if (load >= 5) {
+      if (load >= 2) {
         /* Second reload is a submit */
-        window.location.href = "http://localhost:3001/confirm-host-project"; // Redirect to the desired page
+        window.location.href = `http://localhost:3001/confirm-host-project/`; // Redirect to the desired page
       }
     };
 
@@ -26,11 +27,12 @@ const HostProject = () => {
       }
     };
   }, []);
+ 
 
   return (
     <div className='bg-gradient-to-b from-[#9fa0a9] to-white'>
       <iframe
-        id='gform'
+        id="gform"
         className='mx-auto pt-4 w-full'
         src="https://docs.google.com/forms/d/e/1FAIpQLSekmjdfAmX0CPsvBK3bqGg8Zs7uAQnes_b66Ce11DDQU77WVg/viewform?embedded=true"
         width="640"
@@ -44,6 +46,7 @@ const HostProject = () => {
 };
 
 export default HostProject;
+
 
 // import React from 'react'
 // import { useFormik } from 'formik';

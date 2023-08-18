@@ -34,7 +34,7 @@ const createJoinProjectRequest = async (req, res) => {
           return res.status(404).json({ error: 'Project not found' });
       }
       const projectData = projectDoc.data();
-      const projectManagerEmail = projectData.email;
+      const projectManagerEmail = projectData?.email;
   console.log(projectData);
       // Create a new document in the "RequestsAdmin" collection
       await requestsPMCollection.add({
