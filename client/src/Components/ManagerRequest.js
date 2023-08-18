@@ -1,10 +1,11 @@
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
 //import { useAuth } from '../contexts/AuthContext';
 import { Button, Modal, Box, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-
+import { collection, query, where, onSnapshot, doc, getDoc } from 'firebase/firestore';
+import { db } from "../config/firebase";
 
 
 export default function ManagerRequest({ key, id, type, name, contactNumber, resume, email, projectID, projectName, githubProfileLink, linkedinProfileLink,
@@ -22,6 +23,32 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
             fontFamily: 'Poppins, sans-serif',
         },
     });
+
+    const [projectNameReq, setProjectNameReq] = useState('');
+
+    const getProjectDetails = async (projectID) => {
+        try {
+            const projectDocRef = doc(db, 'Projects', projectID);
+            const projectDocSnap = await getDoc(projectDocRef);
+            console.log("sid",projectID);
+            
+            if (projectDocSnap.exists()) {
+                const projectData = projectDocSnap.data();
+                setProjectNameReq(projectData.projectName); // Store the projectName
+                console.log("tannu",projectNameReq)
+            } else {
+                console.log('Project document not found');
+            }
+        } catch (error) {
+            console.error('Error fetching project details:', error);
+        }
+    };
+
+    useEffect(() => {
+        if (projectID) {
+            getProjectDetails(projectID);
+        }
+    }, [projectID]);
 
     
 
@@ -101,7 +128,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                         </div>
                         <div className="pl-2 flex  w-full justify-between">
                             <div className="mb-2 text-base font-normal">
-                                <span className="font-medium text-gray-900 dark:text-white">{name} </span> wants to join the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
+                                <span className="font-medium text-gray-900 dark:text-white">{name} </span> wants to join the project <span className="font-medium text-gray-900 dark:text-white">{projectNameReq}.</span>
                             </div>
                             <div align="right" className="flex gap-3">
                                 <div>
@@ -120,7 +147,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                                     >
                                         <Box sx={style} className="rounded-lg w-max ">
                                             <Typography align="center" id="modal-modal-title" variant="h6" component="h2" className="text-blue-700">
-                                                {projectName}
+                                                {projectNameReq}
                                             </Typography>
 
                                             <div className="flex gap-3">
@@ -203,7 +230,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 w-full flex justify-between">
                             <div className="mb-2 text-base font-normal">
-                                You allowed <span className="font-medium text-gray-900 dark:text-white">{name}</span> to join the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
+                                You allowed <span className="font-medium text-gray-900 dark:text-white">{name}</span> to join the project <span className="font-medium text-gray-900 dark:text-white">{projectNameReq}.</span>
                             </div>
                             <div align="right" className="flex gap-3 justify-end">
                                 <div className="text-base font-normal text-green-400">
@@ -219,7 +246,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 flex w-full justify-between">
                             <div className="mb-2 text-base font-normal">
-                                You declined <span className="font-medium text-gray-900 dark:text-white">{name} </span>'s request to join the project <span className="font-medium text-gray-900 dark:text-white">{projectName}.</span>
+                                You declined <span className="font-medium text-gray-900 dark:text-white">{name} </span>'s request to join the project <span className="font-medium text-gray-900 dark:text-white">{projectNameReq}.</span>
                             </div>
                             <div align="right" className="flex gap-3 justify-end">
                                 <div className="text-base font-normal text-red-500">
