@@ -82,7 +82,7 @@ useEffect(() => {
 
 console.log(collaboratorsData);
     return (
-        <div>
+        <div className='w-full'>
             <Paper
                 sx={{
                     position: 'relative',
@@ -125,8 +125,8 @@ console.log(collaboratorsData);
                     </Grid>
                 </Grid>
             </Paper>
-            <Container maxWidth="xl" align="left" className="ml-8" >
-                <div className="flex justify-between">
+            <Container maxWidth="xl" align="left" className="lg:ml-8" >
+                <div className="md:flex lg:justify-between">
                     <div>
                         <Typography
                             component="h1"
@@ -145,15 +145,14 @@ console.log(collaboratorsData);
                     </div>
                     <div>
                         {post.startDateOfProject && (
-    <Typography variant="h7" align="right" color="text.secondary" paragraph className="text-neutral-500 font-light mr-6">
-      Start Date :   {post.startDateOfProject.slice(0, 10)}   |   Duration :   {post.durationOfProject} months
+    <Typography variant="h7" align="right" color="text.secondary" paragraph className="text-neutral-500 font-light lg:mr-6">Start Date :   {post.startDateOfProject.slice(0, 10)}   |   Duration :   {post.durationOfProject} months
     </Typography>
   )}
                     </div>
                 </div>
             </Container>
             <div className="mb-16 ml-6">
-                <p className='mb-4 text-xs ml-8 font-semibold leading-none tracking-tight text-[#004eb3] md:text-sm lg:text-2xl dark:text-white'>Tech Stack</p>
+                <p className='mb-4 text-xl lg:ml-8 font-semibold leading-none tracking-tight text-[#004eb3] md:text-sm lg:text-2xl dark:text-white'>Tech Stack</p>
     <Container>
     
     
@@ -167,7 +166,7 @@ console.log(collaboratorsData);
                 index % 4 === 1 ? "text-[#4284f3] border-[#4284f3] " :
                 index % 4 === 2 ? "text-[#E79005] border-[#E79005]" :
                 "text-[#33a852] border-[#33a852]"
-            } m-1`}
+            } lg:m-1`}
             sx={{ marginRight: 2 }}
         />
     ))}

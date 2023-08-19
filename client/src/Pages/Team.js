@@ -19,7 +19,7 @@ export default function Team() {
             github: "javascript:void(0)",
         },
         {
-            avatar: "https://media.licdn.com/dms/image/D4D03AQELrdDpcvOqCg/profile-displayphoto-shrink_100_100/0/1691665167495?e=1697673600&v=beta&t=1KSyAdA2Quivbd--lgpfo4_Z_lvyTwqR_rcgP8dXXPQ",
+            avatar: "https://media.licdn.com/dms/image/C4D03AQHXk6yA-QRRXA/profile-displayphoto-shrink_100_100/0/1650529888623?e=1697673600&v=beta&t=lKxKUS7KHFbl3a7W25Qpv2vZzqfUB1wh5MGwi-oY3Uc",
             name: "Kartik Tiwari",
             title: "Community Manager",
             desc: "Lorem Ipsum is simply dummy text of the printing and typesettin industry.",

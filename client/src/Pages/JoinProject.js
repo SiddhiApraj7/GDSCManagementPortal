@@ -50,7 +50,6 @@ export default function JoinProject() {
       };
   
       fetchProjectDetails();
-      console.log("hello :) heeeee", projectDetails);
     }, [projectId]);
     /* const location = useLocation();
    const { state } = location;
