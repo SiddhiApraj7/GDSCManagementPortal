@@ -13,6 +13,7 @@ import { collection, addDoc, query, where, getDocs, serverTimestamp  } from "fir
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { sendPasswordResetEmail } from "firebase/auth";
 import { GithubAuthProvider } from "firebase/auth";
+import { useNavigate } from "react-router-dom";
 
 const AuthContext = React.createContext();
 
@@ -21,6 +22,7 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }) {
+  const navigate = useNavigate(); // Hook to handle navigation
   const notifyError = (message) => {
     toast.error(message);
   };
@@ -176,7 +178,14 @@ export default function AuthProvider({ children }) {
   };
 
   function logout() {
-    return signOut(auth);
+    const auth = getAuth();
+    signOut(auth)
+      .then(() => {
+        navigate("/login");
+      })
+      .catch((error) => {
+        console.error("Error logging out:", error);
+      });
   }
 
   function resetPassword(email) {

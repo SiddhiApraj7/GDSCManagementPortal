@@ -16,7 +16,7 @@ export default function ProjectCardDashboard({key, name, problem, domain, github
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-[#05276a] dark:text-white">{name}</h5>
             <h7 className="mb-2 text-l font-bold tracking-tight text-[#05276a] dark:text-white">{domain}</h7>
           </a>
-          <p className="mt-2 mb-3 font-normal text-gray-700 dark:text-gray-400">{problem}</p>
+          <p className="mt-2 line-clamp-3 mb-3 font-normal text-gray-700 dark:text-gray-400">{problem}</p>
           <div className="flex justify-between">
           <div className='flex gap-2 my-4'>
             <Link to={github} target="_blank"><GitHubIcon className='h-6 w-8' /></Link>

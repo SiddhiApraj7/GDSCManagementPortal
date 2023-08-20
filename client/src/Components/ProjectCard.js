@@ -17,6 +17,10 @@ import { Chip } from '@mui/material';
 import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
+import axios from 'axios';
+
+
+
 export default function ProjectCard(props) {
 
   const { projectInfo, projectId } = props;
@@ -26,6 +30,24 @@ export default function ProjectCard(props) {
   const handleExploreMoreClick = () => {
     navigate(`/projects/${projectId}`);
   };
+  const access = "95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw"
+  const URL = "https://api.unsplash.com/search/photos?page=1&query=office&client_id=" + access 
+
+
+  const ACCESS_KEY = "95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw";
+const TAG = "programming";
+
+// async function fetchRandomImageWithTag(tag) {
+//   try {
+//     const response = await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${tag}&client_id=95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw`);
+
+//     const imageData = response.results;
+//     return imageData.urls.small; // URL of the random image with the specified tag
+//   } catch (error) {
+//     console.error("Error fetching image:", error);
+//     return null;
+//   }
+// }
 
   return (
     
@@ -51,8 +73,7 @@ export default function ProjectCard(props) {
             {projectInfo.projectName}
           </Typography>
           <Typography gutterBottom variant="h7" component="h2" className="text-[#004eb3] font-light">
-            {projectInfo.fullName
-}
+            {projectInfo.fullName}
           </Typography>
 
           <Typography variant="h9" component="h3" className="text-[#4284f3] text-sm font-light">

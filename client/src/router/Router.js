@@ -23,6 +23,7 @@ import AdminInbox from '../Pages/AdminInbox';
 import ManagerInbox from '../Pages/ManagerInbox';
 import CollaboratorInbox from '../Pages/CollaboratorInbox';
 import Team from '../Pages/Team';
+import Loader from '../Components/Loader';
 
 
 const Router = () => {
@@ -35,7 +36,8 @@ const Router = () => {
       children
     ) : (
       // Render a loading state if currentUser is still loading
-      <div>Loading...</div>
+      <Loader />
+      
     );
   };
 

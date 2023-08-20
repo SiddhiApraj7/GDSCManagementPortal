@@ -19,8 +19,8 @@ function AboutUs({ name }) {
         <div className="mx-auto mt-10 max-w-2xl lg:mx-0 lg:max-w-none">
           <div className="grid grid-cols-1 gap-x-8 gap-y-6 text-base font-semibold leading-7 text-white sm:grid-cols-2 md:flex lg:gap-x-10">
             <a href="#">Our Team <span aria-hidden="true">&rarr;</span></a>
-            <a href="#">Project Managers<span aria-hidden="true">&rarr;</span></a>
-            <a href="#">Top Collaborators<span aria-hidden="true">&rarr;</span></a>
+            {/* <a href="#">Project Managers<span aria-hidden="true">&rarr;</span></a>
+            <a href="#">Top Collaborators<span aria-hidden="true">&rarr;</span></a> */}
             <a href="#">Contact Us<span aria-hidden="true">&rarr;</span></a>
           </div>
         </div>

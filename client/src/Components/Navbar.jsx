@@ -13,6 +13,7 @@ import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
 import CustomButton from "./CustomButton";
 import {
+  Button,
   Drawer,
   List,
   ListItem,
@@ -25,9 +26,16 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import { db } from "../config/firebase";
-import { collection, query, where, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
-import user from '../media/user.png'
-
+import {
+  collection,
+  query,
+  where,
+  getDocs,
+  getDoc,
+  doc,
+  setDoc,
+} from "firebase/firestore";
+import user from "../media/user.png";
 
 export const Navbar = () => {
   const { currentUser } = useAuth();
@@ -55,21 +63,18 @@ export const Navbar = () => {
 
         if (isAdmin) {
           Navigate("/admin-dashboard");
-        }
-        else if (isProjectManager) {
+        } else if (isProjectManager) {
           Navigate("/manager-dashboard");
-        }
-        else {
+        } else {
           Navigate("/collaborator-dashboard");
         }
       } else {
-        console.log('User not found.');
+        console.log("User not found.");
       }
     } catch (error) {
-      console.error('Error fetching isProjectManager:', error);
+      console.error("Error fetching isProjectManager:", error);
       throw error;
     }
-
   };
 
   const [mobileMenu, setMobileMenu] = useState({
@@ -95,22 +100,36 @@ export const Navbar = () => {
       onKeyDown={toggleDrawer(anchor, false)}
     >
       <List>
-        {["Home", "Features", "Services", "Listed", "Contact"].map(
-          (text, index) => (
-            <ListItem key={text} disablePadding>
-              <ListItemButton>
-                <ListItemIcon>
-                  {index === 0 && <HomeIcon />}
-                  {index === 1 && <FeaturedPlayListIcon />}
-                  {index === 2 && <MiscellaneousServicesIcon />}
-                  {index === 3 && <ListAltIcon />}
-                  {index === 4 && <ContactsIcon />}
-                </ListItemIcon>
-                <ListItemText primary={text} />
-              </ListItemButton>
-            </ListItem>
-          )
-        )}
+      {["Home", "Top Project", "Projects", "Contact Us"].map(
+  (text, index) => (
+    <ScrollLink
+      to={
+        index === 0
+          ? "hero"
+          : index === 1
+          ? "top-projects"
+          : index === 2
+          ? "projects"
+          : "about-us"
+      }
+      spy={true}
+      smooth={true}
+      duration={500}
+    >
+      <ListItem key={text} disablePadding>
+        <ListItemButton>
+          <ListItemIcon>
+            {index === 0 && <HomeIcon />}
+            {index === 1 && <FeaturedPlayListIcon />}
+            {index === 2 && <ListAltIcon />}
+            {index === 3 && <ContactsIcon />}
+          </ListItemIcon>
+          <ListItemText primary={text} />
+        </ListItemButton>
+      </ListItem>
+    </ScrollLink>
+  )
+)}
       </List>
     </Box>
   );
@@ -165,17 +184,16 @@ export const Navbar = () => {
   }));
 
   return (
-
-    <NavbarContainer className="border-b-2 border-neutral-50">
-
-      <Box
+    <div className="flex items-center justify-between p-4 md:p-8 border-b-2 border-neutral-50">
+      {/* <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: "2.5rem",
         }}
-      >
+      > */}
+      <div className="flex justify-center gap-3">
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <CustomMenuIcon onClick={toggleDrawer("left", true)} />
           <Drawer
@@ -188,20 +206,16 @@ export const Navbar = () => {
           <NavbarLogo src={logoImg} alt="logo" />
         </Box>
 
-        <NavbarLinksBox>
-
+        <div className=" items-center justify-center cursor-pointer gap-3 hidden md:flex">
           <ScrollLink
-            to="hero"  // The "to" prop should match the element's ID you want to scroll to
+            to="hero" // The "to" prop should match the element's ID you want to scroll to
             spy={true}
             smooth={true}
             duration={500}
             className="text-[#05276a] font-bold text-sm"
           >
-            <div className="p-2">
-              Home
-            </div>
+            <div className="p-2">Home</div>
           </ScrollLink>
-
 
           <ScrollLink
             to="top-projects"
@@ -210,11 +224,8 @@ export const Navbar = () => {
             // duration={500}
             className="text-[#05276a] font-bold text-sm"
           >
-            <div className="p-2">
-              Top Projects
-            </div>
+            <div className="p-2">Top Projects</div>
           </ScrollLink>
-
 
           <ScrollLink
             to="projects"
@@ -223,11 +234,8 @@ export const Navbar = () => {
             duration={500}
             className="text-[#05276a] font-bold text-sm"
           >
-            <div className="p-2">
-              Projects
-            </div>
+            <div className="p-2">Projects</div>
           </ScrollLink>
-
 
           <ScrollLink
             to="about-us"
@@ -236,38 +244,41 @@ export const Navbar = () => {
             duration={500}
             className="text-[#05276a] font-bold text-sm"
           >
-            <div className="p-2">
-              About Us
-            </div>
+            <div className="p-2">About Us</div>
           </ScrollLink>
 
           {/* <NavLink variant="body2">Contact</NavLink> */}
-        </NavbarLinksBox>
-      </Box>
+        </div>
+      </div>
+      {/* </Box> */}
 
-      <Box
+      {/* <Box
         sx={{
           display: "flex",
           alignItems: "center",
           justifyContent: "center",
           gap: "1rem",
         }}
-      >
-
+      > */}
+      <div className="flex justify-center gap-1">
         {currentUser ? (
           // Render user's name and profile picture
-          <Box>
+          <div>
             <div className="flex">
-              <div className="mr-4 mt-2 text-end">
-                <Typography variant="body2" color="#05276a" className="font-semibold">
+              <div className="mr-4  text-end my-auto items-center">
+                <Typography
+                  variant="body2"
+                  color="#05276a"
+                  className="font-semibold line-clamp-1"
+                >
                   {/* {JSON.parse(localStorage.getItem("user"))?.name} */}
                   {currentUser.displayName}
                 </Typography>
               </div>
-              <div className="mr-1">
+              <div className="mr-1 items-center my-auto">
                 {JSON.parse(localStorage.getItem("user"))?.profilePic ? (
                   <img
-                    // src={JSON.parse(localStorage.getItem("user"))?.profilePic}
+                    // src={JSON.parse(localStorage.getItem("user")) ?.profilePic}
                     src={currentUser.photoURL}
                     alt="Profile"
                     className="rounded-full h-8 w-8"
@@ -281,8 +292,13 @@ export const Navbar = () => {
                 )}
               </div>
 
-              <div classname="p-2">
-                <button onClick={handleDashboardClick} className="ml-5 nline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800">Dashboard</button>
+              <div className="p-2 my-auto items-center">
+                <button
+                  onClick={handleDashboardClick}
+                  className="ml-5 nline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800"
+                >
+                  Dashboard
+                </button>
               </div>
 
               {/* <button className="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
@@ -290,23 +306,25 @@ export const Navbar = () => {
           </button> */}
             </div>
             {/* <Box/> */}
-
-
-          </Box>
+          </div>
         ) : (
           // Render sign up and register buttons
           <>
-            <Link to="/login" ><div className="p-2"><NavLink variant="body2" className="p-1">Log In</NavLink></div></Link>
-            <div className="bg-[#04276a] rounded-xl">
+            <Link to="/login">
+              <div className="p-2">
+                <NavLink variant="body2" className="p-1">
+                  Log In
+                </NavLink>
+              </div>
+            </Link>
+          
               <Link to="/register">
                 {/* <button className="bg-[#04276a] text-white text-semibold text-center"> Register </button> */}
-                <CustomButton
-                  backgroundColor="#04276a"
-                  color="#fff"
-                  buttonText="Register"
-                />
+                <button type="button" class="text-white bg-[#04276a] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                Register
+                </button>
               </Link>
-            </div>
+  
           </>
         )}
 
@@ -318,9 +336,9 @@ export const Navbar = () => {
             buttonText="Register"
           />
         </div> */}
-      </Box>
-    </NavbarContainer>
-
+        {/* </Box> */}
+      </div>
+    </div>
   );
 };
 
