@@ -1,6 +1,7 @@
 import React from "react";
 import logoImg from "../media/gdsc-logo.png";
 import { Link } from "react-router-dom";
+import ProjectCardDashboard from "../Components/ProjectCardDashboard";
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../config/firebase";
@@ -27,13 +28,14 @@ export default function AdminDashboard() {
   const { currentUser, logout } = useAuth();
   const [topProjects, setTopProjects] = useState([]);
   const [chartValues, setChartValues] = useState([]);
-  const [domainChartValues, setDomainChartValues] = useState([]); 
+  const [domainChartValues, setDomainChartValues] = useState([]); // [{name: "Web Development", numberofProjects: 5}, ...
 
   const dataFormatter = (number) => {
     return Intl.NumberFormat("us").format(number).toString() + " projects";
   };
 
   useEffect(() => {
+    //console.log(requestsArray);
 
     const fetchBasics = async () => {
       try {
@@ -48,18 +50,19 @@ export default function AdminDashboard() {
             setProfilepic(userData.profilepic);
 
             const projects = await getTopCollaboratedProjects();
-            
+            console.log("Top 7 projects:", projects);
             setTopProjects(projects);
             const chartdata = projects.map((project) => ({
               name: project.projectName,
-              
+              "Number of collaborator": project.collaborators.length, // Size of the collaborator array
             }));
             setChartValues(chartdata);
-             
+            console.log("Chart data:", chartdata);
 
+            // domain wise projects
 
             const domainCountMap = await fetchProjectCountsByDomain();
-             
+            console.log("Domain count map:", domainCountMap);
             const domainChartData = [];
             for (const domain in domainCountMap) {
               domainChartData.push({
@@ -68,14 +71,14 @@ export default function AdminDashboard() {
               });
             }
 
-             
+            console.log("Domain chart data:", domainChartData);
             setDomainChartValues(domainChartData);
           } else {
             setProfilepic({ user });
           }
         }
 
-
+        // top 7 projects fetch
       } catch (error) {
         console.error("Error fetching Admin:", error);
       }
@@ -83,15 +86,23 @@ export default function AdminDashboard() {
 
     fetchBasics();
 
-   
+    // Clean up the listener when the component unmounts
+    /*  return () => {
+            if (unsubscribe) {
+                unsubscribe();
+            }
+            if (unsubs) {
+                unsubs();
+            }
+        }; */
   }, []);
 
- 
+  // Assuming you have initialized your Firebase app and firestore as 'db'
 
   async function getTopCollaboratedProjects() {
     const projectsRef = collection(db, "Projects");
 
-  
+    // Create a query to get projects ordered by the length of the collaborator array in descending order
     const q = query(projectsRef, orderBy("collaborators", "desc"), limit(7));
 
     const querySnapshot = await getDocs(q);
@@ -154,9 +165,9 @@ export default function AdminDashboard() {
                   >
                     <path
                       stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
                       d="M1 1h15M1 7h15M1 13h15"
                     />
                   </svg>
@@ -174,9 +185,9 @@ export default function AdminDashboard() {
                   >
                     <path
                       stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
                       d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"
                     />
                   </svg>
@@ -304,9 +315,9 @@ export default function AdminDashboard() {
                 >
                   <path
                     stroke="currentColor"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                    strokeWidth="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    stroke-width="2"
                     d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
                   />
                 </svg>
@@ -315,7 +326,14 @@ export default function AdminDashboard() {
                 </button>
               </div>
             </li>
-            
+            {/* <li>
+                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
+                                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
+                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
+                                </svg>
+                                <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
+                            </a>
+                        </li> */}
           </ul>
         </div>
       </aside>
@@ -334,6 +352,7 @@ export default function AdminDashboard() {
                   index="name"
                   categories={["Number of collaborator"]}
                   colors={["blue"]}
+                  //   valueFormatter={dataFormatter}
                   yAxisWidth={30}
                   showXAxis={false}
                   layout="horizontal"
@@ -486,9 +505,9 @@ export default function AdminDashboard() {
                   >
                     <path
                       stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
                       d="M4 8h11m0 0-4-4m4 4-4 4m-5 3H3a2 2 0 0 1-2-2V3a2 2 0 0 1 2-2h3"
                     />
                   </svg>
@@ -511,9 +530,9 @@ export default function AdminDashboard() {
                   >
                     <path
                       stroke="currentColor"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth="2"
+                      stroke-linecap="round"
+                      stroke-linejoin="round"
+                      stroke-width="2"
                       d="M5 1 1 5l4 4m6-8L7 5l4 4"
                     />
                   </svg>
