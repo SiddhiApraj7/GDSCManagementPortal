@@ -1,8 +1,10 @@
 import React from 'react'
 import { useNavigate } from 'react-router';
 
-function TopProjects({key,position,collaborators,projectDomain, projectName, projectOverview, projectAuthor, projectCount, projectAuthorImage, projectId}) {
+function TopProjects({position,collaborators,projectDomain, projectName, projectOverview, projectAuthor, projectCount, projectAuthorImage, projectId}) {
   const navigate = useNavigate(); 
+
+  
   return (
     <div className="mx-auto mt-10 grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 border-t border-gray-200 pt-10 sm:mx-auto sm:mt-16 sm:pt-16 sm:max-w-xs lg:mx-auto lg:max-w-sm ">
     <article className="flex max-w-xl flex-col items-start justify-between p-4">

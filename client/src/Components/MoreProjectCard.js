@@ -1,9 +1,22 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
+import Web  from "../media/Web.jpg"
+import App  from "../media/App.jpg"
+import Web3  from "../media/Web3.jpg"
+import Ai  from "../media/Ai.jpg"
+import Ds  from "../media/Ds.jpg"
 
-function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,rank}) {
+function MoreProjectCard({id,projectName,projectManager,collaboratorsCount,rank,projectDomain}) {
   const navigate = useNavigate(); // Hook to handle navigation
+
+  const domainImageMap = {
+    'Web Development': Web,
+    'App Development': App,
+    'Web3 Development': Web3,
+    'ML/AI': Ai,
+    'Data Science': Ds,
+  };
 
 
   const handleExploreMoreClick = () => {
@@ -16,21 +29,21 @@ function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,r
     transition={{ duration: 0.5, type: 'tween' }}
   >
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-blue-950 dark:border-gray-700">
-      <a href="#" className="group">
+      <div className="group">
         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img
-            src="https://source.unsplash.com/random?wallpapers"
-            alt="Tall slender porcelain bottle with natural clay textured body and cork stopper."
+            src={domainImageMap[projectDomain] || 'https://source.unsplash.com/random?wallpapers'}
+            alt={'project description cover'}
             className="h-full w-full object-cover object-center group-hover:opacity-75"
           />
         </div>
-      </a>
+      </div>
       <div className="p-5">
-        <a href="#">
+        <div>
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-[#05276a] dark:text-white">
            {projectName} 
           </h5>
-        </a>
+        </div>
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           {projectManager}
         </p>
@@ -50,9 +63,9 @@ function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,r
           >
             <path
               stroke="currentColor"
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M1 5h12m0 0L9 1m4 4L9 9"
             />
           </svg>

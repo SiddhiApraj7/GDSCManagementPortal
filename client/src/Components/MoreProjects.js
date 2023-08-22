@@ -105,6 +105,7 @@ function MoreProjects({ name }) {
               <MoreProjectCard
                key={project.id}
                rank ={i+1}
+               projectDomain={selectedDomain}
               projectName={project.projectName}
               projectManager ={project.projectManager}
               collaboratorsCount={project.collaboratorsCount} 

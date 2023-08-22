@@ -1,5 +1,6 @@
 
 import {Routes, Route ,useNavigation} from 'react-router-dom'
+import React, { useState, useEffect } from "react";
 import { useAuth } from '../contexts/AuthContext';
 import  {
   HostProject,
@@ -24,12 +25,47 @@ import ManagerInbox from '../Pages/ManagerInbox';
 import CollaboratorInbox from '../Pages/CollaboratorInbox';
 import Team from '../Pages/Team';
 import Loader from '../Components/Loader';
+import { db } from "../config/firebase";
+import { collection, addDoc, query, where, getDocs, serverTimestamp  } from "firebase/firestore";
+
 
 
 const Router = () => {
 
   const { currentUser } = useAuth();
+  const [isAdmin, setIsAdmin] = useState(false);
   console.log("router data",currentUser);
+  useEffect(() => {
+    if (currentUser) {
+      const clientRef = collection(db, "Client");
+      const q = query(clientRef, where("email", "==", currentUser.email));
+      const querySnapshot = getDocs(q);
+  
+      querySnapshot.then((snapshot) => {
+        if (!snapshot.empty) {
+          const clientDoc = snapshot.docs[0];
+          const clientData = clientDoc.data();
+          const clientAdmin = clientData.isAdmin;
+          setIsAdmin(clientAdmin);
+        }
+      }).catch((error) => {
+        console.error("Error getting client data:", error);
+      });
+    }
+  }, [currentUser]);
+
+  const AdminRoute = ({ children }) => {
+    console.log("admin route",isAdmin);
+    return isAdmin === true ? (
+      // Render children if currentUser is available
+      children
+    ) : (
+      // Render a loading state if currentUser is still loading
+      <Loader />
+      
+    );
+  };
+
   const PrivateRoute = ({ children }) => {
     return currentUser !== null ? (
       // Render children if currentUser is available
@@ -40,6 +76,8 @@ const Router = () => {
       
     );
   };
+
+
 
 
   return (
@@ -53,11 +91,11 @@ const Router = () => {
       <Route path="/projects/:projectId" element={<JoinProject />} />
       <Route path="/collaborator-dashboard" element={<PrivateRoute><CollaboratorDashboard/></PrivateRoute>}/>
       <Route path="/manager-dashboard" element={<PrivateRoute><ProjectManagerDashboard/></PrivateRoute>}/>
-      <Route path="/admin-dashboard" element={<AdminDashboard/>}/>
-      <Route path="/admin-dashboard/all-projects" element={<PrivateRoute><AllProjects/></PrivateRoute>}/>
-      <Route path="/admin-dashboard/project-managers" element={<PrivateRoute><ProjectManagers/></PrivateRoute>}/>
+      <Route path="/admin-dashboard" element={<AdminRoute><AdminDashboard/></AdminRoute>}/>
+      <Route path="/admin-dashboard/all-projects" element={<AdminRoute><AllProjects/></AdminRoute>}/>
+      <Route path="/admin-dashboard/project-managers" element={<AdminRoute><ProjectManagers/></AdminRoute>}/>
       <Route path="/manager-dashboard/inbox" element={<PrivateRoute><ManagerInbox/></PrivateRoute>}/>
-      <Route path="/admin-dashboard/inbox" element={<AdminInbox/>}/>
+      <Route path="/admin-dashboard/inbox" element={<AdminRoute><AdminInbox/></AdminRoute>}/>
 
       {/* why is there again a <inbox/> ?? */}
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><CollaboratorInbox/></PrivateRoute>}/>

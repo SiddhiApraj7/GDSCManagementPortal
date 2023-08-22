@@ -18,6 +18,11 @@ import PropTypes from 'prop-types';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
 import axios from 'axios';
+import Web  from "../media/Web.jpg"
+import App  from "../media/App.jpg"
+import Web3  from "../media/Web3.jpg"
+import Ai  from "../media/Ai.jpg"
+import Ds  from "../media/Ds.jpg"
 
 
 
@@ -25,29 +30,22 @@ export default function ProjectCard(props) {
 
   const { projectInfo, projectId } = props;
   console.log(projectId);
+
+  const domainImageMap = {
+    'Web Development': Web,
+    'App Development': App,
+    'Web3 Development': Web3,
+    'ML/AI': Ai,
+    'Data Science': Ds,
+  };
+
   const navigate = useNavigate(); // Hook to handle navigation
 
   const handleExploreMoreClick = () => {
     navigate(`/projects/${projectId}`);
   };
-  const access = "95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw"
-  const URL = "https://api.unsplash.com/search/photos?page=1&query=office&client_id=" + access 
 
 
-  const ACCESS_KEY = "95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw";
-const TAG = "programming";
-
-// async function fetchRandomImageWithTag(tag) {
-//   try {
-//     const response = await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${tag}&client_id=95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw`);
-
-//     const imageData = response.results;
-//     return imageData.urls.small; // URL of the random image with the specified tag
-//   } catch (error) {
-//     console.error("Error fetching image:", error);
-//     return null;
-//   }
-// }
 
   return (
     
@@ -61,7 +59,7 @@ const TAG = "programming";
             // 16:9
             pt: '56.25%',
           }}
-          image={"https://source.unsplash.com/random?wallpapers"}
+          image={domainImageMap[projectInfo.projectDomain] || 'https://source.unsplash.com/random?wallpapers'}
           alt={'project image description'}
         />
         <CardContent sx={{ flexGrow: 1 }}>
@@ -94,9 +92,9 @@ const TAG = "programming";
 
 ProjectCard.propTypes = {
   projectInfo: PropTypes.shape({
-      image: PropTypes.string.isRequired,
-      imageText: PropTypes.string.isRequired,
-      title: PropTypes.string.isRequired,
+      image: PropTypes.string,
+      imageText: PropTypes.string,
+      title: PropTypes.string,
       difficultyLevel: PropTypes.string.isRequired,
       manager: PropTypes.string.isRequired,
       domain: PropTypes.string.isRequired,

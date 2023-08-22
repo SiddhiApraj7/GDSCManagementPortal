@@ -7,7 +7,7 @@ export default function Manager({key,name,projects,pic,email}) {
 
     return (
         <div>
-            <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
+            <div className="w-fit  bg-white border-2 border-gray-200  rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
                 <div>
                     <div className="flex">
                         <div align="left" className="m-3">
@@ -21,9 +21,9 @@ export default function Manager({key,name,projects,pic,email}) {
                         </div>
                     </div>
                     <div>
-                        <div className="flex gap-10">
+                        <div className="flex gap-10 p-2">
                             <div>
-                                <a href="#" class="mb-3 ml-5 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+                                <a href="#" class="mb-3 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
                                     Demote
                                 </a>
                             </div>

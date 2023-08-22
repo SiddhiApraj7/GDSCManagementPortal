@@ -42,14 +42,6 @@ export const Navbar = () => {
   const Navigate = useNavigate();
 
   const handleDashboardClick = async () => {
-    // console.log(isDropdownOpen);
-    // Navigate("/dashboard");
-    // if(isDropdownOpen){
-    //   setIsDropdownOpen(false);
-    // }
-    // else{
-    //   setIsDropdownOpen(true);
-    // }
     console.log("pressss");
     try {
       const clientRef = collection(db, "Client");
@@ -60,6 +52,7 @@ export const Navbar = () => {
         const userData = querySnapshot.docs[0].data();
         const isProjectManager = userData.isProjectManager;
         const isAdmin = userData.isAdmin;
+        console.log("isAdmin: ", isAdmin);
 
         if (isAdmin) {
           Navigate("/admin-dashboard");
@@ -92,6 +85,11 @@ export const Navbar = () => {
     setMobileMenu({ ...mobileMenu, [anchor]: open });
   };
 
+  const onLoginPress = () => {
+    Navigate("/login");
+  };
+
+
   const list = (anchor) => (
     <Box
       sx={{ width: anchor === "top" || anchor === "bottom" ? "auto" : 250 }}
@@ -101,7 +99,7 @@ export const Navbar = () => {
     >
       <List>
       {["Home", "Top Project", "Projects", "Contact Us"].map(
-  (text, index) => (
+  (text, index,i) => (
     <ScrollLink
       to={
         index === 0
@@ -116,7 +114,7 @@ export const Navbar = () => {
       smooth={true}
       duration={500}
     >
-      <ListItem key={text} disablePadding>
+      <ListItem key={i} disablePadding>
         <ListItemButton>
           <ListItemIcon>
             {index === 0 && <HomeIcon />}
@@ -310,17 +308,17 @@ export const Navbar = () => {
         ) : (
           // Render sign up and register buttons
           <>
-            <Link to="/login">
-              <div className="p-2">
-                <NavLink variant="body2" className="p-1">
+            <div>
+              <div className="p-1" onClick={onLoginPress}>
+                <div className="p-2 font-bold rounded-lg hover:bg-neutral-100 text-sm">
                   Log In
-                </NavLink>
+                </div>
               </div>
-            </Link>
+            </div>
           
               <Link to="/register">
                 {/* <button className="bg-[#04276a] text-white text-semibold text-center"> Register </button> */}
-                <button type="button" class="text-white bg-[#04276a] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
+                <button type="button" className="text-white bg-[#04276a] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 Register
                 </button>
               </Link>
@@ -328,15 +326,7 @@ export const Navbar = () => {
           </>
         )}
 
-        {/* <NavLink variant="body2" >Sign Up</NavLink>
-        <div className="bg-[#04276a] rounded-xl">
-          <CustomButton
-            backgroundColor="#04276a"
-            color="#fff"
-            buttonText="Register"
-          />
-        </div> */}
-        {/* </Box> */}
+      
       </div>
     </div>
   );
