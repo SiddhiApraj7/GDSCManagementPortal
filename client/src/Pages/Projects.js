@@ -7,18 +7,13 @@ import Grid from "@mui/material/Grid";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
 import Container from "@mui/material/Container";
-// import { createTheme, ThemeProvider } from '@mui/material/styles';
-// import ProjectCard from '../Components/ProjectCard';
-// import Grid from '@mui/material/Grid';
-// import Box from '@mui/material/Box';
-// import Typography from '@mui/material/Typography';
-// import Container from '@mui/material/Container';
+
 
 import { createTheme, ThemeProvider } from "@mui/material/styles";
 
 import ProjectCard from "../Components/ProjectCard";
 
-// TODO remove, this demo shouldn't need to reset the theme.
+
 const theme = createTheme({
   typography: {
     fontFamily: "Poppins, sans-serif",
@@ -49,7 +44,6 @@ export default function Projects() {
 
         setProjectDetails(projectsData);
 
-        // Filter project IDs based on conditions
         const idsArray = projectsSnapshot.docs
           .filter(
             (doc) =>
@@ -66,7 +60,7 @@ export default function Projects() {
     fetchProjects();
   }, []);
 
-  console.log(projectDetails[0]);
+  
   const cards = [...Array(projectDetails.length).keys()];
   return (
     <ThemeProvider theme={theme}>
@@ -106,12 +100,7 @@ export default function Projects() {
             </div>
           </Container>
           <div className="flex w-full lg:mb-0 items-center mb-2  p-4 text-center justify-center mt-6">
-            {/* <h1 className="flex items-center text-5xl font-extrabold text-[#05276a] justify-center p-5 mb-4">
-            All
-            <span className="bg-blue-100 text-blue-800 text-2xl font-semibold mr-2 px-2.5 py-0.5 rounded dark:bg-blue-200 dark:text-blue-800 ml-2">
-              PROJECTS
-            </span>
-          </h1> */}
+      
             <form className="flex">
               <div className="relative my-auto">
                 <svg
@@ -150,7 +139,7 @@ export default function Projects() {
           </div>
         </Box>
         <Container sx={{ py: 8 }} maxWidth="lg">
-          {/* End hero unit */}
+
           <Grid container spacing={4} columns={12}>
             {cards
               .filter((card) => {

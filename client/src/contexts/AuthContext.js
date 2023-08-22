@@ -22,13 +22,13 @@ export function useAuth() {
 }
 
 export default function AuthProvider({ children }) {
-  const navigate = useNavigate(); // Hook to handle navigation
+  const navigate = useNavigate(); 
   const notifyError = (message) => {
     toast.error(message);
   };
   const [currentUser, setCurrentUser] = useState();
-  console.log("current user:++++++", currentUser);
-  // const [loading, setLoading] = useState(true)
+ 
+  
 
   async function signup(email, password, username) {
     try {
@@ -42,11 +42,10 @@ export default function AuthProvider({ children }) {
         displayName: username,
       });
       localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
-      console.log("user", user);
-      //console.log(user);
+      
+      
       const colRef = collection(db, "Client");
-      //const existingUserQuery = query(colRef, where("email", "==", user.email));
-      //console.log(existingUserQuery);
+      
       await addDoc(colRef, {
         email: email,
         name: username,
@@ -55,12 +54,12 @@ export default function AuthProvider({ children }) {
         profilepic : currentUser.photoURL,
         isAdmin: false,
         isProjectManager: false,
-        projectHosted: [], // An array that will later store references to project documents
-        projectCollaborated: [], // An array that will later store references to project documents
-        joinDate:  serverTimestamp(), // Initialize with null and update later
+        projectHosted: [], 
+        projectCollaborated: [], 
+        joinDate:  serverTimestamp(), 
       })
         .then(() => {
-          console.log("User data stored successfully");
+           ("User data stored successfully");
           return user;
         })
         .catch((error) => {
@@ -70,7 +69,7 @@ export default function AuthProvider({ children }) {
     } catch (error) {
       console.error("Error signing up:", error.message);
       notifyError("Error storing user data");
-      throw error; // Rethrow the error to be caught by the caller
+      throw error; 
     }
   }
 
@@ -86,7 +85,7 @@ export default function AuthProvider({ children }) {
         const clientData = clientDoc.data();
         const clientName = clientData.name;
 
-        // Update the user's display name with the retrieved name
+        
         await updateProfile(auth.currentUser, {
           displayName: clientName,
         });
@@ -105,7 +104,7 @@ export default function AuthProvider({ children }) {
       const googleauthprovider = new GoogleAuthProvider();
       const result = await signInWithPopup(auth, googleauthprovider);
       const user = result.user;
-      console.log("Logged in with Google:", user);
+      
 
       const colRef = collection(db, "Client");
       const querySnapshot = await getDocs(
@@ -121,15 +120,15 @@ export default function AuthProvider({ children }) {
           profilepic : currentUser.photoURL,
           isAdmin: false,
           isProjectManager: false,
-          projectHosted: [], // An array that will later store references to project documents
-          projectCollaborated: [], // An array that will later store references to project documents
-          joinDate: serverTimestamp(), // Initialize with null and update later
+          projectHosted: [], 
+          projectCollaborated: [], 
+          joinDate: serverTimestamp(), 
         });
-        console.log("User data stored successfully");
+        
         localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
         return user;
       } else {
-        console.log("User with the same email already exists.");
+        
       }
     } catch (error) {
       console.error("Google Sign-In Error:", error);
@@ -142,7 +141,7 @@ export default function AuthProvider({ children }) {
       const githubProvider = new GithubAuthProvider();
       const result = await signInWithPopup(auth, githubProvider);
       const user = result.user;
-      console.log("Logged in with Github:", user);
+      
       const colRef = collection(db, "Client");
       const querySnapshot = await getDocs(
         query(colRef, where("email", "==", user.email))
@@ -156,12 +155,12 @@ export default function AuthProvider({ children }) {
           profilepic : currentUser.photoURL,
           isAdmin: false,
           isProjectManager: false,
-          projectHosted: [], // An array that will later store references to project documents
-          projectCollaborated: [], // An array that will later store references to project documents
-          joinDate: serverTimestamp(), // Initialize with null and update later
+          projectHosted: [], 
+          projectCollaborated: [], 
+          joinDate: serverTimestamp(), 
         })
           .then(() => {
-            console.log("User data stored successfully");
+             ("User data stored successfully");
             localStorage.setItem("user", JSON.stringify({ name: currentUser.displayName, email: currentUser.email, profilePic:currentUser.photoURL }));
             return user;
           })
@@ -203,16 +202,16 @@ export default function AuthProvider({ children }) {
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setCurrentUser(user);
-      // setLoading(false)
+      
       if (user) {
-        // Update local storage with user data when user is authenticated
+        
         const { displayName, email, photoURL } = user;
         localStorage.setItem(
           "user",
           JSON.stringify({ name: displayName, email, profilePic: photoURL })
         );
       } else {
-        // Clear local storage when user is not authenticated
+        
         localStorage.removeItem("user");
       }
     });
@@ -234,7 +233,7 @@ export default function AuthProvider({ children }) {
 
   return (
     <AuthContext.Provider value={value}>
-      {/* {!loading && children} */}
+      
       {children}
     </AuthContext.Provider>
   );

@@ -9,7 +9,6 @@ import {
   getDocs,
   getDoc,
   doc,
-  setDoc,
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
@@ -28,9 +27,9 @@ const About = ({ name }) => {
           clientCollection,
           where("isProjectManager", "==", true)
         );
-        // console.log('Project managers query:', q);
+
         const querySnapshot = await getDocs(q);
-        // console.log('Project managers query snapshot:', querySnapshot);
+
 
         const projectManagerData = [];
         querySnapshot.forEach((doc) => {
@@ -38,21 +37,21 @@ const About = ({ name }) => {
           projectManagerData.push({
             id: doc.id,
             projectCount: data.projectHosted ? data.projectHosted.length : 0,
-            topProject: null, // Placeholder for the top project
+            topProject: null, 
             projectHosted: data.projectHosted,
             name: data.name,
             profilepic: data.profilepic,
           });
         });
-        console.log("Project managers:", projectManagerData);
 
-        // Sort project managers based on project count in descending order
+
+        
         projectManagerData.sort((a, b) => b.projectCount - a.projectCount);
 
-        // Get the top 3 project managers
+       
         const top3ProjectManagers = projectManagerData.slice(0, 3);
 
-        // Get the top project for each project manager
+        
         for (const projectManager of top3ProjectManagers) {
           for (const projectId of projectManager.projectHosted) {
             const projectDocRef = doc(db, "Projects", projectId);
@@ -61,7 +60,7 @@ const About = ({ name }) => {
             if (projectDocSnapshot.exists()) {
               const projectData = projectDocSnapshot.data();
               if (projectData && projectData.collaborators) {
-                // Check if collaborators is not undefined
+                
                 if (
                   !projectManager.topProject ||
                   !projectManager.topProject.collaborators ||
@@ -107,7 +106,7 @@ const About = ({ name }) => {
               <span className="border-b-2 border-green-400 ">Tech Leads</span>
             </p>
           </div>
-          <div className="mt-2 flex flex-col md:flex-row">
+          <div className="mt-2 mx-12 flex flex-col md:flex-row">
       {topProjectManagers.length > 0  ? (
         topProjectManagers.map((projectManager, i) => (
           <motion.div

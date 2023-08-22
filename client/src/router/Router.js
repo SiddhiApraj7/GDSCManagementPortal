@@ -1,20 +1,22 @@
 
+<<<<<<< HEAD
 import {Routes, Route ,useNavigation} from 'react-router-dom'
 import React, { useState, useEffect } from "react";
+=======
+import {Routes, Route} from 'react-router-dom'
+>>>>>>> d54983eee60d9b25a71d116b241671b9278c40eb
 import { useAuth } from '../contexts/AuthContext';
 import  {
   HostProject,
   Projects,
   JoinProject,
   ProjectManagerDashboard,
-  Inbox,
   JoinProjectForm,
   CollaboratorDashboard,
   Login,
   Register,
   LandingPage
 } from '../Pages/index';
-import { Navigate } from "react-router-dom";
 import AdminDashboard from '../Pages/AdminDashboard';
 import AllProjects from '../Pages/AllProjects';
 import ProjectManagers from '../Pages/ProjectManagers';
@@ -68,10 +70,10 @@ const Router = () => {
 
   const PrivateRoute = ({ children }) => {
     return currentUser !== null ? (
-      // Render children if currentUser is available
+     
       children
     ) : (
-      // Render a loading state if currentUser is still loading
+      
       <Loader />
       
     );
@@ -97,12 +99,12 @@ const Router = () => {
       <Route path="/manager-dashboard/inbox" element={<PrivateRoute><ManagerInbox/></PrivateRoute>}/>
       <Route path="/admin-dashboard/inbox" element={<AdminRoute><AdminInbox/></AdminRoute>}/>
 
-      {/* why is there again a <inbox/> ?? */}
+
       <Route path="/collaborator-dashboard/inbox" element={<PrivateRoute><CollaboratorInbox/></PrivateRoute>}/>
       <Route path="/join-project-form/:projectId" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
       <Route path="/confirm-host-project" element={<ConfirmHostProject/>}/>
       <Route path="/confirm-join-project/:projectId" element={<ConfirmJoinProject/>}/>
-      <Route path="/meet-the-team" element={<Team/>}/>
+      <Route path="/our-team" element={<Team/>}/>
 
 
       </Routes>

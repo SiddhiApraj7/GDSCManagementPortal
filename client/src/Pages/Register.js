@@ -47,11 +47,11 @@ export default function Register() {
             );
             const user = userCredential.user;
             navigate('/');
-            // Handle your success logic here
+            
           } catch (error) {
             const errorCode = error.code;
             const errorMessage = error.message;
-            // Handle your error logic here
+            
           }
         },
       });
@@ -60,7 +60,7 @@ export default function Register() {
         try {
             const result = await signInWithPopup(auth, googleProvider);
             const user = result.user;
-            console.log("Logged in with Google:", user);
+             ("Logged in with Google:", user);
             navigate('/');
         } catch (error) {
             console.error("Google Sign-In Error:", error);
@@ -71,7 +71,7 @@ export default function Register() {
         try {
             const result = await signInWithPopup(auth, githubProvider);
             const user = result.user;
-            console.log("Logged in with Github:", user);
+             ("Logged in with Github:", user);
             navigate('/');
         } catch (error) {
             console.error("Github Sign-In Error:", error);

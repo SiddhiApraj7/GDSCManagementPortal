@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import axios from 'axios';
-//import { useAuth } from '../contexts/AuthContext';
-import { Button, Modal, Box, Typography } from '@mui/material';
+import { Modal, Box, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { collection, query, where, onSnapshot, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from "../config/firebase";
 
 
 export default function ManagerRequest({ key, id, type, name, contactNumber, resume, email, projectID, projectName, githubProfileLink, linkedinProfileLink,
     hoursCanDedicate, reasonToJoin }) {
-    console.log("Id", id);
-    console.log("type", type);
 
-    //const { currentUser } = useAuth();
+
+    
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -30,15 +28,13 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
         try {
             const projectDocRef = doc(db, 'Projects', projectID);
             const projectDocSnap = await getDoc(projectDocRef);
-            console.log("sid",projectID);
+
             
             if (projectDocSnap.exists()) {
                 const projectData = projectDocSnap.data();
-                setProjectNameReq(projectData.projectName); // Store the projectName
-                console.log("tannu",projectNameReq)
-            } else {
-                console.log('Project document not found');
-            }
+                setProjectNameReq(projectData.projectName); 
+ 
+            } 
         } catch (error) {
             console.error('Error fetching project details:', error);
         }
@@ -54,7 +50,6 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
 
     const handleApproveClick = async () => {
         try {
-            //setLoading(true);
 
 
             const response = await axios.post(
@@ -64,24 +59,17 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
-
+            
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+
         }
     };
 
     const handleDeclineClick = async () => {
         try {
-            //setLoading(true);
+  
 
             const response = await axios.post(
                 'http://localhost:3000/requests/decline-collaborator-request',
@@ -90,18 +78,12 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
+           
 
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+ 
         }
     };
 

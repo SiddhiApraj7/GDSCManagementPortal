@@ -2,9 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import logoImg from "../media/gdsc-logo.png";
-import ProjectCard from '../Components/ProjectCard';
 import { db } from "../config/firebase";
-import { collection, addDoc, query, where, getDocs } from 'firebase/firestore';
+import { collection, query, where, getDocs } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import Request from '../Components/Request';
@@ -21,7 +20,7 @@ export default function AdminInbox() {
     const { currentUser,logout } = useAuth();
 
     useEffect(() => {
-        //console.log(requestsArray);
+
 
         const fetchBasics = async () => {
             try {
@@ -46,22 +45,13 @@ export default function AdminInbox() {
 
         fetchBasics();
 
-        // Clean up the listener when the component unmounts
-        /*  return () => {
-             if (unsubscribe) {
-                 unsubscribe();
-             }
-             if (unsubs) {
-                 unsubs();
-             }
-         }; */
     }, []);
 
 
     const allRequests = async () => {
         try {
             const requestsRef = collection(db, "RequestsAdmin");
-            console.log(requestsRef);
+    
 
 
             return onSnapshot(requestsRef, (snapshot) => {
@@ -72,17 +62,15 @@ export default function AdminInbox() {
                     const request = doc.data();
                     Array.push({ id: requestId, ...request });
                 });
-                console.log("hello", Array);
+                 
 
                 setRequestsArray(Array);
 
-                // Now you have all requests in the requestsArray
-                console.log("second", requestsArray);
+                
 
-                // If you want to perform further operations with the array, you can do so here
             });
 
-            // Remember to unsubscribe when you're done using the listener
+
         } catch (error) {
             console.error("Error fetching requests:", error);
         }
@@ -90,14 +78,12 @@ export default function AdminInbox() {
 
     useEffect(() => {
         setUnsubscribe(() => allRequests());
-        //console.log(requestsArray);
 
-        // Clean up the listener when the component unmounts
         return () => {
             if (unsubscribe) {
                 unsubscribe();
             }
-            console.log(requestsArray);
+            
         };
     }, []);
 
@@ -214,6 +200,7 @@ export default function AdminInbox() {
                         </button>
                      </div>
                         </li>
+    
                     </ul>
                 </div>
             </aside>
@@ -278,6 +265,7 @@ export default function AdminInbox() {
                         </button>
                      </div>
                             </li>
+                        
                         </ul>
                     </div>
                 </aside>

@@ -1,6 +1,4 @@
 import React from 'react'
-import WhatsAppIcon from '@mui/icons-material/WhatsApp';
-import GitHubIcon from '@mui/icons-material/GitHub';
 import user from '../media/user.png'
 
 export default function Manager({key,name,projects,pic,email}) {

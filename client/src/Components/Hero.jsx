@@ -3,8 +3,6 @@ import { Container } from "@mui/system";
 import React from "react";
 import Navbar from "./Navbar";
 import { useTypewriter } from "react-simple-typewriter";
-import heroImg from "../media/hero.png";
-import CustomButton from "./CustomButton";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 import Lottie from "lottie-react";
@@ -94,16 +92,7 @@ const Hero = ({name}) => {
                 </Typography>
               </div>
 
-              {/* <div className = "bg-[#000336] rounded-xl">
-            <span >
-            <CustomButton
-              backgroundColor="#0F1B4C"
-              color="#fff"
-              buttonText="Join a Project"
-              heroBtn={true}
-            />
-            </span>
-            </div> */}
+              
             
             <Link to={currentUser ? "/projects" : "/register"}>
               <Fab
@@ -129,19 +118,12 @@ const Hero = ({name}) => {
             
 
             <Box className="items-start" sx={{ flex: "1.25" }}>
-              {/* <img
-              src={heroImg}
-              // src = ""
-              alt="heroImg"
-              style={{ maxWidth: "100%", marginBottom: "2rem" }}
-            /> */}
+              
               <Lottie animationData={animationData} />
             </Box>
           </div>
 
-          {/* <CustomBox> */}
-
-          {/* </CustomBox> */}
+          
         </Container>
       </ThemeProvider>
     </Box>

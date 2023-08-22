@@ -2,9 +2,8 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import logoImg from "../media/gdsc-logo.png";
-import ProjectCard from '../Components/ProjectCard';
 import { db } from "../config/firebase";
-import { collection, addDoc, query, where, getDocs, unsubscribe } from 'firebase/firestore';
+import { collection, query, where, getDocs, } from 'firebase/firestore';
 import { useEffect } from 'react';
 import { onSnapshot } from 'firebase/firestore';
 import CollaboratorRequests from '../Components/CollaboratorRequests';
@@ -23,11 +22,11 @@ export default function CollaboratorInbox() {
     const allRequests = async () => {
         try {
             const requestsRef = collection(db, "RequestsProjectManager");
-            console.log(requestsRef);
+            
 
             const q = query(requestsRef, where("email", "==", currentUser.email));
             return onSnapshot(q, (snapshot) => {
-                const newArray = []; // Rename the array to avoid confusion
+                const newArray = []; 
 
                 snapshot.forEach((doc) => {
                     const requestId = doc.id;
@@ -35,9 +34,9 @@ export default function CollaboratorInbox() {
                     newArray.push({ id: requestId, ...request });
                 });
 
-                console.log("Fetched requests:", newArray);
-                setRequestsArray(newArray); // Update the state with fetched data
-                console.log("heee", requestsArray);
+                 
+                setRequestsArray(newArray); 
+                 
             });
         } catch (error) {
             console.error("Error fetching requests:", error);
@@ -46,7 +45,7 @@ export default function CollaboratorInbox() {
 
     useEffect(() => {
         setUnsubscribe(() => allRequests());
-        //console.log(requestsArray);
+        
 
         const fetchIsManager = async () => {
             try {
@@ -72,12 +71,12 @@ export default function CollaboratorInbox() {
 
         fetchIsManager();
 
-        // Clean up the listener when the component unmounts
+        
         return () => {
             if (unsubscribe) {
                 unsubscribe();
             }
-            console.log(requestsArray);
+            
         };
     }, []);
 
@@ -183,14 +182,7 @@ export default function CollaboratorInbox() {
                         </button>
                      </div>
                         </li>
-                        {/* <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                                    <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
-                                </svg>
-                                <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                            </a>
-                        </li> */}
+                        
                     </ul>
                 </div>
             </aside>
@@ -243,14 +235,7 @@ export default function CollaboratorInbox() {
                         </button>
                      </div>
                             </li>
-                            {/* <li>
-                                <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                    <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
-                                    </svg>
-                                    <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                                </a>
-                            </li> */}
+                            
                         </ul>
                     </div>
                 </aside>
