@@ -54,6 +54,7 @@ export default function ProjectManagerDashboard() {
 
                      if (projectDocSnapshot.exists()) {
                         const projectData = projectDocSnapshot.data();
+                        projectData.projectID = projectId;
                         newProjectData.push(projectData);
 
                         if (projectData.projectDomain && !newSkillsArray.includes(projectData.projectDomain)) {
@@ -289,6 +290,7 @@ export default function ProjectManagerDashboard() {
                            domain={project.projectDomain}
                            github={project.githubLinkOfProject}
                            slack={project.slackLinkOfProject}
+                           projectID={project.projectID}
                         />
 
 

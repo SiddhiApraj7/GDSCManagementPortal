@@ -56,6 +56,8 @@ export default function CollaboratorDashboard() {
 
               if (projectDocSnapshot.exists()) {
                 const projectData = projectDocSnapshot.data();
+                projectData.projectID = projectId;
+                console.log("yes", projectData);
                 newProjectData.push(projectData);
 
                 if (projectData.projectDomain && !newSkillsArray.includes(projectData.projectDomain)) {
@@ -375,6 +377,7 @@ export default function CollaboratorDashboard() {
                   domain={project.projectDomain}
                   github={project.githubLinkOfProject}
                   slack={project.slackLinkOfProject}
+                  projectID={project.projectID}
                 />
               ))}
             </div>

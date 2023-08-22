@@ -64,7 +64,7 @@ const Router = () => {
       <Route path="/join-project-form/:projectId" element={<PrivateRoute><JoinProjectForm /></PrivateRoute>}/>
       <Route path="/confirm-host-project" element={<ConfirmHostProject/>}/>
       <Route path="/confirm-join-project/:projectId" element={<ConfirmJoinProject/>}/>
-      <Route path="/meet-the-team" element={<Team/>}/>
+      <Route path="/our-team" element={<Team/>}/>
 
 
       </Routes>

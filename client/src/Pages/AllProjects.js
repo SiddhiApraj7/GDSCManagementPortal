@@ -52,9 +52,11 @@ export default function AllProjects() {
 
         const fetchedProjectData = [];
         projectsQuerySnapshot.forEach((doc) => {
-          fetchedProjectData.push(doc.data());
-        });
-
+        const projectData = doc.data();
+        const projectId = doc.id;
+        fetchedProjectData.push({ ...projectData, projectId });
+        console.log("yesss", fetchedProjectData);
+      });
         setProjectData(fetchedProjectData);
       } catch (error) {
         console.error("Error fetching Admin:", error);
@@ -479,6 +481,7 @@ export default function AllProjects() {
                     domain={project.projectDomain}
                     github={project.githubLinkOfProject}
                     slack={project.slackLinkOfProject}
+                    projectID={project.projectId}
                   />
                 ))}
             </div>

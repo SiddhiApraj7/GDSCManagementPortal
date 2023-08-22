@@ -208,7 +208,8 @@ export const NavbarProjects = () => {
                     >
                         {list("left")}
                     </Drawer>
-                    <NavbarLogo src={logoImg} alt="logo" />
+                    <Link to="/"><NavbarLogo src={logoImg} alt="logo" /></Link>
+                    
                 </Box>
 
                 <NavbarLinksBox>

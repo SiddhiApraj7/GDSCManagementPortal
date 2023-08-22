@@ -1,8 +1,15 @@
 import React from 'react'
 import WhatsAppIcon from '@mui/icons-material/WhatsApp';
 import GitHubIcon from '@mui/icons-material/GitHub';
+import { useNavigate } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-export default function ProjectCardDashboard({key, name, problem, domain, github, slack}) {
+export default function ProjectCardDashboard({key, name, problem, domain, github, slack, projectID}) {
+
+  const navigate = useNavigate();
+  const handleExploreMoreClick = () => {
+   
+    navigate(`/projects/${projectID}`);
+  };
   return (
     <div>
 
@@ -32,12 +39,12 @@ export default function ProjectCardDashboard({key, name, problem, domain, github
             <img className="w-10 h-10 border-2 border-white rounded-full dark:border-gray-800" src="https://flowbite.com/docs/images/people/profile-picture-4.jpg" alt="" />
           </div> */}
           <div>
-          <a href="#" className="mt-3 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
+          <button  onClick={handleExploreMoreClick} className="mt-3 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-blue-600 rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
             Read more
             <svg className="w-3.5 h-3.5 ml-2" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 10">
               <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M1 5h12m0 0L9 1m4 4L9 9" />
             </svg>
-          </a>
+          </button>
           </div>
           </div>
           

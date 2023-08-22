@@ -58,7 +58,7 @@ function Stats() {
     return (
         <div >
 
-            <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-28">
+            <div className="relative isolate overflow-hidden bg-gray-900 py-24 sm:py-32">
                 <img src="connection.jpg" alt="" className="absolute inset-0 -z-10 h-full w-full object-cover object-right md:object-center" />
                 <div className="absolute inset-0 -z-10 bg-black opacity-50"></div>
                 <div className="hidden sm:absolute sm:-top-10 sm:right-1/2 sm:-z-10 sm:mr-10 sm:block sm:transform-gpu sm:blur-3xl" aria-hidden="true">
