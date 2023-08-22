@@ -78,7 +78,7 @@ useEffect(() => {
 
     fetchCollaboratorsData();
     checkUserRole();
-}, [post.collaborators, emailid]);
+}, [post.collaborators, emailid, projectId]);
 
 
     return (
@@ -314,7 +314,7 @@ useEffect(() => {
         {collaboratorsData.map((collaborator, index) => (
             <li key={index}>
                 <div className="flex items-center gap-x-6 m-6">
-                    <img className="h-16 w-16 rounded-full" src={collaborator.profilepic} alt="" />
+                    <img className="h-16 w-16 rounded-full" src={collaborator.profilepic} alt="Person Profile" />
                     <div>
                         <h3 className="text-base font-semibold leading-7 tracking-tight text-[#03276a]">{collaborator.name}</h3>
                         

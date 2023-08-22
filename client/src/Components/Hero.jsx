@@ -1,4 +1,4 @@
-import { Box, Button, Fab, styled, Typography } from "@mui/material";
+import { Box, Fab, styled, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 import Navbar from "./Navbar";
@@ -20,28 +20,6 @@ const Hero = ({name}) => {
 
   const { currentUser } = useAuth();
 
-
-  const CustomBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    justifyContent: "center",
-    gap: theme.spacing(5),
-    marginTop: theme.spacing(3),
-    [theme.breakpoints.down("md")]: {
-      flexDirection: "column",
-      alignItems: "center",
-      textAlign: "center",
-    },
-  }));
-
-  const Title = styled(Typography)(({ theme }) => ({
-    fontSize: "64px",
-    color: "#000336",
-    fontWeight: "bold",
-    margin: theme.spacing(4, 0, 4, 0),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "40px",
-    },
-  }));
   const [text] = useTypewriter({
     words: ["Learning technology together one project at a time"],
     loop: 0,

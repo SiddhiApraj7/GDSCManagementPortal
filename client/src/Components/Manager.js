@@ -9,7 +9,7 @@ export default function Manager({key,name,projects,pic,email}) {
                 <div>
                     <div className="flex">
                         <div align="left" className="m-3">
-                            {pic? <img className="w-18 h-18 rounded-full mx-auto" src={pic} alt="user photo" /> : <img className="w-14 h-14 rounded-full mx-auto" src={user} alt="user photo" />}
+                            {pic? <img className="w-18 h-18 rounded-full mx-auto" src={pic} alt="user profile" /> : <img className="w-14 h-14 rounded-full mx-auto" src={user} alt="user photo" />}
 
                         </div>
                         <div className="m-3">

@@ -83,7 +83,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
- 
+            
         }
     };
 
@@ -102,11 +102,11 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
     return (
         <ThemeProvider theme={theme}>
             <div className="p-2">
-                {(type == 1) && (
+                {(type === 1) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
-                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         </div>
                         <div className="pl-2 flex  w-full justify-between">
                             <div className="mb-2 text-base font-normal">
@@ -207,9 +207,9 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 2) && (
+                {(type === 2) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         <div align="right" className="pl-2 w-full flex justify-between">
                             <div className="mb-2 text-base font-normal">
                                 You allowed <span className="font-medium text-gray-900 dark:text-white">{name}</span> to join the project <span className="font-medium text-gray-900 dark:text-white">{projectNameReq}.</span>
@@ -223,9 +223,9 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 3) && (
+                {(type === 3) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         <div align="right" className="pl-2 flex w-full justify-between">
                             <div className="mb-2 text-base font-normal">
                                 You declined <span className="font-medium text-gray-900 dark:text-white">{name} </span>'s request to join the project <span className="font-medium text-gray-900 dark:text-white">{projectNameReq}.</span>
@@ -238,11 +238,11 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                         </div>
                     </div>
                 )}
-                {(type == 4) && (
+                {(type === 4) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
-                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         </div>
                         <div className="pl-2 flex  w-full justify-between">
                             <div className="mb-2 text-base font-normal">
@@ -252,9 +252,9 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 5) && (
+                {(type === 5) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         <div align="right" className="pl-2 w-full flex justify-between">
                             <div className="mb-2 text-base font-normal">
                                 Your request to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}</span> has been approved.
@@ -268,9 +268,9 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 6) && (
+                {(type === 6) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         <div align="right" className="pl-2 flex w-full justify-between">
                             <div className="mb-2 text-base font-normal">
                                 Your request to host the project <span className="font-medium text-gray-900 dark:text-white">{projectName}</span> has been declined.

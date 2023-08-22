@@ -289,7 +289,7 @@ export default function Inbox() {
                   <img
                     className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
                     src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                    alt="Jese Leos image"
+                    alt="Person Profile"
                   />
                   <div className="text-gray-600 dark:text-gray-400">
                     <div className="text-base font-normal">
@@ -321,7 +321,7 @@ export default function Inbox() {
                   <img
                     className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
                     src="https://flowbite.com/docs/images/people/profile-picture-2.jpg"
-                    alt="Bonnie Green image"
+                    alt="Person Profile"
                   />
                   <div>
                     <div className="text-base font-normal text-gray-600 dark:text-gray-400">
@@ -353,7 +353,7 @@ export default function Inbox() {
                   <img
                     className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
                     src="https://flowbite.com/docs/images/people/profile-picture-3.jpg"
-                    alt="Laura Romeros image"
+                    alt="Person Profile"
                   />
                   <div className="text-gray-600 dark:text-gray-400">
                     <div className="text-base font-normal">
@@ -385,7 +385,7 @@ export default function Inbox() {
                   <img
                     className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
                     src="https://flowbite.com/docs/images/people/profile-picture-4.jpg"
-                    alt="Mike Willi image"
+                    alt="Person Profile"
                   />
                   <div>
                     <div className="text-base font-normal text-gray-600 dark:text-gray-400">
@@ -410,7 +410,7 @@ export default function Inbox() {
                   <img
                     className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
                     src="https://flowbite.com/docs/images/people/profile-picture-5.jpg"
-                    alt="Jese Leos image"
+                    alt="Person Profile"
                   />
                   <div className="text-gray-600 dark:text-gray-400">
                     <div className="text-base font-normal">
@@ -442,7 +442,7 @@ export default function Inbox() {
                   <img
                     className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0"
                     src="https://flowbite.com/docs/images/people/profile-picture-1.jpg"
-                    alt="Bonnie Green image"
+                    alt="Person Profile"
                   />
                   <div className="text-gray-600 dark:text-gray-400">
                     <div className="text-base font-normal">

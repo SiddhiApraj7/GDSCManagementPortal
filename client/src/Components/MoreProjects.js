@@ -56,7 +56,7 @@ function MoreProjects({ name }) {
     };
 
     fetchTopProjectsByDomain();
-  }, []);
+  }, [topProjects]);
 
 
 

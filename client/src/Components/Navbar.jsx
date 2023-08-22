@@ -134,16 +134,7 @@ export const Navbar = () => {
     },
   }));
 
-  const NavbarLinksBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
-    cursor: "pointer",
-    gap: theme.spacing(3),
-    [theme.breakpoints.down("md")]: {
-      display: "none",
-    },
-  }));
+
 
   const CustomMenuIcon = styled(MenuIcon)(({ theme }) => ({
     cursor: "pointer",
@@ -154,15 +145,7 @@ export const Navbar = () => {
     },
   }));
 
-  const NavbarContainer = styled(Container)(({ theme }) => ({
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "space-between",
-    padding: theme.spacing(4),
-    [theme.breakpoints.down("md")]: {
-      padding: theme.spacing(2),
-    },
-  }));
+ 
 
   const NavbarLogo = styled("img")(({ theme }) => ({
     cursor: "pointer",
