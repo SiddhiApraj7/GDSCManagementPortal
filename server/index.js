@@ -18,4 +18,4 @@ app.get('/', (req,res) => {
     res.send('Welcome to GDSC Protal');
 });
 
-app.listen(3000, () => console.log('App is listening on url http://localhost:' + 3000));
+app.listen(3000, () =>  ('App is listening on url http://localhost:' + 3000));

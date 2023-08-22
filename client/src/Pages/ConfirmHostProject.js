@@ -4,18 +4,16 @@ import { useAuth } from '../contexts/AuthContext';
 import { useNavigate } from 'react-router';
 export default function ConfirmHostProject() {
 
-    const { currentUser } = useAuth(); // Assuming useAuth() gives you access to the current user
-    //const [loading, setLoading] = useState(false);
+    const { currentUser } = useAuth();  
 
     const navigate = useNavigate();
-  console.log(currentUser);
+
     const handleClick = async () => {
       try {
-        //setLoading(true);
+       
   
-        
+        if (currentUser) {
           const email = currentUser.email;
-            console.log(email);
           const response = await axios.post(
             'http://localhost:3000/requests/create-project-request',
             {
@@ -24,15 +22,14 @@ export default function ConfirmHostProject() {
           );
   
           if (response.status === 200) {
-            // API call successful
-            console.log("API call successful");
+            
             
 
           } else {
-            // API call failed
+            
             console.error("API call failed");
           }
-      } catch (error) {
+      }} catch (error) {
         console.error("Error calling API:", error);
       } finally {
         navigate("/");

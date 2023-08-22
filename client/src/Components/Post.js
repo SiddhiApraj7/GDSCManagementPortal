@@ -10,7 +10,7 @@ import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router';
 import { db } from "../config/firebase";
 import { useAuth } from '../contexts/AuthContext';
-import { collection, query, where, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs, getDoc, doc} from "firebase/firestore";
 import { useState, useEffect } from 'react';
 function Post(props) {
     const [collaboratorsData, setCollaboratorsData] = useState([]);
@@ -20,18 +20,18 @@ function Post(props) {
     const emailid = currentUser?.email;
     const navigate = useNavigate();
     const { post, projectId } = props;
-    console.log("hello :)",post);
+
     const handleApplyNowClick = () => {
         navigate(`/join-project-form/${projectId}`);
       };
-//console.log(post.collaborators);
+
 useEffect(() => {
     async function fetchCollaboratorsData() {
         const collaborators = post.collaborators;
 
         if (!Array.isArray(collaborators)) {
             console.error('Collaborators is not an array:', collaborators);
-            return; // Exit the function or handle the error appropriately
+            return; 
         }
 
         const collaboratorsDataArray = [];
@@ -80,7 +80,7 @@ useEffect(() => {
     checkUserRole();
 }, [post.collaborators, emailid]);
 
-console.log(collaboratorsData);
+
     return (
         <div className='w-full'>
             <Paper
@@ -95,7 +95,7 @@ console.log(collaboratorsData);
                     backgroundImage: `url(${"https://source.unsplash.com/random?wallpapers"})`,
                 }}
             >
-                {/* Increase the priority of the hero background image */}
+                
                 {<img style={{ display: 'none' }} src={"https://source.unsplash.com/random?wallpapers"} alt={"main image description"} />}
                 <Box
                     sx={{
@@ -159,7 +159,7 @@ console.log(collaboratorsData);
     {post.techStack && post.techStack.split(',').map((tech, index) => (
         <Chip
             key={index}
-            label={tech.trim()} // Remove leading/trailing whitespace
+            label={tech.trim()} 
             variant="outlined"
             className={`bg-white-white border ${
                 index % 4 === 0 ? "text-[#ea4335] border-[#ea4335]" :
@@ -176,13 +176,13 @@ console.log(collaboratorsData);
     </Container>
 </div>
             <div>
-        {/* ... (previous JSX code) ... */}
+        
 
         {isCollaboratorOfProject || isHostOfProject ? (
             <div>
                  <span className='lg:ml-[33%]  text-xs  leading-none tracking-tight text-neutral-500 md:text-sm lg:text-2xl dark:text-white'>You {isCollaboratorOfProject ? "are a Collaborator on this project" : "are the Project Manager of this project"}</span>
                 <Container className='flex mt-4 lg:mx-[45%] mx-[30%] md:mx-[35%] gap-4'>
-            {/* Render GitHub and Slack links */}
+            
             <a target="_blank" rel="noopener noreferrer" href={`${post.githubLinkOfProject}`}> <svg
               xmlns="http://www.w3.org/2000/svg"
               viewBox="0 0 32 32"
@@ -201,14 +201,14 @@ console.log(collaboratorsData);
             
         ) : (
             <Container align="center">
-                {/* Render Apply Now button */}
+                
                 <Button onClick={handleApplyNowClick} variant="contained" className="text-white bg-[#03276a] hover:text-[#03276a] hover:bg-[#86adea] mb-10">
                     Apply Now
                 </Button>
             </Container>
         )}
 
-        {/* ... (rest of the JSX code) ... */}
+       
     </div>
             <Container align="left" maxWidth="lg" className=" mt-10 mb-16">
             <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> Problem Statement</h5>
@@ -232,9 +232,7 @@ console.log(collaboratorsData);
             </Container>
             <Container align="left" maxWidth="lg" className="mb-16">
             <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white">Plan/Timeline</h5>
-                {/* <Typography className="mt-10 font-semibold text-[#004eb3] mb-6" variant="h4" >
-                    Plan/Timeline
-                </Typography> */}
+                
                 <Container>
                     <ol className="relative border-l border-gray-200 dark:border-gray-700">
                         <li className="mb-10 ml-6">
@@ -274,16 +272,14 @@ console.log(collaboratorsData);
                 <Paper elevation={2} sx={{ p: 2, bgcolor: '#ffffff' }} className="" gutterBottom>
                 <h5 align="center" className="mb-4 mt-3 text-4xl font-semibold leading-none tracking-tight text-[#7aa5ea] md:text-2xl lg:text-4xl dark:text-white"> Required Prerequisites</h5>
                     
-                    {/* <Typography align="center" className="mt-10 font-semibold text-[#7aa5ea]" variant="h4" >
-                        Required Prerequisites
-                    </Typography> */}
+                    
                     <div className="mb-16 mt-10 mx-auto">
                 
                     <Container>
                     {post.prerequisites && post.prerequisites.split(',').map((tech, index) => (
         <Chip
             key={index}
-            label={tech.trim()} // Remove leading/trailing whitespace
+            label={tech.trim()} 
             variant="outlined"
             className={`bg-white-white border ${
                 index % 4 === 0 ? "text-[#ea4335] border-[#ea4335]" :
@@ -297,24 +293,16 @@ console.log(collaboratorsData);
 </Container>
 
 </div>
-                    {/* <div className="mb-5">
-                        <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
-                        <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
-                        <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
-                        <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
-                        <Typography className="text-[#03276a] text-lg ml-4" > -  Machine Learning: Experience in 2+ projects </Typography>
-                    </div> */}
+                    
                 </Paper>
             </Container>
 
             <Container align="left" maxWidth="lg" className="mb-16">
             <h5 className="mb-4 text-4xl font-semibold leading-none tracking-tight text-[#004eb3] md:text-2xl lg:text-4xl dark:text-white"> Contributors</h5>
-                {/* <Typography className="mt-10 font-semibold text-[#004eb3]" variant="h4" >
-                    Contributors
-                </Typography> */}
+                
 
 <div>
-            {/* ... rest of your component code */}
+            
             {collaboratorsData.length === 0 ? (
         <p className="text-[#03276a] text-lg mt-6 ml-2">
             No collaborators yet, be the first to join!
@@ -329,7 +317,7 @@ console.log(collaboratorsData);
                     <img className="h-16 w-16 rounded-full" src={collaborator.profilepic} alt="" />
                     <div>
                         <h3 className="text-base font-semibold leading-7 tracking-tight text-[#03276a]">{collaborator.name}</h3>
-                        {/* <p className="text-sm font-semibold leading-6 text-[#7aa5e9]"></p> */}
+                        
                     </div>
                 </div>
             </li>

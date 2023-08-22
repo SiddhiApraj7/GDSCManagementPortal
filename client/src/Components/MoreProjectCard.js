@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,rank}) {
-  const navigate = useNavigate(); // Hook to handle navigation
+  const navigate = useNavigate(); 
 
 
   const handleExploreMoreClick = () => {

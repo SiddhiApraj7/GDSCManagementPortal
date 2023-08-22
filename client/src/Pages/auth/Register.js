@@ -2,7 +2,6 @@ import React from "react";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useFormik } from "formik";
-import { auth } from "../../config/firebase";
 import { useNavigate } from "react-router-dom";
 import * as Yup from "yup";
 import gdsc from "../../media/gdsc-logo.png";
@@ -53,11 +52,9 @@ export default function Register() {
     onSubmit: async (values) => {
       try {
         const { name,email, password } = values;
-        console.log("Form data**************:", values);
-        console.log(values);
+        
         await signup(email, password,name);
-        // console.log("Registered user:", user);
-        // Handle your success logic here
+       
         setTimeout(() => {
           navigate("/");
         }, 3000);
@@ -65,8 +62,7 @@ export default function Register() {
         console.error("Registration Error:", error);
         const errorCode = error.code;
         const errorMessage = error.message;
-        //notifyError('An error occurred while registration');
-        // Handle your error logic here
+        
       }
     },
   });
@@ -75,7 +71,7 @@ export default function Register() {
     e.preventDefault();
     try {
       const user = await signInWithGoogle();
-      console.log("Logged in with Google:", user);
+    
   
       notifySuccess("Logged in successfully");
       setTimeout(() => {
@@ -84,7 +80,7 @@ export default function Register() {
       
     } catch (error) {
       console.error("Google Sign-In Error:", error);
-      //notifyError('Google Sign-In Error Occured');
+      
     }
   };
 
@@ -92,7 +88,7 @@ export default function Register() {
     e.preventDefault();
     try {
       const user = await signInWithGithub();
-      console.log("Logged in with Github:", user);
+      
       notifySuccess("Logged in successfully");
       setTimeout(() => {
         navigate("/");
@@ -100,7 +96,7 @@ export default function Register() {
     
     } catch (error) {
       console.error("Github Sign-In Error:", error);
-      //notifyError('Github Sign-In Error Occured');
+      
     }
   };
 

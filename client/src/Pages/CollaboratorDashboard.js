@@ -26,8 +26,6 @@ export default function CollaboratorDashboard() {
 
 
   useEffect(() => {
-
-    // Fetch the isCollaborator field from the Client collection in Firebase
     const fetchDetails = async () => {
       try {
         const clientRef = collection(db, "Client");
@@ -82,9 +80,7 @@ export default function CollaboratorDashboard() {
 
               count = beginnerCount + intermediateCount + advancedCount;
 
-              console.log("Beginner Projects:", beginnerCount);
-              console.log("Intermediate Projects:", intermediateCount);
-              console.log("Advanced Projects:", advancedCount);
+               
 
               setPercentBeg(((beginnerCount / count) * 100));
               setPercentInt(((intermediateCount / count) * 100));
@@ -112,8 +108,7 @@ export default function CollaboratorDashboard() {
   }, []);
 
   useEffect(() => {
-    console.log("lalalala", skillsArray);
-    console.log("tttt", percentInt);
+     
   }, [skillsArray]);
 
   return (
@@ -255,29 +250,7 @@ export default function CollaboratorDashboard() {
                         </button>
                      </div>
             </li>
-            {/* <li>
-              <a
-                href="#"
-                className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-              >
-                <svg
-                  className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white"
-                  aria-hidden="true"
-                  xmlns="http://www.w3.org/2000/svg"
-                  fill="none"
-                  viewBox="0 0 12 10"
-                >
-                  <path
-                    stroke="currentColor"
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    stroke-width="2"
-                    d="M5 1 1 5l4 4m6-8L7 5l4 4"
-                  />
-                </svg>
-                <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-              </a>
-            </li> */}
+            
           </ul>
         </div>
       </aside>
@@ -460,29 +433,7 @@ export default function CollaboratorDashboard() {
                         </button>
                      </div>
               </li>
-              {/* <li>
-                <a
-                  href="#"
-                  className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group"
-                >
-                  <svg
-                    className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white"
-                    aria-hidden="true"
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="none"
-                    viewBox="0 0 12 10"
-                  >
-                    <path
-                      stroke="currentColor"
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      stroke-width="2"
-                      d="M5 1 1 5l4 4m6-8L7 5l4 4"
-                    />
-                  </svg>
-                  <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                </a>
-              </li> */}
+              
             </ul>
           </div>
         </aside>

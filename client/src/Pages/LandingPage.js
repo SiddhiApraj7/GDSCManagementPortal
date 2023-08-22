@@ -15,12 +15,6 @@ export default function LandingPage() {
       <MoreProjects name="projects"/>
       <AboutUs name="about-us"/>
       
-      {/* <Companies />
-      <Guide />
-      <Properties />
-      <Details />
-      <GetStarted /> */}
-      {/* <Footer /> */}
     </>
   );
 }

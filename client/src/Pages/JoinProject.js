@@ -7,8 +7,6 @@ import NavbarProjects from '../Components/NavbarProjects';
 import { db } from "../config/firebase";
 import { doc, getDoc } from 'firebase/firestore';
 
-/* import { useLocation } from 'react-router-dom'; */
-
 
 const theme = createTheme({
     typography: {
@@ -42,7 +40,7 @@ export default function JoinProject() {
             setProjectDetails(projectDocSnapshot.data());
            
           } else {
-            console.log('Project not found');
+            
           }
         } catch (error) {
           console.error('Error fetching project details:', error);
@@ -51,14 +49,7 @@ export default function JoinProject() {
   
       fetchProjectDetails();
     }, [projectId]);
-    /* const location = useLocation();
-   const { state } = location;
-
-   const {
-    name, projectName, contactNumber, resume, email, githubLinkOfProject, githubProfileLink, linkedinProfileLink,
-    prerequisites, problemStatement, projectDomain, projectOverview, slackLink, startDateOfProject, techStack
-   } = state; */
-//console.log(projectDetails);
+   
     return (
         <ThemeProvider theme={theme}>
             <div className="bg-[#f2f0f0] h-full flex flex-col justify-center items-center">

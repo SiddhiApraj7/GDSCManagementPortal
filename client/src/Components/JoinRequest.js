@@ -1,18 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-//import { useAuth } from '../contexts/AuthContext';
-import { Button, Modal, Box, Typography } from '@mui/material';
+import { Modal, Box, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 
 export default function Request({ key, id, type, name, projectName, contactNumber, resume, email, githubLinkOfProject, githubProfileLink, linkedinProfileLink,
     prerequisites, problemStatement, projectDomain, projectOverview, slackLink, startDateOfProject, techStack }) {
-    console.log("Id", id);
-    console.log("type", type);
 
-    //const { currentUser } = useAuth();
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -25,7 +21,6 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
 
     const handleApproveClick = async () => {
         try {
-            //setLoading(true);
 
 
             const response = await axios.post(
@@ -35,24 +30,18 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
+            
 
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+
         }
     };
 
     const handleDeclineClick = async () => {
         try {
-            //setLoading(true);
+ 
 
             const response = await axios.post(
                 'http://localhost:3000/requests/decline-project-request',
@@ -61,18 +50,11 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
-
+           
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+
         }
     };
 

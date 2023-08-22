@@ -4,16 +4,13 @@ import Typography from "@mui/material/Typography";
 import { Link as ScrollLink } from "react-scroll";
 import MenuIcon from "@mui/icons-material/Menu";
 import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
-import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
 import ListAltIcon from "@mui/icons-material/ListAlt";
 import HomeIcon from "@mui/icons-material/Home";
 import ContactsIcon from "@mui/icons-material/Contacts";
 import logoImg from "../media/gdsc.svg";
 import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
-import CustomButton from "./CustomButton";
 import {
-  Button,
   Drawer,
   List,
   ListItem,
@@ -31,9 +28,6 @@ import {
   query,
   where,
   getDocs,
-  getDoc,
-  doc,
-  setDoc,
 } from "firebase/firestore";
 import user from "../media/user.png";
 
@@ -42,15 +36,7 @@ export const Navbar = () => {
   const Navigate = useNavigate();
 
   const handleDashboardClick = async () => {
-    // console.log(isDropdownOpen);
-    // Navigate("/dashboard");
-    // if(isDropdownOpen){
-    //   setIsDropdownOpen(false);
-    // }
-    // else{
-    //   setIsDropdownOpen(true);
-    // }
-    console.log("pressss");
+   
     try {
       const clientRef = collection(db, "Client");
       const q = query(clientRef, where("email", "==", currentUser.email));
@@ -68,9 +54,7 @@ export const Navbar = () => {
         } else {
           Navigate("/collaborator-dashboard");
         }
-      } else {
-        console.log("User not found.");
-      }
+      } 
     } catch (error) {
       console.error("Error fetching isProjectManager:", error);
       throw error;
@@ -185,14 +169,7 @@ export const Navbar = () => {
 
   return (
     <div className="flex items-center justify-between p-4 md:p-8 border-b-2 border-neutral-50">
-      {/* <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "2.5rem",
-        }}
-      > */}
+      
       <div className="flex justify-center gap-3">
         <Box sx={{ display: "flex", alignItems: "center" }}>
           <CustomMenuIcon onClick={toggleDrawer("left", true)} />
@@ -208,7 +185,7 @@ export const Navbar = () => {
 
         <div className=" items-center justify-center cursor-pointer gap-3 hidden md:flex">
           <ScrollLink
-            to="hero" // The "to" prop should match the element's ID you want to scroll to
+            to="hero"
             spy={true}
             smooth={true}
             duration={500}
@@ -221,7 +198,7 @@ export const Navbar = () => {
             to="top-projects"
             spy={true}
             smooth={true}
-            // duration={500}
+
             className="text-[#05276a] font-bold text-sm"
           >
             <div className="p-2">Top Projects</div>
@@ -247,22 +224,13 @@ export const Navbar = () => {
             <div className="p-2">About Us</div>
           </ScrollLink>
 
-          {/* <NavLink variant="body2">Contact</NavLink> */}
+          
         </div>
       </div>
-      {/* </Box> */}
-
-      {/* <Box
-        sx={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          gap: "1rem",
-        }}
-      > */}
+      
       <div className="flex justify-center gap-1">
         {currentUser ? (
-          // Render user's name and profile picture
+         
           <div>
             <div className="flex">
               <div className="mr-4  text-end my-auto items-center">
@@ -271,14 +239,14 @@ export const Navbar = () => {
                   color="#05276a"
                   className="font-semibold line-clamp-1"
                 >
-                  {/* {JSON.parse(localStorage.getItem("user"))?.name} */}
+                  
                   {currentUser.displayName}
                 </Typography>
               </div>
               <div className="mr-1 items-center my-auto">
                 {JSON.parse(localStorage.getItem("user"))?.profilePic ? (
                   <img
-                    // src={JSON.parse(localStorage.getItem("user")) ?.profilePic}
+                    
                     src={currentUser.photoURL}
                     alt="Profile"
                     className="rounded-full h-8 w-8"
@@ -301,14 +269,12 @@ export const Navbar = () => {
                 </button>
               </div>
 
-              {/* <button className="ml-2 inline-flex items-center px-3 py-2 text-sm font-medium text-center text-white bg-[#05276a] rounded-lg hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">
-            Dashboard
-          </button> */}
+              
             </div>
-            {/* <Box/> */}
+            
           </div>
         ) : (
-          // Render sign up and register buttons
+          
           <>
             <Link to="/login">
               <div className="p-2">
@@ -319,7 +285,7 @@ export const Navbar = () => {
             </Link>
           
               <Link to="/register">
-                {/* <button className="bg-[#04276a] text-white text-semibold text-center"> Register </button> */}
+                
                 <button type="button" class="text-white bg-[#04276a] hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 mr-2 mb-2 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
                 Register
                 </button>
@@ -328,15 +294,7 @@ export const Navbar = () => {
           </>
         )}
 
-        {/* <NavLink variant="body2" >Sign Up</NavLink>
-        <div className="bg-[#04276a] rounded-xl">
-          <CustomButton
-            backgroundColor="#04276a"
-            color="#fff"
-            buttonText="Register"
-          />
-        </div> */}
-        {/* </Box> */}
+        
       </div>
     </div>
   );

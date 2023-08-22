@@ -1,31 +1,22 @@
 import * as React from 'react';
-import AppBar from '@mui/material/AppBar';
 import Button from '@mui/material/Button';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
 import CardMedia from '@mui/material/CardMedia';
-import CssBaseline from '@mui/material/CssBaseline';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
-import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
 import Typography from '@mui/material/Typography';
-import Container from '@mui/material/Container';
-import Link from '@mui/material/Link';
 import { Chip } from '@mui/material';
 import PropTypes from 'prop-types';
-import { createTheme, ThemeProvider } from '@mui/material/styles';
 import { useNavigate } from 'react-router';
-import axios from 'axios';
 
 
 
 export default function ProjectCard(props) {
 
   const { projectInfo, projectId } = props;
-  console.log(projectId);
-  const navigate = useNavigate(); // Hook to handle navigation
+
+  const navigate = useNavigate();
 
   const handleExploreMoreClick = () => {
     navigate(`/projects/${projectId}`);
@@ -37,17 +28,7 @@ export default function ProjectCard(props) {
   const ACCESS_KEY = "95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw";
 const TAG = "programming";
 
-// async function fetchRandomImageWithTag(tag) {
-//   try {
-//     const response = await axios.get(`https://api.unsplash.com/search/photos?page=1&query=${tag}&client_id=95L2lqx16TYd-kb4rVKYVMNZV9dpal-nxirqldXlAlw`);
 
-//     const imageData = response.results;
-//     return imageData.urls.small; // URL of the random image with the specified tag
-//   } catch (error) {
-//     console.error("Error fetching image:", error);
-//     return null;
-//   }
-// }
 
   return (
     
@@ -58,7 +39,7 @@ const TAG = "programming";
         <CardMedia
           component="div"
           sx={{
-            // 16:9
+            
             pt: '56.25%',
           }}
           image={"https://source.unsplash.com/random?wallpapers"}
