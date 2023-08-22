@@ -1,40 +1,31 @@
 import React, { useState, useEffect } from 'react';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { Button, Modal, Box, Typography } from '@mui/material';
-import { collection, query, where, onSnapshot, doc, getDoc } from 'firebase/firestore'; // Make sure to import Firebase/Firestore related functions
+import { doc, getDoc } from 'firebase/firestore';
 
 import { db } from "../config/firebase";
 
 export default function CollaboratorRequests({ key, id, type, name, projectID }) {
-    console.log("Id", id);
-    console.log("type", type);
-    console.log("project id",projectID);
+
     const theme = createTheme({
         typography: {
             fontFamily: 'Poppins, sans-serif',
         },
     });
 
-    //const { currentUser } = useAuth();
-    // const [open, setOpen] = React.useState(false);
-    // const handleOpen = () => setOpen(true);
-    // const handleClose = () => setOpen(false);
-    const [projectManagerName, setProjectManagerName] = useState('');
+
     const [projectName, setProjectName] = useState('');
 
     const getProjectDetails = async (projectID) => {
         try {
             const projectDocRef = doc(db, 'Projects', projectID);
             const projectDocSnap = await getDoc(projectDocRef);
-            console.log("sid",projectID);
+
             
             if (projectDocSnap.exists()) {
                 const projectData = projectDocSnap.data();
-                setProjectManagerName(projectData.fullName);
-                setProjectName(projectData.projectName); // Store the projectName
-                console.log("tannu",projectName)
-            } else {
-                console.log('Project document not found');
+                
+                setProjectName(projectData.projectName); 
+
             }
         } catch (error) {
             console.error('Error fetching project details:', error);
@@ -47,76 +38,13 @@ export default function CollaboratorRequests({ key, id, type, name, projectID })
         }
     }, [projectID]);
 
-
-    // const handleApproveClick = async () => {
-    //     try {
-    //         //setLoading(true);
-
-
-    //         const response = await axios.post(
-    //             'http://localhost:3000/requests/approve-project-request',
-    //             {
-    //                 requestID: id,
-    //             }
-    //         );
-
-    //         if (response.status === 200) {
-    //             // API call successful
-    //             console.log("API call successful");
-    //         } else {
-    //             // API call failed
-    //             console.error("API call failed");
-    //         }
-
-    //     } catch (error) {
-    //         console.error("Error calling API:", error);
-    //     } finally {
-    //         //setLoading(false);
-    //     }
-    // };
-
-    // const handleDeclineClick = async () => {
-    //     try {
-    //         //setLoading(true);
-
-    //         const response = await axios.post(
-    //             'http://localhost:3000/requests/decline-project-request',
-    //             {
-    //                 requestID: id,
-    //             }
-    //         );
-
-    //         if (response.status === 200) {
-    //             // API call successful
-    //             console.log("API call successful");
-    //         } else {
-    //             // API call failed
-    //             console.error("API call failed");
-    //         }
-
-    //     } catch (error) {
-    //         console.error("Error calling API:", error);
-    //     } finally {
-    //         //setLoading(false);
-    //     }
-    // };
-
-    const style = {
-        position: 'absolute',
-        top: '50%',
-        left: '50%',
-        transform: 'translate(-50%, -50%)',
-        width: 400,
-        bgcolor: 'background.paper',
-        boxShadow: 24,
-        p: 4,
-    };
+    
 
 
     return (
         <ThemeProvider theme={theme}>
             <div className="p-2">
-                {(type == 1) && (
+                {(type === 1) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>

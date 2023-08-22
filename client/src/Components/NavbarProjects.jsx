@@ -1,14 +1,11 @@
 import * as React from "react";
 import Box from "@mui/material/Box";
 import Typography from "@mui/material/Typography";
-import { Link as ScrollLink } from "react-scroll";
 import MenuIcon from "@mui/icons-material/Menu";
-import FeaturedPlayListIcon from "@mui/icons-material/FeaturedPlayList";
-import MiscellaneousServicesIcon from "@mui/icons-material/MiscellaneousServices";
-import HomeIcon from "@mui/icons-material/Home";
 import logoImg from "../media/gdsc.svg";
 import { Container } from "@mui/system";
 import { Link } from "react-router-dom";
+import HomeIcon from '@mui/icons-material/Home';
 import FolderCopyIcon from '@mui/icons-material/FolderCopy';
 import PostAddIcon from '@mui/icons-material/PostAdd';
 import CustomButton from "./CustomButton";
@@ -25,7 +22,7 @@ import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { useNavigate } from "react-router";
 import { db } from "../config/firebase";
-import { collection, query, where, getDocs, getDoc, doc, setDoc } from "firebase/firestore";
+import { collection, query, where, getDocs} from "firebase/firestore";
 
 
 export const NavbarProjects = () => {
@@ -33,7 +30,7 @@ export const NavbarProjects = () => {
     const Navigate = useNavigate();
 
     const handleDashboardClick = async () => {
-        console.log("pressss");
+
         try {
             const clientRef = collection(db, "Client");
             const q = query(clientRef, where("email", "==", currentUser.email));
@@ -53,9 +50,7 @@ export const NavbarProjects = () => {
                 else {
                     Navigate("/collaborator-dashboard");
                 }
-            } else {
-                console.log('User not found.');
-            }
+            } 
         } catch (error) {
             console.error('Error fetching isProjectManager:', error);
             throw error;
@@ -118,23 +113,6 @@ export const NavbarProjects = () => {
                     </Link>
                 </ListItem>
             </List>
-            {/* <List>
-                {["Home", "All Projects", "Host Project"].map(
-                    (text, index) => (
-                        <ListItem key={text} disablePadding>
-                            <ListItemButton>
-                                <ListItemIcon>
-                                    {index === 0 && <HomeIcon />}
-                                    {index === 1 && <FolderCopyIcon />}
-                                    {index === 2 && <PostAddIcon />}
-
-                                </ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItemButton>
-                        </ListItem>
-                    )
-                )}
-            </List> */}
         </Box>
     );
 
@@ -235,7 +213,7 @@ export const NavbarProjects = () => {
                     </Link>
 
 
-                    {/* <NavLink variant="body2">Contact</NavLink> */}
+                
                 </NavbarLinksBox>
             </Box>
 
@@ -249,19 +227,19 @@ export const NavbarProjects = () => {
             >
 
                 {currentUser ? (
-                    // Render user's name and profile picture
+                    
                     <Box>
                         <div className="flex">
                             <div className="mr-4 mt-2 text-end">
                                 <Typography variant="body2" color="#05276a" className="font-semibold">
-                                    {/* {JSON.parse(localStorage.getItem("user"))?.name} */}
+                                    
                                     {currentUser.displayName}
                                 </Typography>
                             </div>
                             <div className="mr-1">
                                 {JSON.parse(localStorage.getItem("user"))?.profilePic ? (
                                     <img
-                                        // src={JSON.parse(localStorage.getItem("user"))?.profilePic}
+                                       
                                         src={currentUser.photoURL}
                                         alt="Profile"
                                         className="rounded-full h-8 w-8"
@@ -279,17 +257,17 @@ export const NavbarProjects = () => {
                             </div>
 
                         </div>
-                        {/* <Box/> */}
+                        
 
 
                     </Box>
                 ) : (
-                    // Render sign up and register buttons
+                    
                     <>
                         <Link to="/login" ><div className="p-2"><NavLink variant="body2" className="p-1">Log In</NavLink></div></Link>
                         <div className="bg-[#04276a] rounded-xl">
                             <Link to="/register">
-                                {/* <button className="bg-[#04276a] text-white text-semibold text-center"> Register </button> */}
+                                
                                 <CustomButton
                                     backgroundColor="#04276a"
                                     color="#fff"
@@ -300,14 +278,7 @@ export const NavbarProjects = () => {
                     </>
                 )}
 
-                {/* <NavLink variant="body2" >Sign Up</NavLink>
-        <div className="bg-[#04276a] rounded-xl">
-          <CustomButton
-            backgroundColor="#04276a"
-            color="#fff"
-            buttonText="Register"
-          />
-        </div> */}
+                
             </Box>
         </NavbarContainer>
 

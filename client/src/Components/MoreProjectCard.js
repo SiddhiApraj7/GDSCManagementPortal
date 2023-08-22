@@ -3,7 +3,7 @@ import { motion } from "framer-motion";
 import { useNavigate } from "react-router-dom";
 
 function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,rank}) {
-  const navigate = useNavigate(); // Hook to handle navigation
+  const navigate = useNavigate(); 
 
 
   const handleExploreMoreClick = () => {
@@ -16,7 +16,7 @@ function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,r
     transition={{ duration: 0.5, type: 'tween' }}
   >
     <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-blue-950 dark:border-gray-700">
-      <a href="#" className="group">
+      
         <div className="aspect-h-1 aspect-w-1 w-full overflow-hidden rounded-lg bg-gray-200 xl:aspect-h-8 xl:aspect-w-7">
           <img
             src="https://source.unsplash.com/random?wallpapers"
@@ -24,13 +24,13 @@ function MoreProjectCard({key,id,projectName,projectManager,collaboratorsCount,r
             className="h-full w-full object-cover object-center group-hover:opacity-75"
           />
         </div>
-      </a>
+     
       <div className="p-5">
-        <a href="#">
+        
           <h5 className="mb-2 text-2xl font-bold tracking-tight text-[#05276a] dark:text-white">
            {projectName} 
           </h5>
-        </a>
+       
         <p className="mb-3 font-normal text-gray-700 dark:text-gray-400">
           {projectManager}
         </p>

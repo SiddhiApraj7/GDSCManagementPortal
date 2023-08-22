@@ -3,15 +3,10 @@ import { Link } from "react-router-dom";
 import { useState } from "react";
 import logoImg from "../media/gdsc-logo.png";
 import Manager from "../Components/Manager";
-import ProjectCard from "../Components/ProjectCard";
-import { Container } from "@mui/material";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../config/firebase";
 import {
     collection,
-    doc,
-    getDoc,
-    addDoc,
     query,
     where,
     getDocs,
@@ -28,8 +23,7 @@ export default function ProjectManagers() {
     const [searchTerm, setSearchTerm] = useState("");
 
     useEffect(() => {
-        //console.log(requestsArray);
-
+       
         const fetchBasics = async () => {
             try {
                 const clientRef = collection(db, "Client");
@@ -65,15 +59,7 @@ export default function ProjectManagers() {
 
         fetchBasics();
 
-        // Clean up the listener when the component unmounts
-        /*  return () => {
-                 if (unsubscribe) {
-                     unsubscribe();
-                 }
-                 if (unsubs) {
-                     unsubs();
-                 }
-             }; */
+        
     }, []);
 
     return (
@@ -261,14 +247,7 @@ export default function ProjectManagers() {
                                 </button>
                             </div>
                         </li>
-                        {/* <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
-                                </svg>
-                                <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                            </a>
-                        </li> */}
+                       
                     </ul>
                 </div>
             </aside>
@@ -397,14 +376,7 @@ export default function ProjectManagers() {
                                     </button>
                                 </div>
                             </li>
-                            {/* <li>
-                            <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                                <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-gray-900 dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                                    <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
-                                </svg>
-                                <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                            </a>
-                        </li> */}
+                            
                         </ul>
                     </div>
                 </aside>

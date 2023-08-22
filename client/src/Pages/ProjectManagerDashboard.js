@@ -25,7 +25,6 @@ export default function ProjectManagerDashboard() {
 
    useEffect(() => {
 
-      // Fetch the isCollaborator field from the Client collection in Firebase
       const fetchDetails = async () => {
          try {
             const clientRef = collection(db, "Client");
@@ -109,11 +108,7 @@ export default function ProjectManagerDashboard() {
    }, []);
 
    useEffect(() => {
-      console.log("lalalala", skillsArray);
-      console.log("tttt",percentInt);
-      console.log("Beginner Projects:", percentBeg);
-                     console.log("Intermediate Projects:", percentInt);
-                     console.log("Advanced Projects:", percentAdv);
+       
    }, [skillsArray]);
 
 
@@ -211,14 +206,7 @@ export default function ProjectManagerDashboard() {
                      </div>
                    
                   </li>
-                  {/* <li>
-                     <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                        <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                           <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
-                        </svg>
-                        <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                     </a>
-                  </li> */}
+                  
                </ul>
             </div>
          </aside>
@@ -269,14 +257,7 @@ export default function ProjectManagerDashboard() {
                               </div>
                            ))}
                         </div>
-                        {/* <div className='grid lg:grid-cols-3 grid-cols-1 gap-4 '>
-                           <div className='rounded-2xl p-2 text-[#05276a] border-[#487fe6] border-2  bg-blue-100'><h1 className="text-center ">ML</h1></div>
-                           <div className='rounded-2xl p-2 text-[#0C5631] border-[#17a75f] border-2 bg-green-50'><h1 className="text-center">Web Dev</h1></div>
-                           <div className='rounded-2xl p-2 text-[#802f2c] border-[#fe2c25] border-2 bg-red-50'><h1 className="text-center">App Dev</h1></div>
-                           <div className='rounded-2xl p-2 text-[#05276a] border-[#487fe6] border-2 bg-blue-100'><h1 className="text-center">ML</h1></div>
-                           <div className='rounded-2xl p-2 text-[#0C5631] border-[#17a75f] border-2 bg-green-50'><h1 className="text-center">Web Dev</h1></div>
-                           <div className='rounded-2xl p-2 text-[#802f2c] border-[#fe2c25] border-2 bg-red-50'><h1 className="text-center">App Dev</h1></div>
-                        </div> */}
+                       
                      </div>
                   </div>
                   <h1 className='text-4xl text-[#05276a] font-semibold my-10'>Active Projects</h1>
@@ -351,14 +332,7 @@ export default function ProjectManagerDashboard() {
                         </button>
                      </div>
                      </li>
-                     {/* <li>
-                        <a href="#" className="flex items-center p-2 text-gray-900 rounded-lg dark:text-white hover:bg-gray-100 dark:hover:bg-gray-700 group">
-                           <svg className="flex-shrink-0 w-5 h-5 text-gray-500 transition duration-75 dark:text-gray-400 group-hover:text-[#05276a] dark:group-hover:text-white" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 12 10">
-                              <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 1 1 5l4 4m6-8L7 5l4 4" />
-                           </svg>
-                           <span className="flex-1 ml-3 whitespace-nowrap">Back</span>
-                        </a>
-                     </li> */}
+                    
                   </ul>
                </div>
             </aside>

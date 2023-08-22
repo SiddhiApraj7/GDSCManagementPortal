@@ -1,19 +1,17 @@
 import React, { useState, useEffect } from 'react';
-import { Link } from 'react-router-dom';
+
 import axios from 'axios';
-//import { useAuth } from '../contexts/AuthContext';
-import { Button, Modal, Box, Typography } from '@mui/material';
+import { Modal, Box, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import { collection, query, where, onSnapshot, doc, getDoc } from 'firebase/firestore';
+import { doc, getDoc } from 'firebase/firestore';
 import { db } from "../config/firebase";
 
 
 export default function ManagerRequest({ key, id, type, name, contactNumber, resume, email, projectID, projectName, githubProfileLink, linkedinProfileLink,
     hoursCanDedicate, reasonToJoin }) {
-    console.log("Id", id);
-    console.log("type", type);
 
-    //const { currentUser } = useAuth();
+
+    
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -30,15 +28,13 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
         try {
             const projectDocRef = doc(db, 'Projects', projectID);
             const projectDocSnap = await getDoc(projectDocRef);
-            console.log("sid",projectID);
+
             
             if (projectDocSnap.exists()) {
                 const projectData = projectDocSnap.data();
-                setProjectNameReq(projectData.projectName); // Store the projectName
-                console.log("tannu",projectNameReq)
-            } else {
-                console.log('Project document not found');
-            }
+                setProjectNameReq(projectData.projectName); 
+ 
+            } 
         } catch (error) {
             console.error('Error fetching project details:', error);
         }
@@ -54,7 +50,6 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
 
     const handleApproveClick = async () => {
         try {
-            //setLoading(true);
 
 
             const response = await axios.post(
@@ -64,24 +59,17 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
-
+            
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+
         }
     };
 
     const handleDeclineClick = async () => {
         try {
-            //setLoading(true);
+  
 
             const response = await axios.post(
                 'http://localhost:3000/requests/decline-collaborator-request',
@@ -90,18 +78,12 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
+           
 
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+            
         }
     };
 
@@ -120,7 +102,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
     return (
         <ThemeProvider theme={theme}>
             <div className="p-2">
-                {(type == 1) && (
+                {(type === 1) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
@@ -225,7 +207,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 2) && (
+                {(type === 2) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 w-full flex justify-between">
@@ -241,7 +223,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 3) && (
+                {(type === 3) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 flex w-full justify-between">
@@ -256,7 +238,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                         </div>
                     </div>
                 )}
-                {(type == 4) && (
+                {(type === 4) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
@@ -270,7 +252,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 5) && (
+                {(type === 5) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 w-full flex justify-between">
@@ -286,7 +268,7 @@ export default function ManagerRequest({ key, id, type, name, contactNumber, res
                     </div>
                 )}
 
-                {(type == 6) && (
+                {(type === 6) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 flex w-full justify-between">

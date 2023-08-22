@@ -14,19 +14,19 @@ function Stats() {
     const allStats = async () => {
         try {
             const projectsRef = collection(db, "Projects");
-            console.log(projectsRef);
+           
             const query1Snapshot = await getDocs(projectsRef);
             setNumberOfProjects(query1Snapshot.size);
-            console.log("Total number of projects:", numberOfProjects);
+            
 
             const requestsRef = collection(db, "RequestsAdmin");
-            console.log(requestsRef);
+            
             const query2Snapshot = await getDocs(requestsRef);
             setNumberOfRequests(query2Snapshot.size);
-            console.log("Total number of requests:", numberOfRequests);
+            
 
             const clientRef = collection(db, "Client");
-            console.log(clientRef);
+            
             const query3Snapshot = await getDocs(clientRef);
             let collaboratorCount = 0;
             let managerCount=0;
@@ -45,7 +45,7 @@ function Stats() {
             setNumberOfCollaborators(collaboratorCount);
             setNumberOfManagers(managerCount);
 
-            // Remember to unsubscribe when you're done using the listener
+            
         } catch (error) {
             console.error("Error fetching projects:", error);
         }
@@ -82,7 +82,7 @@ function Stats() {
                                 <dd className="text-2xl font-bold leading-9 tracking-tight text-white">{numberOfCollaborators}</dd>
                             </div>
                             <div className="flex flex-col-reverse">
-                                <dt className="text-base leading-7 text-[#e6f0ff]">Collaboration Requests So Far</dt>
+                                <dt className="text-base leading-7 text-[#e6f0ff]">Project Requests So Far</dt>
                                 <dd className="text-2xl font-bold leading-9 tracking-tight text-white">{numberOfRequests}</dd>
                             </div>
                             <div className="flex flex-col-reverse">

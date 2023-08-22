@@ -1,18 +1,14 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
 import axios from 'axios';
-//import { useAuth } from '../contexts/AuthContext';
-import { Button, Modal, Box, Typography } from '@mui/material';
+import { Modal, Box, Typography } from '@mui/material';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
 
 
 
 export default function Request({ key, id, type, name, projectName, contactNumber, resume, email, githubLinkOfProject, githubProfileLink, linkedinProfileLink,
     prerequisites, problemStatement, projectDomain, projectOverview, slackLink, startDateOfProject, techStack }) {
-    console.log("Id", id);
-    console.log("type", type);
 
-    //const { currentUser } = useAuth();
+
     const [open, setOpen] = React.useState(false);
     const handleOpen = () => setOpen(true);
     const handleClose = () => setOpen(false);
@@ -25,8 +21,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
 
     const handleApproveClick = async () => {
         try {
-            //setLoading(true);
-
+            
 
             const response = await axios.post(
                 'http://localhost:3000/requests/approve-project-request',
@@ -35,25 +30,18 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
+            
 
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+            
         }
     };
 
     const handleDeclineClick = async () => {
         try {
-            //setLoading(true);
-
+            
             const response = await axios.post(
                 'http://localhost:3000/requests/decline-project-request',
                 {
@@ -61,18 +49,12 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                 }
             );
 
-            if (response.status === 200) {
-                // API call successful
-                console.log("API call successful");
-            } else {
-                // API call failed
-                console.error("API call failed");
-            }
+            
 
         } catch (error) {
             console.error("Error calling API:", error);
         } finally {
-            //setLoading(false);
+   
         }
     };
 
@@ -91,7 +73,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
     return (
         <ThemeProvider theme={theme}>
             <div className="p-2">
-                {(type == 1) && (
+                {(type === 1) && (
                     <div className="items-center block p-3 md:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
@@ -247,7 +229,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                     </div>
                 )}
 
-                {(type == 2) && (
+                {(type === 2) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 w-full md:flex justify-between">
@@ -263,7 +245,7 @@ export default function Request({ key, id, type, name, projectName, contactNumbe
                     </div>
                 )}
 
-                {(type == 3) && ( 
+                {(type === 3) && ( 
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
                         <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
                         <div align="right" className="pl-2 flex w-full justify-between">

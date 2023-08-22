@@ -1,10 +1,8 @@
-import { Box, Button, Fab, styled, Typography } from "@mui/material";
+import { Box, Fab, styled, Typography } from "@mui/material";
 import { Container } from "@mui/system";
 import React from "react";
 import Navbar from "./Navbar";
 import { useTypewriter } from "react-simple-typewriter";
-import heroImg from "../media/hero.png";
-import CustomButton from "./CustomButton";
 import { createTheme } from "@mui/material/styles";
 import { ThemeProvider } from "@emotion/react";
 import Lottie from "lottie-react";
@@ -22,28 +20,6 @@ const Hero = ({name}) => {
 
   const { currentUser } = useAuth();
 
-
-  const CustomBox = styled(Box)(({ theme }) => ({
-    display: "flex",
-    justifyContent: "center",
-    gap: theme.spacing(5),
-    marginTop: theme.spacing(3),
-    [theme.breakpoints.down("md")]: {
-      flexDirection: "column",
-      alignItems: "center",
-      textAlign: "center",
-    },
-  }));
-
-  const Title = styled(Typography)(({ theme }) => ({
-    fontSize: "64px",
-    color: "#000336",
-    fontWeight: "bold",
-    margin: theme.spacing(4, 0, 4, 0),
-    [theme.breakpoints.down("sm")]: {
-      fontSize: "40px",
-    },
-  }));
   const [text] = useTypewriter({
     words: ["Learning technology together one project at a time"],
     loop: 0,
@@ -94,16 +70,7 @@ const Hero = ({name}) => {
                 </Typography>
               </div>
 
-              {/* <div className = "bg-[#000336] rounded-xl">
-            <span >
-            <CustomButton
-              backgroundColor="#0F1B4C"
-              color="#fff"
-              buttonText="Join a Project"
-              heroBtn={true}
-            />
-            </span>
-            </div> */}
+              
             
             <Link to={currentUser ? "/projects" : "/register"}>
               <Fab
@@ -129,19 +96,12 @@ const Hero = ({name}) => {
             
 
             <Box className="items-start" sx={{ flex: "1.25" }}>
-              {/* <img
-              src={heroImg}
-              // src = ""
-              alt="heroImg"
-              style={{ maxWidth: "100%", marginBottom: "2rem" }}
-            /> */}
+              
               <Lottie animationData={animationData} />
             </Box>
           </div>
 
-          {/* <CustomBox> */}
-
-          {/* </CustomBox> */}
+          
         </Container>
       </ThemeProvider>
     </Box>

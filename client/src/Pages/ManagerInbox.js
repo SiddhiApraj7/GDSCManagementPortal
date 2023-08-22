@@ -2,7 +2,6 @@ import React from 'react'
 import { Link } from 'react-router-dom';
 import { useState } from 'react';
 import logoImg from "../media/gdsc-logo.png";
-import ProjectCard from '../Components/ProjectCard';
 import { db } from "../config/firebase";
 import { collection, doc, getDoc, addDoc, query, where, getDocs } from 'firebase/firestore';
 import { useEffect } from 'react';
@@ -24,7 +23,7 @@ export default function ManagerInbox() {
 
     const allCollaboratorRequests = async () => {
         try {
-            const currentUserEmail = currentUser.email; // Replace with the actual email
+            const currentUserEmail = currentUser.email;  
 
             const requestsRef = collection(db, "RequestsProjectManager");
             const querySnapshot = query(requestsRef, where("projectManagerEmail", "==", currentUserEmail));
@@ -38,23 +37,17 @@ export default function ManagerInbox() {
                     const request = doc.data();
                     Array.push({ id: requestId, ...request });
                 });
-                console.log("hello", Array);
+                
 
                 setCollaboratorRequestsArray(Array);
 
-                // Now you have all requests in the requestsArray
-                console.log("second", collaboratorRequestsArray);
+                
+                
 
-                // If you want to perform further operations with the array, you can do so here
+                
             });
 
-            /* const Array = querySnapshot.docs.map((doc) => {
-              const requestId = doc.id;
-              const request = doc.data();
-              return { id: requestId, ...request };
-            }); */
-
-            //setCollaboratorRequestsArray(Array);
+            
         } catch (error) {
             console.error("Error fetching requests:", error);
         }
@@ -62,7 +55,7 @@ export default function ManagerInbox() {
 
     const allManagerRequests = async () => {
         try {
-            const currentUserEmail = currentUser.email; // Replace with the actual email
+            const currentUserEmail = currentUser.email; 
 
             const requestsRef = collection(db, "RequestsAdmin");
             const querySnapshot = query(requestsRef, where("email", "==", currentUserEmail))
@@ -76,23 +69,17 @@ export default function ManagerInbox() {
                     const request = doc.data();
                     Array.push({ id: requestId, ...request });
                 });
-                console.log("hello", Array);
+                
 
                 setManagerRequestsArray(Array);
 
-                // Now you have all requests in the requestsArray
-                console.log("second", managerRequestsArray);
+                
+            
 
-                // If you want to perform further operations with the array, you can do so here
+                
             });
 
-            /* const Array = querySnapshot.docs.map((doc) => {
-              const requestId = doc.id;
-              const request = doc.data();
-              return { id: requestId, ...request };
-            }); */
-
-            //setCollaboratorRequestsArray(Array);
+            
         } catch (error) {
             console.error("Error fetching requests:", error);
         }
@@ -105,16 +92,16 @@ export default function ManagerInbox() {
 
         try {
             const projectSnapshot = await getDoc(projectDocRef);
-            console.log("sakshi", projectSnapshot);
+            
 
             if (projectSnapshot.exists()) {
-                // The document exists, and you can access its data using projectSnapshot.data()
+                
                 const projectData = projectSnapshot.data();
-                console.log("Project data:", projectData);
+                
 
-                //return projectData.projectName;
+                
             } else {
-                console.log("Project not found.");
+              
             }
         } catch (error) {
             console.error("Error fetching project:", error);
@@ -125,7 +112,6 @@ export default function ManagerInbox() {
     useEffect(() => {
         setUnsubscribe(() => allCollaboratorRequests());
         setUnsubs(() => allManagerRequests());
-        //console.log(requestsArray);
 
         const fetchIsCollaborator = async () => {
             try {
@@ -151,7 +137,6 @@ export default function ManagerInbox() {
 
         fetchIsCollaborator();
 
-        // Clean up the listener when the component unmounts
         return () => {
             if (unsubscribe) {
                 unsubscribe();
@@ -159,8 +144,7 @@ export default function ManagerInbox() {
             if (unsubs) {
                 unsubs();
             }
-            console.log(collaboratorRequestsArray);
-            console.log(managerRequestsArray);
+            
         };
     }, []);
 
