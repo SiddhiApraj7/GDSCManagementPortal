@@ -1,10 +1,6 @@
 
-<<<<<<< HEAD
 import {Routes, Route ,useNavigation} from 'react-router-dom'
 import React, { useState, useEffect } from "react";
-=======
-import {Routes, Route} from 'react-router-dom'
->>>>>>> d54983eee60d9b25a71d116b241671b9278c40eb
 import { useAuth } from '../contexts/AuthContext';
 import  {
   HostProject,

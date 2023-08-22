@@ -8,7 +8,7 @@ import Web3  from "../media/Web3.jpg"
 import Ai  from "../media/Ai.jpg"
 import Ds  from "../media/Ds.jpg"
 
-export default function ProjectCardDashboard({key, name, problem, domain, github, slack}) {
+export default function ProjectCardDashboard({key, name, problem, domain, github, slack,projectID}) {
 
   const domainImageMap = {
     'Web Development': Web,
@@ -18,7 +18,11 @@ export default function ProjectCardDashboard({key, name, problem, domain, github
     'Data Science': Ds,
   };
 
-
+  const navigate = useNavigate();
+  const handleExploreMoreClick = () => {
+   
+    navigate(`/projects/${projectID}`);
+  };
   return (
     <div>
 
