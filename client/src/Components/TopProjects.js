@@ -20,7 +20,7 @@ function TopProjects({key,position,collaborators,projectDomain, projectName, pro
         <p className="mt-5 line-clamp-3 text-sm leading-6 text-gray-600">{projectOverview}</p>
       </div>
       <div className="relative mt-8 flex items-center gap-x-4">
-        <img src={projectAuthorImage} alt="" className="h-10 w-10 rounded-full bg-gray-50"/>
+        <img src={projectAuthorImage} alt="Person Profile" className="h-10 w-10 rounded-full bg-gray-50"/>
         <div className="text-sm leading-6">
           <p className="font-semibold text-[#04276a]">
        

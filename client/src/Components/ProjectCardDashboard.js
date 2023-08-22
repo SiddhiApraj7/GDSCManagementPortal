@@ -14,9 +14,9 @@ export default function ProjectCardDashboard({key, name, problem, domain, github
 
 
       <div className="max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700">
-       
-          <img className="rounded-t-lg" src="https://source.unsplash.com/random?wallpapers" alt="" />
-       
+        <a href="#">
+          <img className="rounded-t-lg" src="https://source.unsplash.com/random?wallpapers" alt="Project Explanation" />
+        </a>
         <div className="p-5">
        
             <h5 className="mb-2 text-2xl font-bold tracking-tight text-[#05276a] dark:text-white">{name}</h5>

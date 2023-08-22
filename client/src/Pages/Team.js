@@ -115,7 +115,7 @@ export default function Team() {
                                         <img
                                             src={item.avatar}
                                             className="w-full h-full rounded-full"
-                                            alt=""
+                                            alt="Team"
                                         />
                                     </div>
                                     <div className="mt-2">

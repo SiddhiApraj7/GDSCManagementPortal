@@ -29,14 +29,8 @@ export default function Register() {
     toast.success(message);
   };
 
-  const notifyError = (message) => {
-    toast.error(message);
-  };
-
-
-
   const navigate = useNavigate();
-  const {signup,signInWithGithub,signInWithGoogle,currentUser} = useAuth();
+  const {signup,signInWithGithub,signInWithGoogle} = useAuth();
 
 
 
@@ -60,8 +54,7 @@ export default function Register() {
         }, 3000);
       } catch (error) {
         console.error("Registration Error:", error);
-        const errorCode = error.code;
-        const errorMessage = error.message;
+        
         
       }
     },
@@ -105,13 +98,14 @@ export default function Register() {
   return (
     <div className="lg:flex gap-4 h-screen w-full">
       <ToastContainer autoClose={1000}/>
-      <img src="pic5.jpg" className="h-full hidden lg:flex w-[55%]"></img>
+      <img src="pic5.jpg" alt="Relevant img" className="h-full hidden lg:flex w-[55%]"></img>
 
       <div className="lg:w-[30%] w-[90%] mx-auto ">
         <div>
           <a href="/">
             <img
               src={gdsc}
+              alt="relevant img"
               className="lg:h-24 lg:w-24 h-10 w-10 mx-auto rounded-full"
             ></img>
           </a>
@@ -213,7 +207,7 @@ export default function Register() {
                 ) : null}
               </div>
             </div>
-            <a href="#" className="text-xs text-[#7a8aff] hover:underline">
+            <a href="" className="text-xs text-[#7a8aff] hover:underline">
               Forget Password?
             </a>
             <div className="flex items-center mt-4">

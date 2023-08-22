@@ -48,7 +48,7 @@ export default function CollaboratorRequests({ key, id, type, name, projectID })
                     <div className="items-center block p-3 sm:flex rounded-lg bg-sky-100 border-sky-100 border-2 ">
 
                         <div>
-                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                            <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         </div>
                         <div className="pl-2 flex  w-full justify-between">
                             <div className="mb-2 text-base font-normal">
@@ -63,7 +63,7 @@ export default function CollaboratorRequests({ key, id, type, name, projectID })
 
                 {(type == 2) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-green-100 border-green-100 border-2 ">
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         <div align="right" className="pl-2 w-full flex justify-between">
                             <div className="mb-2 text-base font-normal">
                                  <span className="font-medium text-gray-900 dark:text-white">Your </span>request to join the project - <span className="font-medium text-gray-900 dark:text-white">{projectName} is approved.</span>
@@ -79,7 +79,7 @@ export default function CollaboratorRequests({ key, id, type, name, projectID })
 
                 {(type == 3) && (
                     <div className="items-center block p-3 sm:flex rounded-lg bg-red-100 border-red-100 border-2 ">
-                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Bonnie Green image" />
+                        <img className="w-12 h-12 mb-3 mr-3 rounded-full sm:mb-0" src="https://flowbite.com/docs/images/people/profile-picture-2.jpg" alt="Person Profile" />
                         <div align="right" className="pl-2 flex w-full justify-between">
                             <div className="mb-2 text-base font-normal">
                                  <span className="font-medium text-gray-900 dark:text-white">Your </span>request to join the project <span className="font-medium text-gray-900 dark:text-white">{projectName} was declined.</span>
