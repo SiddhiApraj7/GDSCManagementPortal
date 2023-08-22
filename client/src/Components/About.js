@@ -107,7 +107,7 @@ const About = ({ name }) => {
               <span className="border-b-2 border-green-400 ">Tech Leads</span>
             </p>
           </div>
-          <div className="mt-2 flex flex-col md:flex-row">
+          <div className="mt-2 mx-12 flex flex-col md:flex-row">
       {topProjectManagers.length > 0  ? (
         topProjectManagers.map((projectManager, i) => (
           <motion.div

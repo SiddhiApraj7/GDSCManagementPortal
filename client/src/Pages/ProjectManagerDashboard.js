@@ -76,7 +76,7 @@ export default function ProjectManagerDashboard() {
 
                         }
                      }
-
+                     
                      count = beginnerCount + intermediateCount + advancedCount;
 
                      

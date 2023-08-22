@@ -175,6 +175,9 @@ export default function Projects() {
                       .includes(searchTerm.toLowerCase())) ||
                   (projectInfo.fullName || "")
                     .toLowerCase()
+                    .includes(searchTerm.toLowerCase()) ||
+                    (projectInfo.projectDomain || "")
+                    .toLowerCase()
                     .includes(searchTerm.toLowerCase())
                 ) {
                   return true;
