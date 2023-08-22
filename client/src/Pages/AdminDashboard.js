@@ -1,15 +1,12 @@
 import React from "react";
 import logoImg from "../media/gdsc-logo.png";
 import { Link } from "react-router-dom";
-import ProjectCardDashboard from "../Components/ProjectCardDashboard";
+
 import { useState } from "react";
 import { useAuth } from "../contexts/AuthContext";
 import { db } from "../config/firebase";
 import {
   collection,
-  doc,
-  getDoc,
-  addDoc,
   query,
   where,
   getDocs,

@@ -9,7 +9,7 @@ import {
   getDocs,
   getDoc,
   doc,
-  setDoc,
+ 
 } from "firebase/firestore";
 import { useState, useEffect } from "react";
 import Loader from "./Loader";
